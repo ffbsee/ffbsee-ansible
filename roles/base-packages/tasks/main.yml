@@ -1,0 +1,30 @@
+---
+
+- name: Install some common base packages
+  apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - tmux
+    - aptitude
+    - htop
+    - iftop
+    - iotop
+    - molly-guard
+    - ethtool
+    - ethstatus
+    - nano
+    - ncdu
+
+- name: Install some common Debian specific packages
+  apt:
+    pkg: '{{ item }}'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - debian-goodies
+    - apt-dater-host
+  when: ansible_distribution == 'Debian'

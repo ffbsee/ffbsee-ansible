@@ -1,0 +1,7 @@
+---
+
+- name: copy network interface configuration file
+  copy:
+    src: interfaces.conf
+    dest: /etc/network/interfaces
+  notify: restart networking

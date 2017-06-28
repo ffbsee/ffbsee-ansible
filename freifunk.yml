@@ -1,0 +1,7 @@
+---
+# General host groups
+- name: Install common packages
+  hosts: all
+  roles:
+    - base-packages
+    - ssh_authorized_keys

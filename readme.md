@@ -1,0 +1,25 @@
+Ansible for Freifunk Bodensee node
+==================================
+
+This is the ansible repository for the Freifunk Bodensee node at CCCZH.
+
+
+Usage
+-----
+
+Run ansible with:
+
+    ansible-playbook freifunk.yml
+
+from the top-level directory.
+
+
+New admins
+----------
+
+To add a new person `NAME` with admin rights (root) on some device `FQDN`, do
+
+* Add one or more ssh keys to `files/admin_ssh_pubkeys/`
+  * Make sure to use a unique `NAME`
+  * Each key file must match the regex `NAME_*.pub`
+* Edit the file `host_vars/FQDN` and add `NAME` on a new line

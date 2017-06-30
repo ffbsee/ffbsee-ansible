@@ -1,2 +1,2 @@
 [freifunk]
-io.rack.ccczh.ch
+io.rack.ccczh.ch ansible_host=2a02:168:4638:f0::10

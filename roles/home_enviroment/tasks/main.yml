@@ -1,0 +1,10 @@
+---
+
+- name: Create a new the vimrc 
+  copy:
+    src: 'files/vim/vimrc'
+    dest: '/root/.vimrc'
+    owner: root
+    group: root
+    mode: 0644
+

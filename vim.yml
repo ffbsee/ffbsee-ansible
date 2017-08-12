@@ -1,0 +1,7 @@
+---
+
+- name: Install vimrc
+  hosts: all
+  roles:
+    - home_enviroment
+

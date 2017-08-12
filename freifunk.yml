@@ -6,3 +6,5 @@
     - base-packages
     - ssh_authorized_keys
     - network
+    - home_enviroment
+

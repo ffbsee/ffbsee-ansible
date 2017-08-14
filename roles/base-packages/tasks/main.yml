@@ -17,6 +17,14 @@
     - ethstatus
     - nano
     - ncdu
+    - haveged
+    - nmap
+    - vim
+    - fail2ban
+    - cpan
+    - python3
+    - python3-jsonschema
+    - jq
 
 - name: Install some common Debian specific packages
   apt:

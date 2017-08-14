@@ -1,0 +1,33 @@
+---
+- name: Create User www-data
+  user:
+    name: 'www-data'
+    group: 'www-data'
+    shell: '/bin/false'
+    system: yes
+    createhome: no
+
+
+- name: Install lighttpd Webserver 
+  apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - lighttpd
+
+- name: Create openssl dhparam if they don't exist at /etc/ssl/certs/dhparam.pem.
+  command: '/usr/bin/openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096'
+  args:
+    creates: /etc/ssl/certs/dhparam.pem
+
+- name: Create /etc/lighttpd/lighttpd.conf
+  template:
+    src: 'templates/lighttpd/lighttpd.conf'
+    dest: '/etc/lighttpd/lighttpd.conf'
+    owner: root
+    group: root
+    mode: 0644
+
+

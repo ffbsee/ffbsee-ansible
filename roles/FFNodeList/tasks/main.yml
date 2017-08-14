@@ -1,0 +1,27 @@
+---
+
+- name: Install FFNodeList dependencies
+  apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - perl
+    - libjson-pp-perl
+    - libwww-perl
+
+- name: Clone FFNodeList
+  git:
+    repo: 'https://github.com/ffbsee/FFNodeList.git'
+    dest: /var/www/FFNodeList
+    clone: yes
+    update: yes
+
+- name: cronjob for FFNodeList
+  cron:
+    name: "Git pull"
+    special_time: daily
+    job: "cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null"
+
+

@@ -1,0 +1,27 @@
+---
+- name: Create User www-data
+  user:
+    name: 'www-data'
+    group: 'www-data'
+    shell: '/bin/false'
+    system: yes
+    createhome: no
+
+- name: Create /var/www
+  copy:
+    src: 'files/www'
+    dest: '/var/www'
+    owner: www-data
+    group: www-data
+    mode: 'u=rwx,g=r,o=r'
+    directory_mode: yes
+
+- name: Hostename in JSOn File...
+  template:
+    src: 'templates/www/cgi-bin/data'
+    dest: '/var/www/cgi-bin/data'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: 'u=rw,g=r,o=r'
+
+    

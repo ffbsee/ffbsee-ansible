@@ -1,0 +1,37 @@
+---
+
+- name: Install Meshviewer apt packages
+  apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - git
+    - make
+    - npm
+    - nodejs-legacy
+    - ruby-sass
+    - node-grunt-cli
+
+- name: Git clonen
+  git:
+    repo: 'https://github.com/ffbsee/meshviewer.git'
+    dest: /tmp/meshviewer
+    clone: yes
+    update: yes
+
+- name: execute Grunt
+  command: grunt
+    chdir: /tmp/meshviewer/
+
+- name: Meshviewer nach /var/www/meshviewer kopieren
+  shell: cp -r build/* /var/www/meshviewer/
+
+- name: copy config file
+  copy:
+    src: files/meshviewer/config.json
+    dest: /var/www/meshviewer/config.json
+    owner: www-data
+    group: www-data
+    mode: 0644

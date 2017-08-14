@@ -1,0 +1,106 @@
+---
+
+- name: batman-adv dependencies:
+    apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - wget
+    - build-essential
+    - pkg-config
+    - libnl-3-dev
+    - libjson-c-dev
+    - git
+    - libcap-dev
+    - pkg-config
+    - libnl-genl-3-dev
+    - linux-headers-amd64
+
+- name: Download B.A.T.M.A.N. Advanced '{{ batman-version }}'
+  get_url:
+    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman-version }}/batman-adv-{{ batman-version }}.tar.gz'
+    dest: /tmp/batman-adv
+    checksum: sha256:d0a0fc90c4f410b57d043215e253bb0b855efa5edbe165d87c17bfdcfafd0db7
+
+- name: unpack tar.gz archive
+  unarchive:
+    src: '/tmp/batman-adv'
+    dest: '/tmp/batman-adv/'
+    remote_src: yes
+
+- name: make batman-adv
+  make:
+    chdir: '/tmp/batman-adv/'
+
+- name: make install batman-adv
+  make:
+    chdir: '/tmp/batman-adv/'
+    target: install
+
+
+- name: Download batctl
+  get_url:
+    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman-version }}/batctl-{{ batman-version }}.tar.gz'
+    dest: /tmp/batctl
+    checksum: sha256:07edeb1d87a548285be8c499542790a158fc8d94ef7ebb295f27ebf710024ae9
+
+- name: unpack tar.gz archive
+  unarchive:
+    src: '/tmp/batctl'
+    dest: '/tmp/batctl/'
+    remote_src: yes
+
+- name: make batctl
+  make:
+    chdir: '/tmp/batctl/'
+
+- name: make install batctl
+  make:
+    chdir: '/tmp/batctl/'
+    target: install
+
+- name: alfred user and group 
+  user:
+    name: alfred
+    shell: /bin/false
+    groups: alfred
+    system: yes
+    home: /var/run/alfred
+
+
+- name: Download alfred
+  get_url:
+    url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman-version }}.tar.gz'
+    dest: /tmp/alfred
+    checksum: sha256:37b3babf7f37643cf296be11fb82d5730cf441a5a56f72fba96edae9f149c9d2
+
+- name: unpack tar.gz archive
+  unarchive:
+    src: '/tmp/alfred'
+    dest: '/tmp/alfred/'
+    remote_src: yes
+
+- name: make batctl
+  make:
+    chdir: '/tmp/alfred/'
+    params: 
+      CONFIG_ALFRED_GPSD: n
+      CONFIG_ALFRED_VIS: n
+
+
+- name: make install batctl
+  make:
+    chdir: '/tmp/alfred/'
+    target: install
+    params: 
+      CONFIG_ALFRED_GPSD: n
+      CONFIG_ALFRED_VIS: n
+
+
+- capabilities:
+    path: '/usr/local/sbin/alfred'
+    capability: cap_net_raw+ep
+    state: present
+

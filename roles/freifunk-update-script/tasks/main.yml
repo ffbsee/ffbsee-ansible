@@ -1,0 +1,25 @@
+---
+
+- name: create freifunk directory
+  file:
+    path: /opt/freifunk
+    state: directory
+    mode: 0755
+
+- name: copy freifunk update.sh template
+  template: 
+    src: 'templates/freifunk-files/update.sh'
+    dest: '/opt/freifunk/update.sh'
+    owner: root
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: copy freifunk bash files
+  template: 
+    src: 'files/freifunk-files/'
+    dest: '/opt/freifunk/'
+    owner: root
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+

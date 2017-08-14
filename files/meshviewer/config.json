@@ -1,0 +1,25 @@
+{
+  "dataPath": "/meshviewer/",
+  "siteName": "Freifunk Bodensee",
+  "mapSigmaScale": 1.3,
+  "showContact": true,
+  "maxAge": 7,
+  "blinkingHours": 8,
+  "mapLayers": [
+    { "name": "OSM Mapnik",
+      "url": "https://tiles.ffbsee.de:9090/{z}/{x}/{y}.png",
+      "config": {
+        "subdomains": "abc",
+        "type": "osm",
+        "attribution": "Map data Tiles &copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors, CC-BY-SA",
+        "maxZoom": 18
+      }
+    },
+    {
+      "name": "Stamen.TonerLite"
+    }
+  ],
+  "siteNames": [
+    { "site": "bodensee", "name": "Bodensee", "link" : "https://ffbsee.de" }
+  ]
+}

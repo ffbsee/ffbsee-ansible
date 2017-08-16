@@ -21,7 +21,6 @@
     - nmap
     - vim
     - fail2ban
-    - cpan
     - python3
     - python3-jsonschema
     - jq

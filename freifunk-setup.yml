@@ -1,0 +1,17 @@
+---
+
+- name: Install common packages
+  hosts: all
+  roles:
+#    - base-packages
+#    - ssh_authorized_keys
+#    - network
+#    - home_enviroment
+#    - lighttpd
+#    - meshviewer
+#    - webdata
+#    - FFNodeList
+#    - freifunk-backbone
+#--    - freifunk-update-script
+    - fastd-install
+

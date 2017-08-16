@@ -9,10 +9,25 @@
   with_items:
     - git
     - make
-    - npm
-    - nodejs-legacy
     - ruby-sass
-    - node-grunt-cli
+
+- name: unstable apt_repository for npm
+  apt_repository:
+    repo: deb https://ftp.ch.debian.org/debian/ sid main
+    state: present
+
+- name: Install npm from sid
+  apt:
+    pkg: 'npm'
+    default_release: sid
+    update_cache: yes
+    cache_valid_time: 86400
+ 
+- name: unstable apt_repository for npm
+  apt_repository:
+    repo: deb https://ftp.ch.debian.org/debian/ sid main
+    state: absent
+
 
 - name: Git clonen
   git:
@@ -21,12 +36,23 @@
     clone: yes
     update: yes
 
+- name: grunt-cli via npm
+  npm:
+    name: grunt-cli
+    path: /tmp/meshviewer
+
+
+- name: npm install
+  npm:
+    path: /tmp/meshviewer
+
 - name: execute Grunt
-  command: grunt
-    chdir: /tmp/meshviewer/
+  shell: node_modules/.bin/grunt
+  args:
+    chdir: '/tmp/meshviewer'
 
 - name: Meshviewer nach /var/www/meshviewer kopieren
-  shell: cp -r build/* /var/www/meshviewer/
+  shell: mv /tmp/meshviewer/build /var/www/meshviewer
 
 - name: copy config file
   copy:

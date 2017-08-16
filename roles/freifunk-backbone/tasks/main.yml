@@ -1,7 +1,7 @@
 ---
 
-- name: batman-adv dependencies:
-    apt:
+- name: batman-adv dependencies
+  apt:
     pkg: '{{ item }}'
     state: 'latest'
     update_cache: yes
@@ -17,51 +17,78 @@
     - pkg-config
     - libnl-genl-3-dev
     - linux-headers-amd64
+    - libcap2-bin
 
-- name: Download B.A.T.M.A.N. Advanced '{{ batman-version }}'
+- name: 'Download B.A.T.M.A.N. Advanced' 
   get_url:
-    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman-version }}/batman-adv-{{ batman-version }}.tar.gz'
-    dest: /tmp/batman-adv
+    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz'
+    dest: /tmp/batman-adv.tar.gz
     checksum: sha256:d0a0fc90c4f410b57d043215e253bb0b855efa5edbe165d87c17bfdcfafd0db7
 
-- name: unpack tar.gz archive
+- name: Create /tmp/batman-adv/ Directory
+  file:
+    path: '/tmp/batman-adv'
+    state: directory
+    mode: 0755
+
+- name: unpack tar.gz archive batman-adv
   unarchive:
-    src: '/tmp/batman-adv'
+    src: '/tmp/batman-adv.tar.gz'
     dest: '/tmp/batman-adv/'
     remote_src: yes
 
 - name: make batman-adv
   make:
-    chdir: '/tmp/batman-adv/'
+    chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
+    params:
+      NUM_THREADS: 4
 
 - name: make install batman-adv
   make:
-    chdir: '/tmp/batman-adv/'
+    chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
     target: install
-
+    params:
+      NUM_THREADS: 4
 
 - name: Download batctl
   get_url:
-    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman-version }}/batctl-{{ batman-version }}.tar.gz'
-    dest: /tmp/batctl
+    url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'
+    dest: /tmp/batctl.tar.gz
     checksum: sha256:07edeb1d87a548285be8c499542790a158fc8d94ef7ebb295f27ebf710024ae9
+
+- name: Create /tmp/batctl/ Directory
+  file:
+    path: '/tmp/batctl'
+    state: directory
+    mode: 0755
+
 
 - name: unpack tar.gz archive
   unarchive:
-    src: '/tmp/batctl'
+    src: '/tmp/batctl.tar.gz'
     dest: '/tmp/batctl/'
     remote_src: yes
 
 - name: make batctl
   make:
-    chdir: '/tmp/batctl/'
+    chdir: '/tmp/batctl/batctl-{{ batman_version }}'
+    params:
+      NUM_THREADS: 4
 
 - name: make install batctl
   make:
-    chdir: '/tmp/batctl/'
+    chdir: '/tmp/batctl/batctl-{{ batman_version }}'
     target: install
+    params:
+      NUM_THREADS: 4
 
-- name: alfred user and group 
+- name: alfred group
+  group:
+    name: alfred
+    state: present
+    system: yes
+
+- name: alfred user 
   user:
     name: alfred
     shell: /bin/false
@@ -72,31 +99,39 @@
 
 - name: Download alfred
   get_url:
-    url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman-version }}.tar.gz'
-    dest: /tmp/alfred
+    url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
+    dest: /tmp/alfred.tar.gz
     checksum: sha256:37b3babf7f37643cf296be11fb82d5730cf441a5a56f72fba96edae9f149c9d2
+
+- name: Create /tmp/alfred/ Directory
+  file:
+    path: '/tmp/alfred'
+    state: directory
+    mode: 0755
 
 - name: unpack tar.gz archive
   unarchive:
-    src: '/tmp/alfred'
+    src: '/tmp/alfred.tar.gz'
     dest: '/tmp/alfred/'
     remote_src: yes
 
 - name: make batctl
   make:
-    chdir: '/tmp/alfred/'
-    params: 
+    chdir: '/tmp/alfred/alfred-{{ batman_version }}'
+    params:
+      NUM_THREADS: 4
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
 
 
 - name: make install batctl
   make:
-    chdir: '/tmp/alfred/'
+    chdir: '/tmp/alfred/alfred-{{ batman_version }}'
     target: install
     params: 
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
+      NUM_THREADS: 4
 
 
 - capabilities:

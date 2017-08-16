@@ -5,5 +5,6 @@ ipv6_prefix:  'fdef:1701:b5ee:42:'
 community: 'bodensee'
 community_name: 'Bodensee'
 community_shortname: 'ffbsee'
-batman-version: 2016.5
+batman_version: 2016.5
+fastd_libsodium_version: 1.0.10
 

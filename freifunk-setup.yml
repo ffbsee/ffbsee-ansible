@@ -14,5 +14,6 @@
 #    - freifunk-backbone
 #    - freifunk-update-script
 #    - fastd-install
-    - fastd-config
+#    - fastd-config
+    - firewall
 

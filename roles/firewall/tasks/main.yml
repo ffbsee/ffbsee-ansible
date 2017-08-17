@@ -11,9 +11,10 @@
 
 - name: copy ferm config
   template:
-    src: files/ferm.conf
+    src: templates/ferm.conf
     dest: /etc/ferm/ferm.conf
     owner: root
     group: root
     mode: 0644 
+  notify: restart ferm
    

@@ -6,14 +6,45 @@
     shell: '/bin/false'
     createhome: no
 
-- name: FastD config kopieren
+- name: create freifunk directory
+  file:
+    path: /etc/fastd
+    state: directory
+    mode: 0755
+
+- name: create freifunk directory
+  file:
+    path: /etc/fastd/backbone
+    state: directory
+    mode: 0755
+
+
+- name: FastD configurations kopieren
   copy: 
-    src: files/fastd
-    dest: /etc/fastd
+    src: 'files/fastd/fastd.conf'
+    dest: '/etc/fastd/fastd.conf'
     owner: nobody
     group: root
-    directory_mode: yes
     mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: FastD vpn configurations kopieren
+  copy: 
+    src: 'files/fastd/backbone/{{ item }}'
+    dest: '/etc/fastd/backbone/{{ item }}'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+  with_items:
+    - vpn1
+    - vpn2
+    - vpn3
+    - vpn4
+    - vpn5
+    - vpn6
+    - vpn7
+    - vpn8
+
 
 - name: Create Fastd private key pair
   shell: 'fastd_secret= "{{ fastd_secret }}";if [ -z "$fastd_secret" ]; then fastd_secret=$(fastd --generate-key --machine-readable); fi; echo "secret \"$fastd_secret\";" >> /etc/fastd/fastd.conf; fastd_key=$(echo "secret \"$fastd_secret\";" | fastd --config - --show-key --machine-readable); echo "#key \"$fastd_key\";" >> /etc/fastd/fastd.conf; sed -i "s/eth0/$wan_iface/g" /etc/fastd/fastd.conf; sed -i "s/eth0/{{ wan_interface }}/g" /etc/fastd/fastd.conf'

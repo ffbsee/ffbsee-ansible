@@ -136,7 +136,7 @@
 
 - name: unpack tar.xz archive fastd
   unarchive:
-    src: '/mp/fastd.tar.xz'
+    src: '/tmp/fastd.tar.xz'
     dest: '/tmp/fastd/'
     remote_src: yes
 

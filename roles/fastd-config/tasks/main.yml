@@ -1,0 +1,24 @@
+---
+
+- name: Create User nobody for FastD
+  user:
+    name: nobody
+    shell: '/bin/false'
+    createhome: no
+
+- name: FastD config kopieren
+  copy: 
+    src: files/fastd
+    dest: /etc/fastd
+    owner: nobody
+    group: root
+    directory_mode: yes
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Create Fastd private key pair
+  shell: 'fastd_secret= "{{ fastd_secret }}";if [ -z "$fastd_secret" ]; then fastd_secret=$(fastd --generate-key --machine-readable); fi; echo "secret \"$fastd_secret\";" >> /etc/fastd/fastd.conf; fastd_key=$(echo "secret \"$fastd_secret\";" | fastd --config - --show-key --machine-readable); echo "#key \"$fastd_key\";" >> /etc/fastd/fastd.conf; sed -i "s/eth0/$wan_iface/g" /etc/fastd/fastd.conf; sed -i "s/eth0/{{ wan_interface }}/g" /etc/fastd/fastd.conf'
+  args:
+    chdir: '/etc/fastd'
+
+
+

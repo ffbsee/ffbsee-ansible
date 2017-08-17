@@ -3,7 +3,7 @@
 # This script is called every 5 minutes via crond
 
 # Server address
-mac_addr="{{ ansible_facts.ansible_{{wan_interface}}.macaddress }}"
+mac_addr="{{ mac_address }}"
 ipv6_address="{{ ipv6_address }}"
 ff_prefix="{{ ipv6_prefix }}:"
 ipv4_mesh_interface="{{ ipv4_mesh_address }}"

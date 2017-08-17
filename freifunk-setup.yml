@@ -12,6 +12,7 @@
 #    - webdata
 #    - FFNodeList
 #    - freifunk-backbone
-#--    - freifunk-update-script
-    - fastd-install
+     - freifunk-update-script
+#    - fastd-install
+#    - fastd-config
 

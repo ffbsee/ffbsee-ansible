@@ -6,13 +6,20 @@
     shell: '/bin/false'
     createhome: no
 
-- name: create freifunk directory
+- name: create fastd directory
   file:
     path: /etc/fastd
     state: directory
     mode: 0755
 
-- name: create freifunk directory
+- name: create fastd/peers directory
+  file:
+    path: /etc/fastd/peers
+    state: directory
+    mode: 0755
+
+
+- name: create fastd/peers directory
   file:
     path: /etc/fastd/backbone
     state: directory
@@ -28,7 +35,7 @@
     mode: 'u=rwx,g=rx,o=rx'
 
 
-- name: FastD vpn configurations kopieren
+- name: FastD vpn-backbone configurations kopieren
   copy: 
     src: 'files/fastd/backbone/{{ item }}'
     dest: '/etc/fastd/backbone/{{ item }}'

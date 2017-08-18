@@ -24,4 +24,24 @@
     special_time: daily
     job: "cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null"
 
+- name: Perl Modul HTML::Entities
+  cpanm:
+    name: HTML::Entities
+
+
+- name: Perl Modul LWP::Simple
+  cpanm:
+    name: LWP::Simple
+
+
+- name: Perl Modul utf8
+  cpanm:
+    name: utf8
+
+- name: Perl Modul JSON
+  cpanm:
+    name: JSON
+
+
+
 

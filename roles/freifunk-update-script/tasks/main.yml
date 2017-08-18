@@ -18,4 +18,36 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
+- name: copy map-backend.py (deprecated, but required)
+  copy:
+    src: 'files/freifunk-files/map-backend.py'
+    dest: '/opt/freifunk/map-backend.py'
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy ffmap-d3.jq (deprecated, but required)
+  copy:
+    src: 'files/freifunk-files/ffmap-d3.jq'
+    dest: '/opt/freifunk/ffmap-d3.jq'
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy status_page_create.sh (deprecated, but required)
+  copy:
+    src: 'files/freifunk-files/status_page_create.sh'
+    dest: '/opt/freifunk/status_page_create.sh'
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy counter_update.py (deprecated, but required)
+  copy:
+    src: 'files/freifunk-files/counter_update.py'
+    dest: '/opt/freifunk/counter_update.py'
+    owner: root
+    group: root
+    mode: 0755
+
 

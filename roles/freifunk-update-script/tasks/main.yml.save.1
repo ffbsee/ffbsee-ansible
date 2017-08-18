@@ -1,0 +1,22 @@
+---
+
+- name: create freifunk directory
+  file:
+    path: /opt/freifunk
+    state: directory
+    mode: 0755
+
+- name: Debug mac
+  debug: msg='{{ ansible_facts[''] }}' 
+
+ansible_enp1s0f0
+
+- name: copy freifunk update.sh template
+  template: 
+    src: 'templates/freifunk-files/update.sh'
+    dest: '/opt/freifunk/update.sh'
+    owner: root
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+

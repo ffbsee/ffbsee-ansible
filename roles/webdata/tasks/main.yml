@@ -7,14 +7,38 @@
     system: yes
     createhome: no
 
-- name: Create /var/www
+- name: create /var/www
+  file:
+    path: '/var/www'
+    state: directory
+    mode: 0755
+
+- name: Create /var/www/status_page_style.css
   copy:
-    src: 'files/www'
-    dest: '/var/www'
+    src: 'files/www/status_page_style.css'
+    dest: '/var/www/status_page_style.css'
     owner: www-data
     group: www-data
     mode: 'u=rwx,g=r,o=r'
-    directory_mode: yes
+
+
+- name: Create /var/www/status_page_background.png
+  copy:
+    src: 'files/www/status_page_background.png'
+    dest: '/var/www/status_page_background.png'
+    owner: www-data
+    group: www-data
+    mode: 'u=rwx,g=r,o=r'
+
+- name: Create /var/www/counter.svg
+  copy:
+    src: 'files/www/counter.svg'
+    dest: '/var/www/counter.svg'
+    owner: www-data
+    group: www-data
+    mode: 'u=rwx,g=r,o=r'
+
+
 
 - name: Hostename in JSOn File...
   template:

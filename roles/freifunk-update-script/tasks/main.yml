@@ -18,6 +18,14 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
+- name: add cron job for update script
+  cron:
+    name: 'Update statistics script'
+    job: '/opt/freifunk/update.sh > /dev/null'
+    minute: '*/5'
+    user: root
+    state: present
+
 - name: copy map-backend.py (deprecated, but required)
   copy:
     src: 'files/freifunk-files/map-backend.py'

@@ -15,5 +15,6 @@
 #    - freifunk-update-script
 #    - fastd-install
 #    - fastd-config
-    - firewall
+#    - firewall
+    - dhcp-relay
 

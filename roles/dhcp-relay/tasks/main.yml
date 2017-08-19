@@ -1,0 +1,26 @@
+---
+
+- name: Install isc-dhcp-relay
+  apt:
+    pkg: 'isc-dhcp-relay'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Set DHCP Relay Servers Option
+  debconf:
+    name: 'isc-dhcp-relay'
+    question: 'isc-dhcp-relay/servers'
+    value: '{{ ipv4_dhcp_server }}'
+    vtype: string
+
+- name: set DHCP-Relay interface Option
+  debconf:
+    name: 'isc-dhcp-relay'
+    question: 'isc-dhcp-relay/interfaces'
+    value: 'bat0'
+    vtype: string
+
+- name: DPKG Reconfigure
+  command: 'dpkg-reconfigure isc-dhcp-relay'
+

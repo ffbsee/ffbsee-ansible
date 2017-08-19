@@ -13,6 +13,7 @@
     question: 'isc-dhcp-relay/servers'
     value: '{{ ipv4_dhcp_server }}'
     vtype: string
+  notify: dpkg reconfigure
 
 - name: set DHCP-Relay interface Option
   debconf:
@@ -20,7 +21,4 @@
     question: 'isc-dhcp-relay/interfaces'
     value: 'bat0'
     vtype: string
-
-- name: DPKG Reconfigure
-  command: 'dpkg-reconfigure -f noninteractive isc-dhcp-relay'
-
+  notify: dpkg reconfigure

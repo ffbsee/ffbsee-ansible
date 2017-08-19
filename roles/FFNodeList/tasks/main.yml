@@ -10,6 +10,7 @@
     - perl
     - libjson-pp-perl
     - libwww-perl
+    - cpanminus
 
 - name: Clone FFNodeList
   git:
@@ -26,21 +27,12 @@
 
 - name: Perl Modul HTML::Entities
   cpanm:
-    name: HTML::Entities
-
-
-- name: Perl Modul LWP::Simple
-  cpanm:
-    name: LWP::Simple
-
-
-- name: Perl Modul utf8
-  cpanm:
-    name: utf8
-
-- name: Perl Modul JSON
-  cpanm:
-    name: JSON
+    name: '{{ item }}'
+  with_items:
+    - 'HTML::Entities'
+    - 'LWP::Simple'
+    - 'utf8'
+    - 'JSON'
 
 
 

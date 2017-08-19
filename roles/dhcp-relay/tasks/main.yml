@@ -22,5 +22,5 @@
     vtype: string
 
 - name: DPKG Reconfigure
-  command: 'dpkg-reconfigure isc-dhcp-relay'
+  command: 'dpkg-reconfigure -f noninteractive isc-dhcp-relay'
 

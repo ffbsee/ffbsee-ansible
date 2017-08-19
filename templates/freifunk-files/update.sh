@@ -44,7 +44,7 @@ is_running() {
 }
 
 #make sure batman-adv is loaded
-modprobe batman_adv
+/sbin/modprobe batman_adv
 
 #enable forwarding
 echo 1 > /proc/sys/net/ipv6/conf/default/forwarding

@@ -38,9 +38,7 @@
     group: www-data
     mode: 'u=rwx,g=r,o=r'
 
-
-
-- name: Hostename in JSOn File...
+- name: Hostename in JSON File...
   template:
     src: 'templates/www/cgi-bin/data'
     dest: '/var/www/cgi-bin/data'

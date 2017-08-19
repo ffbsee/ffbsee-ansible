@@ -52,7 +52,7 @@
     chdir: '/tmp/meshviewer'
 
 - name: Meshviewer nach /var/www/meshviewer kopieren
-  shell: mv /tmp/meshviewer/build /var/www/meshviewer
+  shell: 'rm -rf /var/www/meshviewer && mv /tmp/meshviewer/build /var/www/meshviewer'
 
 - name: copy config file
   copy:

@@ -2,18 +2,16 @@
 
 - name: Install ferm
   apt:
-    pkg: '{{ item }}'
+    pkg: 'ferm'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
-    - ferm
 
-- name: copy ferm config
+- name: Copy ferm configuration
   template:
     src: 'templates/ferm.conf'
     dest: '/etc/ferm/ferm.conf'
     owner: root
     group: root
-    mode: 0644
+    mode: 'u=rw,g=r,o=r'
   notify: restart ferm

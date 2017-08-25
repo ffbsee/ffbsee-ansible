@@ -11,7 +11,7 @@
     - make
     - ruby-sass
 
-- name: unstable apt_repository for npm
+- name: Add unstable apt repository for npm
   apt_repository:
     repo: deb https://ftp.ch.debian.org/debian/ sid main
     state: present
@@ -22,42 +22,42 @@
     default_release: sid
     update_cache: yes
     cache_valid_time: 86400
- 
-- name: unstable apt_repository for npm
+
+- name: Remove unstable apt repository for npm
   apt_repository:
     repo: deb https://ftp.ch.debian.org/debian/ sid main
     state: absent
 
-
-- name: Git clonen
+- name: Clone meshviewer git
   git:
     repo: 'https://github.com/ffbsee/meshviewer.git'
-    dest: /tmp/meshviewer
+    dest: '/tmp/meshviewer'
     clone: yes
     update: yes
 
-- name: grunt-cli via npm
+- name: Install grunt-cli via npm
   npm:
     name: grunt-cli
-    path: /tmp/meshviewer
+    path: '/tmp/meshviewer'
 
+- name: Run npm install
+  command: npm install
+  args:
+    chdir: '/tmp/meshviewer'
 
-- name: npm install
-  npm:
-    path: /tmp/meshviewer
-
-- name: execute Grunt
-  shell: node_modules/.bin/grunt
+- name: Execute Grunt
+  shell: 'node_modules/.bin/grunt'
   args:
     chdir: '/tmp/meshviewer'
 
 - name: Meshviewer nach /var/www/meshviewer kopieren
+  # TODO: Clean this up
   shell: 'rm -rf /var/www/meshviewer && mv /tmp/meshviewer/build /var/www/meshviewer'
 
-- name: copy config file
+- name: Copy config file
   copy:
-    src: files/meshviewer/config.json
-    dest: /var/www/meshviewer/config.json
+    src: 'files/meshviewer/config.json'
+    dest: '/var/www/meshviewer/config.json'
     owner: www-data
     group: www-data
-    mode: 0644
+    mode: 'u=rw,g=r,o=r'

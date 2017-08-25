@@ -1,19 +1,17 @@
 ---
 
-- name: Create a new vimrc 
+- name: Copy vimrc configuration
   copy:
     src: 'files/home_enviroment/vimrc'
     dest: '/root/.vimrc'
     owner: root
     group: root
-    mode: 0644
+    mode: 'u=rw,g=r,o=r'
 
-- name: Creat some bash aliases
+- name: Create some bash aliases
   copy:
     src: 'files/home_enviroment/bashrc'
     dest: '/etc/bash.bashrc'
     owner: root
     group: root
-    mode: 0644
-
-
+    mode: 'u=rw,g=r,o=r'

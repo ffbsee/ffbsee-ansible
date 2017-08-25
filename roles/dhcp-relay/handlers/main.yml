@@ -1,4 +1,4 @@
 ---
 
-- name: dpkg reconfigure
+- name: dpkg reconfigure isc-dhcp-relay
   command: 'dpkg-reconfigure -f noninteractive isc-dhcp-relay'

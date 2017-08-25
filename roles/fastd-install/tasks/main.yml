@@ -17,9 +17,9 @@
     - libjson-c-dev
     - cmake-curses-gui
 
-- name: Download libsodium from github.com
+- name: Download libsodium
   get_url:
-    url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version}}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
+    url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
     dest: '/tmp/fastd_libsodium.tar.gz'
     checksum: sha256:71b786a96dd03693672b0ca3eb77f4fb08430df307051c0d45df5353d22bc4be
 
@@ -27,7 +27,7 @@
   file:
     path: '/tmp/fastd_libsodium'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack libsodium archive
   unarchive:
@@ -66,13 +66,13 @@
   file:
     path: '/tmp/libuecc'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Create '/tmp/libuecc/build' Directory
   file:
     path: '/tmp/libuecc/build'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack libuecc archive
   unarchive:
@@ -103,25 +103,27 @@
 
 - name: Download fastd
   get_url:
-    url: 'https://projects.universe-factory.net/attachments/download/86'
-    dest: '/tmp/fastd.tar.xz'
-    checksum: sha256:714ff09d7bd75f79783f744f6f8c5af2fe456c8cf876feaa704c205a73e043c9
+    #url: 'https://projects.universe-factory.net/attachments/download/86'
+    #checksum: sha256:714ff09d7bd75f79783f744f6f8c5af2fe456c8cf876feaa704c205a73e043c9
+    url: 'https://git.universe-factory.net/fastd/snapshot/fastd-18.tar'
+    checksum: sha256:dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491a
+    dest: '/tmp/fastd-18.tar'
 
 - name: Create '/tmp/fastd' Directory
   file:
     path: '/tmp/fastd'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Create '/tmp/fastd/build' Directory
   file:
     path: '/tmp/fastd/build'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack fastd archive
   unarchive:
-    src: '/tmp/fastd.tar.xz'
+    src: '/tmp/fastd-18.tar'
     dest: '/tmp/fastd/'
     remote_src: yes
 

@@ -24,11 +24,11 @@
     dest: '/tmp/batman-adv.tar.gz'
     checksum: sha256:d0a0fc90c4f410b57d043215e253bb0b855efa5edbe165d87c17bfdcfafd0db7
 
-- name: Create '/tmp/batman-adv/' Directory
+- name: Create '/tmp/batman-adv/' directory
   file:
     path: '/tmp/batman-adv'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack batman-adv archive
   unarchive:
@@ -59,7 +59,7 @@
   file:
     path: '/tmp/batctl'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack batctl archive
   unarchive:
@@ -104,7 +104,7 @@
   file:
     path: '/tmp/alfred'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Unpack alfred archive
   unarchive:

@@ -13,7 +13,7 @@ ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
 
 wan_base_interface: 'enp1s0f0'
 wan_vlan_id: '240'
-wan_interface: '{{ wan_base_interface }}.{{ wan_vlan_id }}' # TODO: Fix case of empty vlan id
+wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
 
 fastd_secret_key: ''
 

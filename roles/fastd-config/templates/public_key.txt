@@ -1,0 +1,2 @@
+# The peer’s public key.
+key "{{ fastd_public_key }}";

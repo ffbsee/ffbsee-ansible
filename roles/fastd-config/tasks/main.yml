@@ -24,9 +24,58 @@
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Copy fastd configurations
-  copy:
-    src: 'files/fastd/fastd.conf'
+
+- name: Generate fastd secret key
+  shell: 'fastd --generate-key --machine-readable > /etc/fastd/secret.txt;'
+  args:
+    creates: '/etc/fastd/secret.txt'
+  when: fastd_secret_key == ''
+
+- name: Retrieve fastd secret key
+  slurp:
+    src: '/etc/fastd/secret.txt'
+  register: fastd_secret_key_data
+  when: fastd_secret_key == ''
+
+- name: Read in fastd secret key
+  set_fact: fastd_secret_key="{{ fastd_secret_key_data['content'] | b64decode | trim }}"
+  when: fastd_secret_key == ''
+
+- name: Put secret key to host
+  template:
+    src: 'templates/secret_key.txt'
+    dest: '/etc/fastd/secret_key.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'
+
+- name: Create fastd public key
+  shell: 'fastd --config /etc/fastd/secret_key.txt --show-key --machine-readable > /etc/fastd/public.txt;'
+  args:
+    creates: '/etc/fastd/public.txt'
+  when: fastd_public_key == ''
+
+- name: Retrieve fastd public key
+  slurp:
+    src: '/etc/fastd/public.txt'
+  register: fastd_public_key_data
+  when: fastd_public_key == ''
+
+- name: Read in fastd public key
+  set_fact: fastd_public_key="{{ fastd_public_key_data['content'] | b64decode | trim }}"
+  when: fastd_public_key == ''
+
+- name: Put public key back to host
+  template:
+    src: 'templates/public_key.txt'
+    dest: '/etc/fastd/public_key.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'
+
+- name: Copy fastd configuration
+  template:
+    src: 'templates/fastd/fastd.conf'
     dest: '/etc/fastd/fastd.conf'
     owner: nobody
     group: root
@@ -42,7 +91,9 @@
   with_items:
     '{{ fastd_vpn_backbone_configs }}'
 
-- name: Create fastd private key pair
-  shell: 'fastd_secret= "{{ fastd_secret }}";if [ -z "$fastd_secret" ]; then fastd_secret=$(fastd --generate-key --machine-readable); fi; echo "secret \"$fastd_secret\";" >> /etc/fastd/fastd.conf; fastd_key=$(echo "secret \"$fastd_secret\";" | fastd --config - --show-key --machine-readable); echo "#key \"$fastd_key\";" >> /etc/fastd/fastd.conf; sed -i "s/eth0/$wan_iface/g" /etc/fastd/fastd.conf; sed -i "s/eth0/{{ wan_interface }}/g" /etc/fastd/fastd.conf'
-  args:
-    chdir: '/etc/fastd'
+
+- debug:
+    msg: '{{ fastd_public_key }}'
+
+- debug:
+    msg: '{{ fastd_public_key }}'

@@ -8,24 +8,24 @@
     cache_valid_time: 86400
   with_items:
     - perl
+    - cpanminus
     - libjson-pp-perl
     - libwww-perl
-    - cpanminus
 
 - name: Clone FFNodeList
   git:
     repo: 'https://github.com/ffbsee/FFNodeList.git'
-    dest: /var/www/FFNodeList
+    dest: '/var/www/FFNodeList'
     clone: yes
     update: yes
 
-- name: cronjob for FFNodeList
+- name: Add cronjob for FFNodeList
   cron:
     name: "Git pull"
     special_time: daily
     job: "cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null"
 
-- name: Perl Modul HTML::Entities
+- name: Perl Modul 'HTML::Entities'
   cpanm:
     name: '{{ item }}'
   with_items:
@@ -33,7 +33,3 @@
     - 'LWP::Simple'
     - 'utf8'
     - 'JSON'
-
-
-
-

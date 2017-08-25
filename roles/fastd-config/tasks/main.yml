@@ -6,57 +6,43 @@
     shell: '/bin/false'
     createhome: no
 
-- name: create fastd directory
+- name: Create fastd directory
   file:
-    path: /etc/fastd
+    path: '/etc/fastd'
     state: directory
     mode: 0755
 
-- name: create fastd/peers directory
+- name: Create 'fastd/peers' directory
   file:
-    path: /etc/fastd/peers
+    path: '/etc/fastd/peers'
     state: directory
     mode: 0755
 
-
-- name: create fastd/peers directory
+- name: Create 'fastd/backbone' directory
   file:
     path: /etc/fastd/backbone
     state: directory
     mode: 0755
 
-
-- name: FastD configurations kopieren
-  copy: 
+- name: Copy fastd configurations
+  copy:
     src: 'files/fastd/fastd.conf'
     dest: '/etc/fastd/fastd.conf'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
-
-- name: FastD vpn-backbone configurations kopieren
-  copy: 
+- name: Copy fastd vpn-backbone configurations
+  copy:
     src: 'files/fastd/backbone/{{ item }}'
     dest: '/etc/fastd/backbone/{{ item }}'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'
   with_items:
-    - vpn1
-    - vpn2
-    - vpn3
-    - vpn4
-    - vpn5
-    - vpn6
-    - vpn7
-    - vpn8
+    '{{ fastd_vpn_backbone_configs }}'
 
-
-- name: Create Fastd private key pair
+- name: Create fastd private key pair
   shell: 'fastd_secret= "{{ fastd_secret }}";if [ -z "$fastd_secret" ]; then fastd_secret=$(fastd --generate-key --machine-readable); fi; echo "secret \"$fastd_secret\";" >> /etc/fastd/fastd.conf; fastd_key=$(echo "secret \"$fastd_secret\";" | fastd --config - --show-key --machine-readable); echo "#key \"$fastd_key\";" >> /etc/fastd/fastd.conf; sed -i "s/eth0/$wan_iface/g" /etc/fastd/fastd.conf; sed -i "s/eth0/{{ wan_interface }}/g" /etc/fastd/fastd.conf'
   args:
     chdir: '/etc/fastd'
-
-
-

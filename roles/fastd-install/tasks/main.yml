@@ -1,52 +1,52 @@
 ---
 
-- name: Install some dependensie packages
+- name: Install some dependencies
   apt:
     pkg: '{{ item }}'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
   with_items:
+    - zip
     - git
-    - cmake-curses-gui
-    - libnacl-dev
     - flex
     - bison
-    - libcap-dev
     - pkg-config
-    - zip
+    - libnacl-dev
+    - libcap-dev
     - libjson-c-dev
+    - cmake-curses-gui
 
-- name: downloas libsodium from github.com
+- name: Download libsodium from github.com
   get_url:
     url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version}}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
-    dest: /tmp/fastd_libsodium.tar.gz
+    dest: '/tmp/fastd_libsodium.tar.gz'
     checksum: sha256:71b786a96dd03693672b0ca3eb77f4fb08430df307051c0d45df5353d22bc4be
 
-- name: Create /tmp/fastd_libsodium/ Directory
+- name: Create '/tmp/fastd_libsodium/' Directory
   file:
     path: '/tmp/fastd_libsodium'
     state: directory
     mode: 0755
 
-- name: unpack tar.gz archive fastd
+- name: Unpack libsodium archive
   unarchive:
     src: '/tmp/fastd_libsodium.tar.gz'
     dest: '/tmp/fastd_libsodium/'
     remote_src: yes
 
-- name: ./configure
-  shell: /tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}/configure
+- name: Configure libsodium
+  shell: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}/configure'
   args:
-    chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}' 
+    chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
 
-- name: make fastd libsodium
+- name: Make libsodium
   make:
     chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
     params:
       NUM_THREADS: 4
 
-- name: make install fastd libsodium
+- name: Make install libsodium
   make:
     chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
     target: install
@@ -56,51 +56,42 @@
 - name: Execute ldconfig
   shell: ldconfig
 
-
-
-
-
-
-
-
-
-- name: downloas fastd libuecc
+- name: Download libuecc
   get_url:
     url: 'https://projects.universe-factory.net/attachments/download/85'
-    dest: /tmp/libuecc-7.tar.xz
+    dest: '/tmp/libuecc-7.tar.xz'
     checksum: sha256:b94aef08eab5359d0facaa7ead2ce81b193eef0c61379d9835213ebc0a46257a
 
-- name: Create /tmp/libuecc/ Directory
+- name: Create '/tmp/libuecc/' Directory
   file:
     path: '/tmp/libuecc'
     state: directory
     mode: 0755
 
-- name: Create /tmp/libuecc/build Directory
+- name: Create '/tmp/libuecc/build' Directory
   file:
     path: '/tmp/libuecc/build'
     state: directory
     mode: 0755
 
-
-- name: unpack tar.xz archive fastd
+- name: Unpack libuecc archive
   unarchive:
     src: '/tmp/libuecc-7.tar.xz'
     dest: '/tmp/libuecc/'
     remote_src: yes
 
-- name: cmake libuecc-7
-  shell: cmake /tmp/libuecc/libuecc-7
+- name: Cmake libuecc
+  shell: 'cmake /tmp/libuecc/libuecc-7'
   args:
-    chdir: /tmp/libuecc/build
+    chdir: '/tmp/libuecc/build'
 
-- name: make libuecc
+- name: Make libuecc
   make:
     chdir: '/tmp/libuecc/build'
     params:
       NUM_THREADS: 4
 
-- name: make install libuecc
+- name: Make install libuecc
   make:
     chdir: '/tmp/libuecc/build'
     target: install
@@ -110,56 +101,44 @@
 - name: Execute ldconfig
   shell: ldconfig
 
-
-
-
-
-
-- name: download fastd
+- name: Download fastd
   get_url:
     url: 'https://projects.universe-factory.net/attachments/download/86'
-    dest: /tmp/fastd.tar.xz
+    dest: '/tmp/fastd.tar.xz'
     checksum: sha256:714ff09d7bd75f79783f744f6f8c5af2fe456c8cf876feaa704c205a73e043c9
 
-- name: Create /tmp/fastd Directory
+- name: Create '/tmp/fastd' Directory
   file:
     path: '/tmp/fastd'
     state: directory
     mode: 0755
 
-- name: Create /tmp/fastd/build Directory
+- name: Create '/tmp/fastd/build' Directory
   file:
     path: '/tmp/fastd/build'
     state: directory
     mode: 0755
 
-
-- name: unpack tar.xz archive fastd
+- name: Unpack fastd archive
   unarchive:
     src: '/tmp/fastd.tar.xz'
     dest: '/tmp/fastd/'
     remote_src: yes
 
-- name: cmake fastd
-  shell: cmake /tmp/fastd/fastd-18
+- name: Cmake fastd
+  shell: 'cmake /tmp/fastd/fastd-18'
   args:
-    chdir: /tmp/fastd/build
+    chdir: '/tmp/fastd/build'
 
-- name: make fastd
+- name: Make fastd
   make:
     chdir: '/tmp/fastd/build'
     params:
       NUM_THREADS: 4
 
-- name: make install fastd
+- name: Make install fastd
   make:
     chdir: '/tmp/fastd/build'
     target: install
     params:
       NUM_THREADS: 4
-
-
-
-
-
-

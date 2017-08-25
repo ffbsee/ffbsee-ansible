@@ -130,7 +130,7 @@
       CONFIG_ALFRED_VIS: n
 
 - name: Set Linux capabilities for alfred
-- capabilities:
+  capabilities:
     path: '/usr/local/sbin/alfred'
     capability: 'cap_net_raw+ep'
     state: present

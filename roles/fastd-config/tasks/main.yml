@@ -1,6 +1,6 @@
 ---
 
-- name: Create User nobody for FastD
+- name: Create user nobody for fastd
   user:
     name: nobody
     shell: '/bin/false'
@@ -10,19 +10,19 @@
   file:
     path: '/etc/fastd'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Create 'fastd/peers' directory
   file:
     path: '/etc/fastd/peers'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Create 'fastd/backbone' directory
   file:
-    path: /etc/fastd/backbone
+    path: '/etc/fastd/backbone'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: Copy fastd configurations
   copy:

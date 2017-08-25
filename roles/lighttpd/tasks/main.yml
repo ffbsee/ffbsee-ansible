@@ -1,19 +1,24 @@
 ---
 
-- name: Create user www-data
-  user:
-    name: 'www-data'
-    group: 'www-data'
-    shell: '/bin/false'
-    system: yes
-    createhome: no
-
 - name: Install lighttpd webserver
   apt:
     pkg: 'lighttpd'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
+
+- name: Create www-data group
+  group:
+    name: 'www-data'
+    state: present
+
+- name: Create www-data user
+  user:
+    name: 'www-data'
+    group: 'www-data'
+    shell: '/bin/false'
+    system: yes
+    createhome: no
 
 - name: Create openssl dhparam if they do not exist
   command: '/usr/bin/openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096'

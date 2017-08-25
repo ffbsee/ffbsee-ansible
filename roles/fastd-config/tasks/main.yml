@@ -24,7 +24,6 @@
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
 
-
 - name: Generate fastd secret key
   shell: 'fastd --generate-key --machine-readable > /etc/fastd/secret.txt;'
   args:
@@ -53,17 +52,14 @@
   shell: 'fastd --config /etc/fastd/secret_key.txt --show-key --machine-readable > /etc/fastd/public.txt;'
   args:
     creates: '/etc/fastd/public.txt'
-  when: fastd_public_key == ''
 
 - name: Retrieve fastd public key
   slurp:
     src: '/etc/fastd/public.txt'
   register: fastd_public_key_data
-  when: fastd_public_key == ''
 
 - name: Read in fastd public key
   set_fact: fastd_public_key="{{ fastd_public_key_data['content'] | b64decode | trim }}"
-  when: fastd_public_key == ''
 
 - name: Put public key back to host
   template:
@@ -90,10 +86,3 @@
     mode: 'u=rwx,g=rx,o=rx'
   with_items:
     '{{ fastd_vpn_backbone_configs }}'
-
-
-- debug:
-    msg: '{{ fastd_public_key }}'
-
-- debug:
-    msg: '{{ fastd_public_key }}'

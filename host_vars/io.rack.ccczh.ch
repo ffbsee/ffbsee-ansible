@@ -16,7 +16,6 @@ wan_vlan_id: '240'
 wan_interface: '{{ wan_base_interface }}.{{ wan_vlan_id }}' # TODO: Fix case of empty vlan id
 
 fastd_secret_key: ''
-fastd_public_key: ''
 
 fastd_vpn_backbone_configs:
   - vpn1

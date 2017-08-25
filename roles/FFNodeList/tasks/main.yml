@@ -21,11 +21,11 @@
 
 - name: Add cronjob for FFNodeList
   cron:
-    name: "Git pull"
+    name: 'Git pull'
     special_time: daily
-    job: "cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null"
+    job: 'cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null'
 
-- name: Perl Modul 'HTML::Entities'
+- name: Install Perl modules
   cpanm:
     name: '{{ item }}'
   with_items:

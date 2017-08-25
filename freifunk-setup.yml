@@ -4,16 +4,16 @@
   hosts: all
   roles:
     - base-packages
+    - home_enviroment
     - ssh_authorized_keys
     - network
-    - home_enviroment
-    - lighttpd
-    - meshviewer
-    - webdata
-    - FFNodeList
     - freifunk-backbone
     - freifunk-update-script
     - fastd-install
     - fastd-config
     - firewall
     - dhcp-relay
+    - lighttpd
+    - meshviewer
+    - webdata
+    - FFNodeList

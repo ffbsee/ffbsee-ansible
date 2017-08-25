@@ -1,8 +1,9 @@
 ---
+
 - name: Add ssh keys for admins
   template:
-    src: authorized_keys.j2
-    dest: /root/.ssh/authorized_keys
+    src: 'authorized_keys.j2'
+    dest: '/root/.ssh/authorized_keys'
     owner: root
     group: root
     mode: "u=rw,g=,o="

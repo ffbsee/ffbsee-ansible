@@ -1,5 +1,6 @@
 ---
-- name: Create User www-data
+
+- name: Create www-data user
   user:
     name: 'www-data'
     group: 'www-data'
@@ -7,43 +8,40 @@
     system: yes
     createhome: no
 
-- name: create /var/www
+- name: Create /var/www directory
   file:
     path: '/var/www'
     state: directory
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
-- name: Create /var/www/status_page_style.css
+- name: Copy /var/www/status_page_style.css
   copy:
     src: 'files/www/status_page_style.css'
     dest: '/var/www/status_page_style.css'
-    owner: www-data
-    group: www-data
-    mode: 'u=rwx,g=r,o=r'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: 'u=rw,g=r,o=r'
 
-
-- name: Create /var/www/status_page_background.png
+- name: Copy /var/www/status_page_background.png
   copy:
     src: 'files/www/status_page_background.png'
     dest: '/var/www/status_page_background.png'
-    owner: www-data
-    group: www-data
-    mode: 'u=rwx,g=r,o=r'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: 'u=rw,g=r,o=r'
 
-- name: Create /var/www/counter.svg
+- name: Copy /var/www/counter.svg
   copy:
     src: 'files/www/counter.svg'
     dest: '/var/www/counter.svg'
-    owner: www-data
-    group: www-data
-    mode: 'u=rwx,g=r,o=r'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: 'u=rw,g=r,o=r'
 
-- name: Hostename in JSON File...
+- name: Put hostname in JSON file
   template:
     src: 'templates/www/cgi-bin/data'
     dest: '/var/www/cgi-bin/data'
     owner: 'www-data'
     group: 'www-data'
     mode: 'u=rw,g=r,o=r'
-
-    

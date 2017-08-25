@@ -1,6 +1,6 @@
 ---
 
-- name: batman-adv dependencies
+- name: Install dependencies for batman-adv batctl and alfred
   apt:
     pkg: '{{ item }}'
     state: 'latest'
@@ -8,42 +8,41 @@
     cache_valid_time: 86400
   with_items:
     - wget
+    - git
     - build-essential
     - pkg-config
-    - libnl-3-dev
-    - libjson-c-dev
-    - git
-    - libcap-dev
-    - pkg-config
-    - libnl-genl-3-dev
     - linux-headers-amd64
+    - libnl-3-dev
+    - libnl-genl-3-dev
+    - libjson-c-dev
+    - libcap-dev
     - libcap2-bin
 
-- name: 'Download B.A.T.M.A.N. Advanced' 
+- name: Download 'B.A.T.M.A.N.' Advanced
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz'
-    dest: /tmp/batman-adv.tar.gz
+    dest: '/tmp/batman-adv.tar.gz'
     checksum: sha256:d0a0fc90c4f410b57d043215e253bb0b855efa5edbe165d87c17bfdcfafd0db7
 
-- name: Create /tmp/batman-adv/ Directory
+- name: Create '/tmp/batman-adv/' Directory
   file:
     path: '/tmp/batman-adv'
     state: directory
     mode: 0755
 
-- name: unpack tar.gz archive batman-adv
+- name: Unpack batman-adv archive
   unarchive:
     src: '/tmp/batman-adv.tar.gz'
     dest: '/tmp/batman-adv/'
     remote_src: yes
 
-- name: make batman-adv
+- name: Make batman-adv
   make:
     chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
     params:
       NUM_THREADS: 4
 
-- name: make install batman-adv
+- name: Make install batman-adv
   make:
     chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
     target: install
@@ -53,69 +52,67 @@
 - name: Download batctl
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'
-    dest: /tmp/batctl.tar.gz
+    dest: '/tmp/batctl.tar.gz'
     checksum: sha256:07edeb1d87a548285be8c499542790a158fc8d94ef7ebb295f27ebf710024ae9
 
-- name: Create /tmp/batctl/ Directory
+- name: Create '/tmp/batctl/' Directory
   file:
     path: '/tmp/batctl'
     state: directory
     mode: 0755
 
-
-- name: unpack tar.gz archive
+- name: Unpack batctl archive
   unarchive:
     src: '/tmp/batctl.tar.gz'
     dest: '/tmp/batctl/'
     remote_src: yes
 
-- name: make batctl
+- name: Make batctl
   make:
     chdir: '/tmp/batctl/batctl-{{ batman_version }}'
     params:
       NUM_THREADS: 4
 
-- name: make install batctl
+- name: Make install batctl
   make:
     chdir: '/tmp/batctl/batctl-{{ batman_version }}'
     target: install
     params:
       NUM_THREADS: 4
 
-- name: alfred group
+- name: Create alfred group
   group:
     name: alfred
     state: present
     system: yes
 
-- name: alfred user 
+- name: Create alfred user
   user:
     name: alfred
-    shell: /bin/false
     groups: alfred
+    shell: '/bin/false'
     system: yes
-    home: /var/run/alfred
-
+    home: '/var/run/alfred'
 
 - name: Download alfred
   get_url:
     url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
-    dest: /tmp/alfred.tar.gz
+    dest: '/tmp/alfred.tar.gz'
     checksum: sha256:37b3babf7f37643cf296be11fb82d5730cf441a5a56f72fba96edae9f149c9d2
 
-- name: Create /tmp/alfred/ Directory
+- name: Create '/tmp/alfred/' Directory
   file:
     path: '/tmp/alfred'
     state: directory
     mode: 0755
 
-- name: unpack tar.gz archive
+- name: Unpack alfred archive
   unarchive:
     src: '/tmp/alfred.tar.gz'
     dest: '/tmp/alfred/'
     remote_src: yes
 
-- name: make batctl
+- name: Make alfred
   make:
     chdir: '/tmp/alfred/alfred-{{ batman_version }}'
     params:
@@ -123,19 +120,17 @@
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
 
-
-- name: make install batctl
+- name: Make install alfred
   make:
     chdir: '/tmp/alfred/alfred-{{ batman_version }}'
     target: install
-    params: 
+    params:
+      NUM_THREADS: 4
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
-      NUM_THREADS: 4
 
-
+- name: Set Linux capabilities for alfred
 - capabilities:
     path: '/usr/local/sbin/alfred'
-    capability: cap_net_raw+ep
+    capability: 'cap_net_raw+ep'
     state: present
-

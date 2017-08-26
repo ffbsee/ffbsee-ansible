@@ -1,7 +1,8 @@
 Ansible for Freifunk Bodensee node
 ==================================
 
-This is the ansible repository for the Freifunk Bodensee node at CCCZH.
+This is the Ansible Repository for the Freifunk Community Freifunk Bodensee.
+Here you can deploy new Freifunk Gateways..
 
 
 Usage
@@ -9,7 +10,7 @@ Usage
 
 Run ansible with:
 
-    ansible-playbook freifunk.yml
+    ansible-playbook freifunk-setup.yml
 
 from the top-level directory.
 
@@ -17,7 +18,7 @@ from the top-level directory.
 New admins
 ----------
 
-To add a new person `NAME` with admin rights (root) on some device `FQDN`, do
+To add a new person `NAME` with admin rddights (root) on some device `FQDN`, do
 
 * Add one or more ssh keys to `files/admin_ssh_pubkeys/`
   * Make sure to use a unique `NAME`

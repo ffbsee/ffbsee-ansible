@@ -3,6 +3,7 @@
 admins:
   - raoul
   - l3d
+  - mart
 
 hostname: 'gw02.ffbsee.de'
 

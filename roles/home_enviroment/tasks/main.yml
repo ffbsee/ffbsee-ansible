@@ -4,8 +4,8 @@
   copy:
     src: 'files/home_enviroment/vimrc'
     dest: '/root/.vimrc'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rw,g=r,o=r'
 
 - name: Copy vimrc to users
@@ -31,7 +31,10 @@
   copy:
     src: 'files/home_enviroment/bash.bashrc'
     dest: '/etc/bash.bashrc'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rw,g=r,o=r'
+
+- name: Set fancy motd
+  script: 'files/home_enviroment/motd.sh {{ hostname }}'
 

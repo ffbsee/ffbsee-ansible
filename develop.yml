@@ -3,5 +3,4 @@
 - name: Develop stuf
   hosts: all
   roles:
-    - ssh_authorized_keys
     - home_enviroment

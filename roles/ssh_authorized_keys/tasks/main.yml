@@ -8,6 +8,19 @@
     group: root
     mode: "u=rw,g=,o="
 
+- name: Add admin group
+  group:
+    name: admins
+    state: present
+
+- name: Add ansible user
+  user:
+    name: 'ansible'
+    shell: '/bin/bash'
+    groups: 'admins'
+    append: yes
+
+
 - name: Add admins at the gateway
   user:
     name: '{{ item }}'
@@ -16,6 +29,53 @@
     append: yes
   with_items: '{{ admins }}'
 
+- name: Create .ssh directory
+  file:
+    path: '/home/{{ item }}/.ssh'
+    state: directory
+    group: 'admins'
+    owner: '{{ item }}'
+    mode: '0700'
+  with_items: '{{ admins }}'
 
+- name: Create .ssh directory for user ansible
+  file:
+    path: '/home/ansible/.ssh'
+    state: directory
+    group: 'admins'
+    owner: 'ansible'
+    mode: '0700'
 
+- name: Add ssh keys for admins at user ansible
+  template:
+    src: 'authorized_keys.j2'
+    dest: '/home/ansible/.ssh/authorized_keys'
+    owner: 'ansible'
+    group: 'admins'
+    mode: "u=rwx,g=x,o="
+
+- name: Copy ansible .bashrc
+  copy:
+    src: 'files/home_enviroment/bashrc'
+    dest: '/home/ansible/.bashrc'
+    owner: 'ansible'
+    group: 'admins'
+    mode: 0750
+
+- name: Copy ssh authorized_keys from admins
+  copy:
+    src: 'files/admin_ssh_keys/{{ item }}_id.pub'
+    dest: '/home/{{ item }}/.ssh/authorized_keys'
+    owner: '{{ item }}'
+    group: 'admins'
+    mode: "u=rwx,g=,o="
+  with_items: '{{ admins }}'
+
+- name: Superkräfte vergeben
+  copy:
+    src: 'files/home_enviroment/sudoers'
+    dest: '/etc/sudoers.d/ansible'
+    owner: 'root'
+    group: 'root'
+    mode: "u=r,g=r,o="
 

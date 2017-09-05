@@ -3,13 +3,6 @@
 community: 'bodensee'
 community_name: 'Bodensee'
 community_shortname: 'ffbsee'
-admins:
- - l3d
- - r3l
- - mart
-
-users:
- - falko
 
 ipv6_prefix: 'fdef:1701:b5ee:42:'
 ipv4_dhcp_server: '10.11.160.8'

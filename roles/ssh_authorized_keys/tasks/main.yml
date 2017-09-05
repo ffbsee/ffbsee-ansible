@@ -1,9 +1,21 @@
 ---
 
-- name: Add ssh keys for admins
+- name: Add ssh keys for admins at user root
   template:
     src: 'authorized_keys.j2'
     dest: '/root/.ssh/authorized_keys'
     owner: root
     group: root
     mode: "u=rw,g=,o="
+
+- name: Add admins at the gateway
+  user:
+    name: '{{ item }}'
+    shell: '/bin/bash'
+    groups: 'admins'
+    append: yes
+  with_items: '{{ admins }}'
+
+
+
+

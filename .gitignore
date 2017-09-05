@@ -1,2 +1,6 @@
-*~
+*.swp
+**.swp
+*.tmp
+**.tmp
+develop.yml
 *.pyc

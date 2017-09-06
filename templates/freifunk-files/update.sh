@@ -73,7 +73,7 @@ if [ "$(cat /sys/class/net/bat0/address 2> /dev/null)" != "$mac_addr" ]; then
         ip link set bat0 address "$mac_addr"
         ip link set bat0 up
         #set IPv4 address on bat0 for DNS; This is gateway specific!
-        ip addr add "$ipv4_mesh_interface/16" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $ipv4_mesh_interface to bat0"
+        ip addr add "$ipv4_mesh_interface/20" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $ipv4_mesh_interface to bat0"
     #set IPv4 extra address - in this case extra IP for DNS Service from icvpn
     #ip addr add "$ipv4_extra_addr/20" dev bat0 2> /dev/null && echo "(I) Add extra IPv4-Address $ipv4_extra_addr to bat0"
         # we do not accept a default gateway through bat0

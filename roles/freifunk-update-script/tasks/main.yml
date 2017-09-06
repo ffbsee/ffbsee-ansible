@@ -3,7 +3,7 @@
 - name: Create freifunk directory
   file:
     path: '/opt/freifunk'
-    state: directory
+    state: 'directory'
     mode: 'u=rwx,g=rx,o=rx'
 
 - name: Get the MAC address
@@ -14,46 +14,63 @@
   template:
     src: 'templates/freifunk-files/update.sh'
     dest: '/opt/freifunk/update.sh'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Add cron job for update script
+- name: Add cron job for update script each five minutes
   cron:
     name: 'Update statistics script'
     job: '/opt/freifunk/update.sh > /dev/null'
     minute: '*/5'
-    user: root
-    state: present
+    user: 'root'
+    state: 'present'
+
+- name: Add cron job for update script at reboot
+  cron:
+    name: 'Launch update.sh script'
+    job: '/opt/freifunk/update.sh > /dev/null'
+    special_time: 'reboot'
+    user: 'root'
+    state: 'present'
+
 
 - name: Copy map-backend.py (deprecated, but required)
   copy:
     src: 'files/freifunk-files/map-backend.py'
     dest: '/opt/freifunk/map-backend.py'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
 
 - name: Copy ffmap-d3.jq (deprecated, but required)
   copy:
     src: 'files/freifunk-files/ffmap-d3.jq'
     dest: '/opt/freifunk/ffmap-d3.jq'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
 
 - name: Copy status_page_create.sh (deprecated, but required)
   copy:
     src: 'files/freifunk-files/status_page_create.sh'
     dest: '/opt/freifunk/status_page_create.sh'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
 
 - name: Copy counter_update.py (deprecated, but required)
   copy:
     src: 'files/freifunk-files/counter_update.py'
     dest: '/opt/freifunk/counter_update.py'
-    owner: root
-    group: root
+    owner: 'root'
+    group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
+
+- name: get v2_map-backend.py
+  get_url:
+    url: 'https://raw.githubusercontent.com/freifunk-bielefeld/server-config/e1e738f0f3c3c66f9f6dc2106709f834fcc27eff/freifunk/map-backend.py'
+    dest: '/opt/freifunk/v2_map-backend.py'
+    checksum: sha256:6cf31c290c6d3001e190caf94dcdb273bb68d7bd162c1643f944f26df54a40b5
+    mode: '750'
+

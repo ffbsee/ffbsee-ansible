@@ -164,10 +164,10 @@ fi
 
 if [ "$webserver" = "true" ]; then
 
-#        if ! is_running "lighttpd"; then
- #               echo "(I) Start lighttpd."
-  #              /etc/init.d/lighttpd start
-   #     fi
+        if ! is_running "lighttpd"; then
+                echo "(I) Start lighttpd."
+                /etc/init.d/lighttpd start
+        fi
 
         #collect all map pieces
         alfred -r 64 -u /var/run/alfred/alfred.sock > /tmp/maps.txt
@@ -177,8 +177,12 @@ if [ "$webserver" = "true" ]; then
 
         #New meshviewer based system
         ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/meshviewer/nodes.json --meshviewer-graph /var/www/meshviewer/graph.json
+
         #make old list.html work
         jq -n -f /opt/freifunk/ffmap-d3.jq --argfile nodes /var/www/meshviewer/nodes.json --argfile graph /var/www/meshviewer/graph.json > /var/www/nodes.json
+
+        # Experimental v2 Version of nodes.json
+        ./v2_map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/meshviewer/nodesv2.json --meshviewer-graph /var/www/meshviewer/graphv2.json  
 
         #update FF-Internal status page
         ./status_page_create.sh '/var/www/index.html'

@@ -17,6 +17,7 @@
     - libjson-c-dev
     - libcap-dev
     - libcap2-bin
+    - radvd
 
 - name: Download 'B.A.T.M.A.N.' Advanced
   get_url:
@@ -134,3 +135,12 @@
     path: '/usr/local/sbin/alfred'
     capability: 'cap_net_raw+ep'
     state: present
+
+- name: Copy Router-Advertisement configuration
+  template:
+    src: 'templates/freifunk-files/radvd.conf'
+    dest: '/etc/radvd.conf'
+    owner: 'root'
+    group: 'root'
+    mode: 0755
+

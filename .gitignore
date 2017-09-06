@@ -3,4 +3,7 @@
 *.tmp
 **.tmp
 develop.yml
+*develop.yml
 *.pyc
+./develop.yml
+**develop.yml

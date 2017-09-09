@@ -1,17 +1,44 @@
 ---
 
-- name: Install ferm
+- name: iptables installieren
   apt:
-    pkg: 'ferm'
+    pkg: 'iptables'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
 
-- name: Copy ferm configuration
+- name: Copy iptables (IPv4) Rule
   template:
-    src: 'templates/ferm.conf'
-    dest: '/etc/ferm/ferm.conf'
-    owner: root
-    group: root
-    mode: 'u=rw,g=r,o=r'
-  notify: restart ferm
+    src: 'templates/firewall/ip4tables.sh'
+    dest: '/opt/freifunk/ip4tables.sh'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: Copy ip6tables (IPv6) Rule
+  template:
+    src: 'templates/firewall/ip6tables.sh'
+    dest: '/opt/freifunk/ip6tables.sh'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: Cron for IPv4 Firewall
+  cron:
+    name: 'Cron for IPv4 iptables'
+    job: '/opt/freifunk/ip4tables.sh > /dev/null'
+    special_time: 'reboot'
+    user: 'root'
+    state: 'present'
+
+- name: Cron for IPv6 Firewall
+  cron:
+    name: 'Cron for ipv6 iptables'
+    job: '/opt/freifunk/ip6tables.sh > /dev/null'
+    special_time: 'reboot'
+    user: 'root'
+    state: 'present'
+
+- name: execute firewall rules
+  shell: '/sbin/iptables -F; /sbin/iptables -t nat -F; /sbin/ip6tables -F; /sbin/ip6tables -t nat -F; /opt/freifunk/ip4tables.sh; /opt/freifunk/ip6tables.sh'
+

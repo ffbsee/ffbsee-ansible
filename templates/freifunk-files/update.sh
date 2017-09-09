@@ -14,7 +14,7 @@ name="{{ hostname }}"
 firmware="server"
 community="{{ community }}"
 webserver="true" #start webserver, create map/status/status page
-gateway="false" #start OpenVPN, bind, tayga, radvd, DHCP, batman gateway mode
+gateway="true" #start OpenVPN, bind, tayga, radvd, DHCP, batman gateway mode
 statistics="false" #start and setup statistical output
 
 
@@ -203,32 +203,36 @@ if [ "$webserver" = "true" ]; then
 fi
 
 if [ "$gateway" = "true" ]; then
-        if ! is_running "openvpn"; then
-                echo "(I) Start openvpn."
-                /etc/init.d/openvpn start
-        fi
+        # if ! is_running "openvpn"; then
+        #        echo "(I) Start openvpn."
+        #        /etc/init.d/openvpn start
+        # fi
 
         # we do not use tayga at the moment
-        #if ! is_running "tayga"; then
+        # if ! is_running "tayga"; then
         #       echo "(I) Start tayga."
         #       tayga
-        #fi
+        # fi
 
-        if ! is_running "named"; then
-                echo "(I) Start bind."
-                /etc/init.d/bind9 start
-        fi
+        # if ! is_running "named"; then
+        #        echo "(I) Start bind."
+        #        /etc/init.d/bind9 start
+        # fi
 
         if ! is_running "radvd"; then
                 echo "(I) Start radvd."
                 /etc/init.d/radvd restart
         fi
-        if ! is_running "dhcpd"; then
-                echo "(I) Start DHCP."
-                /etc/init.d/isc-dhcp-server start
-        fi
-   #     /etc/init.d/isc-dhcp-server restart
+#        if ! is_running "dhcpd"; then
+#                echo "(I) Start DHCP."
+#                /etc/init.d/isc-dhcp-server start
+#        fi
+#        /etc/init.d/isc-dhcp-server restart
 
+        if ! is_running "dhcrelay"; then
+                echo "(I) Start DHCP Relay."
+                /etc/init.d/isc-dhcp-relay start
+        fi
         # Activate the gateway announcements on a node that has a DHCP server running
         batctl gw_mode server
 else

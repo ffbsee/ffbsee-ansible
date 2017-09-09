@@ -1,5 +1,14 @@
 ---
 
+- name: Add debian.ch repo
+  apt_repository:
+    repo: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'deb https://ftp.ch.debian.org/debian/ stretch main'
+    - 'deb https://ftp.ch.debian.org/debian/ stretch-updates main'
+    - 'deb https://ftp.ch.debian.org/debian/ stretch-backports main'
+
 - name: Install Meshviewer apt packages
   apt:
     pkg: '{{ item }}'
@@ -10,6 +19,10 @@
     - git
     - make
     - ruby-sass
+    - apt-transport-https
+    - node-grunt-legacy-util
+    - node-grunt-legacy-log
+    - node-findup-sync
 
 - name: Add unstable apt repository for npm
   apt_repository:
@@ -22,6 +35,15 @@
     default_release: sid
     update_cache: yes
     cache_valid_time: 86400
+
+- name: Install coffee-script
+  npm:
+    name: '{{ item }}'
+    global: yes
+  with_items: 
+    - 'coffee-script'
+    - 'js-yaml'
+    - 'bower'
 
 - name: Remove unstable apt repository for npm
   apt_repository:

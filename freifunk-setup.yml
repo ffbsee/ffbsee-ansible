@@ -4,8 +4,8 @@
   hosts: all
   roles:
     - base-packages
-    - home_enviroment
     - ssh_authorized_keys
+    - home_enviroment
     - network
     - freifunk-backbone
     - freifunk-update-script

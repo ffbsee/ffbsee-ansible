@@ -1,0 +1,35 @@
+---
+
+admins:
+  - raoul
+  - l3d
+  - mart
+
+hostname: 'vpn3.ffbsee.de'
+
+ipv4_mesh_address: '10.11.160.3'
+
+ipv6_suffix: ':3'
+ipv6_radv_suffix: ':1'
+ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
+ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
+ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
+
+wan_base_interface: 'ens3'
+wan_vlan_id: ''
+wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
+
+fastd_secret_key: ''
+
+fastd_vpn_backbone_configs:
+  - vpn1
+  - vpn2
+  - vpn3
+  - vpn4
+  - vpn5
+  - vpn6
+  - vpn7
+  - vpn8
+
+radv_AdvDefaultPreference: 'low'
+

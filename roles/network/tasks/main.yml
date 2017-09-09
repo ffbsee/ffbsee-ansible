@@ -2,6 +2,7 @@
 
 - name: Copy network interface configuration file
   copy:
-    src: 'interfaces.conf'
+    src: 'roles/network/files/interfaces_{{ hostname }}.conf'
     dest: '/etc/network/interfaces'
   notify: restart networking
+

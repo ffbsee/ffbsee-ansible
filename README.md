@@ -1,13 +1,12 @@
-Ansible for Freifunk Bodensee node
+Ansible for Freifunk Bodensee Gateways
 ==================================
 
 This is the Ansible Repository for the Freifunk Community Freifunk Bodensee.
 Here you can:
-* deploy new Freifunk Gateways
-* Deploy the same software on each gateway
+* deploy *(new)* Freifunk Gateways *(or clone them)*
+* Deploy the same software Version on each gateway
 * Manage admin users
 * Update the infrastructure
-* deplay old freifunk gateways too
 * ...
 
 
@@ -18,23 +17,32 @@ Run ansible with:
 
     ansible-playbook freifunk-setup.yml
 
-from the top-level directory.
+from the **top-level directory**.
 
 
-How 2 New admins
-----------
+Freifunk Bodensee Network
+=========================
 
-To add a new person `NAME` with admin rights (root) on some device `FQDN`, do
+There are some dedicated Servers, the Freifunk-Gateways:
 
-* Add the file with your ssh key(s) at `files/admin_ssh_pubkeys/$nick_id.pub`
-  * Make sure to use a unique `NAME`
-  * Each key file must match the regex `NAME_id.pub`
-* Edit the file `host_vars/FQDN` and add `NAME` on a new line
-*Ansibele create a new user, where you can do `sudo su -l` to get root access.*
+* [gw01.ffbsee.de](https://vpn8.ffbsee.de) - Gateway #01
+ * Hetzner Server - Germany
+ * Dual-Stack
+ * Thanks to FF3L and kpanic
+* [gw02.ffbsee.de](https://gw02.ffbsee.de) - Gateway #02
+ * CCCZH Server - Swiss
+ * In: IPv6, out: Dualstack
+ * Thanks to CCCZH and raoul
+* [n01.ffbsee.de](https://vpn9.ffbsee.de) - Node #01
+ * VM - Swiss
+ * Dual-Stack
+ * Thanks to bostan
 
-New Modules
----------
-By executing the `freifunk-setup.yml` it should deploy each required peace of software on each freifunk gateway.
-If you create new modules please add them at `freifunk-setup.yml`.
-Don't forget to have a look in the [**Dokumentation**](http://docs.ansible.com/ansible/latest/list_of_all_modules.html). It may help you ;-)
+## Functions
+* Update Users
+*Update the User privileges, SSH-Keys, and could add new Admins on all nodes*
+````bash
+ansible-playbook updateUsers.yml
+````
 
+ 

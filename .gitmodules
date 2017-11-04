@@ -1,0 +1,3 @@
+[submodule "files/gateway-page"]
+	path = files/gateway-page
+	url = https://github.com/ffbsee/gateway-page.git

@@ -25,18 +25,18 @@ Freifunk Bodensee Network
 
 There are some dedicated Servers, the Freifunk-Gateways:
 
-* [gw01.ffbsee.de](https://vpn8.ffbsee.de) - Gateway #01
- * Hetzner Server - Germany
- * Dual-Stack
- * Thanks to FF3L and kpanic
-* [gw02.ffbsee.de](https://gw02.ffbsee.de) - Gateway #02
- * CCCZH Server - Swiss
- * In: IPv6, out: Dualstack
- * Thanks to CCCZH and raoul
-* [n01.ffbsee.de](https://vpn9.ffbsee.de) - Node #01
- * VM - Swiss
- * Dual-Stack
- * Thanks to bostan
+* [gw01.ffbsee.de](https://vpn8.ffbsee.de) - **Gateway #01**
+  * Hetzner Server - Germany
+  * Dual-Stack
+  * Thanks to FF3L and kpanic
+* [gw02.ffbsee.de](https://gw02.ffbsee.de) - **Gateway #02**
+  * CCCZH Server - Swiss
+  * In: IPv6, out: Dualstack
+  * Thanks to CCCZH and raoul
+* [n01.ffbsee.de](https://vpn9.ffbsee.de) - **Node #01**
+  * VM - Swiss
+  * Dual-Stack
+  * Thanks to bostan
 
 ## Functions
 * Update Users

@@ -10,6 +10,6 @@ ipv4_dhcp_server: '10.11.160.8'
 batman_version: '2016.5'
 
 fastd_libsodium_version: '1.0.10'
-
+letsencrypt_email: 'kommunikation@ffbsee.de'
 
 

@@ -1,0 +1,30 @@
+---
+- name: Create www-data group
+  group:
+    name: 'www-data'
+    state: present
+
+- name: Create www-data user
+  user:
+    name: 'www-data'
+    group: 'www-data'
+    shell: '/bin/false'
+    system: yes
+    createhome: no
+
+- name: Create '/var/www/HOSTNAME' directory
+  file:
+    path: '/var/www/{{ hostname }}'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: Standard HTML Page
+  template:
+    src: 'templates/gateway-page/index.html'
+    dest: '/var/www/{{ hostname }}/index.html'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0755'
+
+

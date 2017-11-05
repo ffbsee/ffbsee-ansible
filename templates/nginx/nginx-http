@@ -1,0 +1,17 @@
+server_tokens off;
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{ hostname }};
+
+    location /.well-known/acme-challenge {
+        root /var/www/letsencrypt;
+        try_files $uri $uri/ =404;
+    }
+
+    location / {
+        rewrite ^ https://{{ hostname }}$request_uri? permanent;
+    }
+}
+

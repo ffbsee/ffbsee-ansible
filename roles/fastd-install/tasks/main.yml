@@ -21,7 +21,7 @@
   get_url:
     url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
     dest: '/tmp/fastd_libsodium.tar.gz'
-    checksum: sha256:71b786a96dd03693672b0ca3eb77f4fb08430df307051c0d45df5353d22bc4be
+    checksum: sha256:{{ fastd_libsodium_sha256sum }}
 
 - name: Create '/tmp/fastd_libsodium/' Directory
   file:

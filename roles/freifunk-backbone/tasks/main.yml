@@ -23,7 +23,7 @@
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz'
     dest: '/tmp/batman-adv.tar.gz'
-    checksum: sha256:d0a0fc90c4f410b57d043215e253bb0b855efa5edbe165d87c17bfdcfafd0db7
+    checksum: sha256:{{ batman_sha256sum }}
 
 - name: Create '/tmp/batman-adv/' directory
   file:
@@ -54,7 +54,7 @@
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'
     dest: '/tmp/batctl.tar.gz'
-    checksum: sha256:07edeb1d87a548285be8c499542790a158fc8d94ef7ebb295f27ebf710024ae9
+    checksum: sha256:{{ badctl_sha256sum }}
 
 - name: Create '/tmp/batctl/' Directory
   file:
@@ -99,7 +99,7 @@
   get_url:
     url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
     dest: '/tmp/alfred.tar.gz'
-    checksum: sha256:37b3babf7f37643cf296be11fb82d5730cf441a5a56f72fba96edae9f149c9d2
+    checksum: sha256:{{ alfred_sha256sum }}
 
 - name: Create '/tmp/alfred/' Directory
   file:

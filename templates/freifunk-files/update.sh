@@ -226,7 +226,7 @@ if [ $run_map = 1 ]; then
     # several newer vars like mem usage are not covered by the script below - deactivated
         #./ffmap-backend.py -m /tmp/maps.txt -a ./aliases.json > /var/www/nodes.json
         # create map data (meshviewer)
-        ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/data/nodes.json --meshviewer-graph /var/www/data/graph.json
+        ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes.json --meshviewer-graph /var/www/{{ hostname }}/graph.json
         #update FF-Internal status page
     # old map - deactivated
         #./status_page_create.sh '/var/www/index.html'
@@ -234,7 +234,7 @@ if [ $run_map = 1 ]; then
     # old map - deactivated
         #./counter_update.py '/var/www/nodes.json' '/var/www/counter.svg'
 fi # run_map
-if [ $run_webserver = 1 ]; then
+if [ $run_webserver = true ]; then
     if ! is_running "nginx"; then
         echo "(I) Start nginx."
         systemctl start nginx.service

@@ -75,7 +75,7 @@ is_running() {
 }
 
 
-if [ $run_mesh = 1 ]; then
+if [ $run_mesh = true ]; then
 
     #make sure batman-adv is loaded
     modprobe batman_adv
@@ -148,7 +148,9 @@ if [ $run_mesh = 1 ]; then
         chown alfred.alfred /var/run/alfred/
         echo "(I) Start alfred."
         # set umask of socket from 0117 to 0111 so that data can be pushed to alfred.sock below
-                start-stop-daemon --start --quiet --pidfile /var/run/alfred/alfred.pid --umask 0111 --make-pidfile --chuid alfred:alfred --background --exec `which alfred` --oknodo -- -i bat0 -u /var/run/alfred/alfred.sock
+                start-stop-daemon --start --quiet --pidfile /var/run/alfred/alfred.pid \
+                    --umask 0111 --make-pidfile --chuid root:alfred \
+                    --background --exec `which alfred` --oknodo -- -i bat0 -u /var/run/alfred/alfred.sock
         # wait for alfred to start up...
                 sleep 1
         if ! is_running "alfred"; then echo "(E) alfred is not running!"
@@ -161,12 +163,12 @@ if [ $run_mesh = 1 ]; then
     #announce map information via alfred
     
     # do we have a tunnel to the internet ?
-    if [ $run_gateway = 1 ]; 
+    if [ $run_gateway = true ]; 
       then gateway="true" 
       else gateway="false" 
     fi
         # do we have fastd ?
-    if [ $run_mesh = 1 ]; 
+    if [ $run_mesh = true ]; 
       then vpn="true"
       else vpn="false"
     fi
@@ -206,20 +208,20 @@ if [ $run_gateway = true ]; then
             fi
         fi
         if [ $dhcp_relay = true ]; then
-            if ! is_running "dhcpd"; then
-                echo "(I) Start DHCP."
-                systemctl start isc-dhcp-server
-            fi
-        else
-            if ! is_running "dhcprelay"; then
+           if ! is_running "dhcpr"; then
                 echo "(I) Start DHCP Relay."
                 systemctl start isc-dhcp-relay.service
             fi
-         fi
+        else
+             if ! is_running "dhcpd"; then
+                echo "(I) Start DHCP."
+                systemctl start isc-dhcp-server
+            fi
+        fi
         # Activate the gateway announcements on a node that has a DHCP server running
         batctl gw_mode server
 fi # run_gateway
-if [ $run_map = 1 ]; then
+if [ $run_map = true ]; then
         #collect all map pieces
         alfred -r 64 -u /var/run/alfred/alfred.sock > /tmp/maps.txt
         #create map data (old map)

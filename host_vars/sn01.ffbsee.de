@@ -5,20 +5,20 @@ admins:
   - l3d
   - mart
 
-hostname: 'gw02.ffbsee.de'
+hostname: 'sn01.ffbsee.de'
 
-ipv4_mesh_address: '10.11.160.102'
+ipv4_mesh_address: '10.11.160.201'
 
-ipv6_suffix: ':1:2'
+ipv6_suffix: ':2:1'
 ipv6_radv_suffix: ':1'
 ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
 mesh_ipv6_address: '{{ ipv6_address }}'
 ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
-wan_ipv6_network: '2a02:168:4638:f0::/64'
-wan_base_interface: 'enp1s0f0'
-wan_vlan_id: '240'
+wan_ipv6_network: '2001:67c:10ec:49c3::154/128'
+wan_base_interface: 'eth0'
+wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
 
 
@@ -43,8 +43,8 @@ fastd_vpn_backbone_configs:
   - vpn7
   - vpn8
 
-ipv6_uplink_announcen: 'true'
+ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'
 
-debian: '9'
+debian: '8'
 

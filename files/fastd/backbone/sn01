@@ -1,0 +1,3 @@
+key "e8ba3102b0f1d412e5da3d742d58719186f36413db9ad6fe7f6b98c3ec835493";
+float no;
+remote "sn01.ffbsee.net" port 1244;

@@ -18,6 +18,12 @@
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
 
+- name: Delete 'fastd/backbone' directory
+  file:
+    path: '/etc/fastd/backbone'
+    state: absent
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Create 'fastd/backbone' directory
   file:
     path: '/etc/fastd/backbone'

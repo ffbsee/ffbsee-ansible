@@ -1,0 +1,3 @@
+key "580d21611a1bd85bc402edb9eb2f2305890c03e58024cd68d7f350557ddde3a9";
+float no;
+remote "gw02.ffbsee.de" port 1244;

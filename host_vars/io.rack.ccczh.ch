@@ -41,7 +41,9 @@ fastd_vpn_backbone_configs:
   - vpn5
   - vpn6
   - vpn7
-  - vpn8
+  - gw01
+  - gw02
+  - sn01
 
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'low'

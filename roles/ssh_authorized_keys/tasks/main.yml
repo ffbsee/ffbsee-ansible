@@ -1,5 +1,13 @@
 ---
 
+- name: Create /root/.ssh directory
+  file:
+    path: '/root/.ssh'
+    state: directory
+    group: 'root'
+    owner: 'root'
+    mode: '0700'
+
 - name: Add ssh keys for admins at user root
   template:
     src: 'authorized_keys.j2'
@@ -10,7 +18,7 @@
 
 - name: Add admin group
   group:
-    name: admins
+    name: 'admins'
     state: present
 
 - name: Add ansible user

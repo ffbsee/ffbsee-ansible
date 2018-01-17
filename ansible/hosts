@@ -1,4 +1,5 @@
 [freifunk]
 io.rack.ccczh.ch ansible_host=2a02:168:4638:f0::10
 sn01.ffbsee.de ansible_host=2001:67c:10ec:49c3::154
+gw03.ffbsee.net
 

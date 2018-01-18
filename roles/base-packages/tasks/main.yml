@@ -37,3 +37,8 @@
     - debian-goodies
     - apt-dater-host
   when: ansible_distribution == 'Debian'
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+

@@ -32,6 +32,7 @@ fastd_vpn_backbone_configs:
   - vpn7
   - gw01
   - gw02
+  - gw03
   - sn01
 
 radv_AdvDefaultPreference: 'high'

@@ -53,4 +53,4 @@ Um das Ansible zu starten gebe folgendes ein:
 ansible-playbook hostname.yml
 ````
 
-**Bei Fragen oder Unsicherheiten frag einfach auf Hackint im Channel #ffbsee nach. Am besten du pingst dort direkt den L3D oder mart.**
+**Bei Fragen oder Unsicherheiten frag einfach auf Hackint im Channel [#ffbsee](https://webirc.hackint.org/#irc://irc.hackint.org/#ffbsee) nach.** Am besten du pingst dort direkt den L3D oder mart.

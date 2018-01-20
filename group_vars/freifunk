@@ -6,6 +6,7 @@ community_shortname: 'ffbsee'
 
 ipv6_prefix: 'fdef:1701:b5ee:42:'
 ipv4_dhcp_server: '10.11.160.8'
+ipv4_dhcp_interface: 'bat0'
 
 batman_version: '2017.3'
 batman_sha256sum: '830edd297ff11b91623e9612172db3e2b2c1524e2f9b2ca1cb243e2e3f0ba4d4'

@@ -1,6 +1,8 @@
 #!/bin/bash
+#  
+#  Diese Datei wird von Ansible erstellt
 #
-# Nicht oeffentliche IP's erstmal droppen
+#  Nicht oeffentliche IP's erstmal droppen
 #  Koennte sonst aerger mit Providern geben...
 #
 /sbin/iptables -A FORWARD -d 192.168.0.0/16  -j REJECT --reject-with icmp-net-prohibited               # RFC 1918
@@ -19,6 +21,6 @@
 # NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
 # 
 /sbin/iptables -t nat -A POSTROUTING -o {{ wan_interface }} -j MASQUERADE
-/sbin/iptables -A FORWARD -i {{ wan_interface }} -o bat0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-/sbin/iptables -A FORWARD -i {{ wan_interface }} -o bat0 -j ACCEPT
+/sbin/iptables -A FORWARD -i {{ wan_interface }} -o {{ ipv4_dhcp_interface }} -m state --state RELATED,ESTABLISHED -j ACCEPT
+/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ wan_interface }} -j ACCEPT
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Diese Datei wird von Ansible erstellt
+#
 # Auch beim IPv6 gibt es bischen zu tun
 #
 /sbin/ip6tables -A INPUT -i bat0 -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j DROP

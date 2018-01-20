@@ -19,6 +19,16 @@
   debconf:
     name: 'isc-dhcp-relay'
     question: 'isc-dhcp-relay/interfaces'
-    value: 'bat0'
+    value: '{{ ipv4_dhcp_interface }}'
     vtype: string
   notify: dpkg reconfigure isc-dhcp-relay
+
+- name: Copy ISC DHCP Gateway config (backup)
+  template:
+    src: 'templates/isc-dhcp-relay'
+    dest: '/etc/default/isc-dhcp-relay'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+

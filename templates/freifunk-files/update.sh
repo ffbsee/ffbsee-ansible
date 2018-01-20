@@ -208,15 +208,9 @@ if [ $run_gateway = true ]; then
             fi
         fi
         if [ $dhcp_relay = true ]; then
-           if ! is_running "dhcpr"; then
-                echo "(I) Start DHCP Relay."
-                systemctl start isc-dhcp-relay.service
-            fi
+                systemctl restart isc-dhcp-relay.service
         else
-             if ! is_running "dhcpd"; then
-                echo "(I) Start DHCP."
-                systemctl start isc-dhcp-server
-            fi
+                systemctl restart isc-dhcp-server
         fi
         # Activate the gateway announcements on a node that has a DHCP server running
         batctl gw_mode server

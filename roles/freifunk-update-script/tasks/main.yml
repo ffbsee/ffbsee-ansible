@@ -25,6 +25,7 @@
     minute: '*/5'
     user: 'root'
     state: 'present'
+    cron_file: 'freifunk'
 
 - name: Add cron job for update script at reboot
   cron:
@@ -33,6 +34,7 @@
     special_time: 'reboot'
     user: 'root'
     state: 'present'
+    cron_file: 'freifunk'
 
 
 - name: Copy map-backend.py (deprecated, but required)

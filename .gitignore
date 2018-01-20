@@ -7,3 +7,7 @@ develop.yml
 *.pyc
 ./develop.yml
 **develop.yml
+host_vars/gw03.ffbsee.net
+host_vars/gw02.ffbsee.net
+host_vars/gw01.ffbsee.net
+host_vars/sn01.ffbsee.net

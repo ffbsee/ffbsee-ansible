@@ -32,7 +32,7 @@ ipv6_uplink={{ ipv6_uplink_announcen }}
 set -e
 set -u
 
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
 
 #switch script directory
 cd "$(dirname $0)"

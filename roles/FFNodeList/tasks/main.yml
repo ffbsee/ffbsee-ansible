@@ -24,7 +24,8 @@
     name: 'Git pull'
     special_time: daily
     job: 'cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null'
-    cron_file: 'ffNodeList'
+    cron_file: '/etc/crontab'
+    user: 'root'
 
 - name: Install Perl modules
   cpanm:

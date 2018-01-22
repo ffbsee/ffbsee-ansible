@@ -30,6 +30,8 @@
     special_time: 'reboot'
     user: 'root'
     state: 'present'
+    cron_file: '/etc/crontab'
+
 
 - name: Cron for IPv6 Firewall
   cron:
@@ -38,6 +40,7 @@
     special_time: 'reboot'
     user: 'root'
     state: 'present'
+    cron_file: '/etc/crontab'
 
 - name: execute firewall rules
   shell: '/sbin/iptables -F; /sbin/iptables -t nat -F; /sbin/ip6tables -F; /sbin/ip6tables -t nat -F; /opt/freifunk/ip4tables.sh; /opt/freifunk/ip6tables.sh'

@@ -76,6 +76,7 @@
     name: letsencrypt_renewal
     special_time: weekly
     job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ hostname }} && service nginx reload
-    cron_file: 'letsencrypt-renewal'
+    cron_file: '/etc/crontab'
     user: 'root'
+
 

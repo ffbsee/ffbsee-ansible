@@ -8,13 +8,13 @@ ipv6_prefix: 'fdef:1701:b5ee:42:'
 ipv4_dhcp_server: '10.11.160.8'
 ipv4_dhcp_interface: 'bat0'
 
-batman_version: '2017.3'
-batman_sha256sum: '830edd297ff11b91623e9612172db3e2b2c1524e2f9b2ca1cb243e2e3f0ba4d4'
-badctl_sha256sum: '29c7f075023e02ed9a9299008ec73cfdb4e1b04991d27e4f396131b4059b88a8'
-alfred_sha256sum: 'c2963523ba86746476db9bbd820b7956761b362d5daa392d9ed471786eaf0208'
+batman_version: '2017.4'
+batman_sha256sum: '8a50ffacd2bd5b65b2987eb2ae06fb9338c6af46935ec38ba869cca545719a4c'
+batctl_sha256sum: '047d6aac4da51dbfb5721df0bbc9b1699c8431e4707157f939c6d6c4f214e464'
+alfred_sha256sum: 'c4ea1afa75628667693d14ee95f08c9943b9f0001b8c442c9a2974f26c75dc88'
 
-fastd_libsodium_version: '1.0.14'
-fastd_libsodium_sha256sum: '3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7'
+fastd_libsodium_version: '1.0.16'
+fastd_libsodium_sha256sum: 'eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533'
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
 

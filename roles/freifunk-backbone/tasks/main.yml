@@ -54,7 +54,7 @@
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'
     dest: '/tmp/batctl.tar.gz'
-    checksum: sha256:{{ badctl_sha256sum }}
+    checksum: sha256:{{ batctl_sha256sum }}
 
 - name: Create '/tmp/batctl/' Directory
   file:

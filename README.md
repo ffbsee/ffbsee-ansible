@@ -14,7 +14,9 @@ Clone Projekt
 ```
     # Clone the Git
     https://github.com/ffbsee/ansible.git
+
     # Clone the Submodules
+    cd ansible
     git submodule update --init --recursive
 
 ```
@@ -24,7 +26,7 @@ Usage
 
 Run ansible with:
 
-    ansible-playbook freifunk-setup.yml
+    ansible-playbook $GATEWAY.yml
 
 from the **top-level directory**.
 

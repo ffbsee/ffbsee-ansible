@@ -5,7 +5,7 @@ admins:
   - l3d
   - mart
 
-hostname: 'gw02.ffbsee.de'
+hostname: 'gw02.ffbsee.net'
 
 ipv4_mesh_address: '10.11.160.102'
 

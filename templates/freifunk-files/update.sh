@@ -197,10 +197,6 @@ if [ $run_mesh = true ]; then
     } | gzip -c - | alfred -s 64 -u /var/run/alfred/alfred.sock
 fi # run_mesh
 if [ $run_gateway = true ]; then
-#        if ! is_running "tayga"; then
-#                echo "(I) Start tayga."
-#                tayga
-#        fi
         if [ $ipv6_uplink = true ]; then
             if ! is_running "radvd"; then
                 echo "(I) Start radvd."
@@ -218,17 +214,8 @@ fi # run_gateway
 if [ $run_map = true ]; then
         #collect all map pieces
         alfred -r 64 -u /var/run/alfred/alfred.sock > /tmp/maps.txt
-        #create map data (old map)
-    # several newer vars like mem usage are not covered by the script below - deactivated
-        #./ffmap-backend.py -m /tmp/maps.txt -a ./aliases.json > /var/www/nodes.json
         # create map data (meshviewer)
         ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes.json --meshviewer-graph /var/www/{{ hostname }}/graph.json
-        #update FF-Internal status page
-    # old map - deactivated
-        #./status_page_create.sh '/var/www/index.html'
-        #update nodes/clients/gateways counter
-    # old map - deactivated
-        #./counter_update.py '/var/www/nodes.json' '/var/www/counter.svg'
 fi # run_map
 if [ $run_webserver = true ]; then
     if ! is_running "nginx"; then

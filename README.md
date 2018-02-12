@@ -9,6 +9,15 @@ Here you can:
 * Update the infrastructure
 * ...
 
+Clone Projekt
+---
+```
+    # Clone the Git
+    https://github.com/ffbsee/ansible.git
+    # Clone the Submodules
+    git submodule update --init --recursive
+
+```
 
 Usage
 -----

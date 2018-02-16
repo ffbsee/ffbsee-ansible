@@ -1,8 +1,14 @@
 ---
 
-- name: Copy network interface configuration file
+- name: Copy network interface configuration file and restart networking
   copy:
     src: 'roles/network/files/interfaces_{{ hostname }}.conf'
     dest: '/etc/network/interfaces'
   notify: restart networking
+  when: ansible_hostname != 'gw03.ffbsee.net'
 
+- name: Copy network interface configuration file
+  copy:
+    src: 'roles/network/files/interfaces_{{ hostname }}.conf'
+    dest: '/etc/network/interfaces'
+  when: ansible_hostname == 'gw03.ffbsee.net'

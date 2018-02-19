@@ -8,6 +8,7 @@
 # Server address
 mac_addr="{{ mac_address }}"
 mesh_ipv6_addr="{{ mesh_ipv6_address }}"
+mesh_ipv6_extra_addr="{{ mesh_ipv6_extra_addr }}"
 ff_prefix="{{ ipv6_prefix }}:"
 mesh_ipv4_addr="{{ ipv4_mesh_address }}"
 
@@ -136,6 +137,9 @@ if [ $run_mesh = true ]; then
     fi
     if ip -6 addr add "$mesh_ipv6_addr/64" dev bat0 2> /dev/null; then
         echo "(I) Set IP-Address of bat0 to $mesh_ipv6_addr"
+    fi
+    if [! -z $mesh_ipv6_extra_addr ] && [ ip -6 addr add "$mesh_ipv6_extra_addr/64" dev bat0 2> /dev/null ]; then
+        echo "(I) Set Extra IPv6-Address of bat0 to $mesh_ipv6_extra_addr"
     fi
     if ! is_running "alfred"; then
         # remove remains

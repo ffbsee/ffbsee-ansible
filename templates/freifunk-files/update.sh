@@ -138,7 +138,7 @@ if [ $run_mesh = true ]; then
     if ip -6 addr add "$mesh_ipv6_addr/64" dev bat0 2> /dev/null; then
         echo "(I) Set IP-Address of bat0 to $mesh_ipv6_addr"
     fi
-    if [! -z $mesh_ipv6_extra_addr ] && [ ip -6 addr add "$mesh_ipv6_extra_addr/64" dev bat0 2> /dev/null ]; then
+    if ip -6 addr add "$mesh_ipv6_extra_addr/64" dev bat0 2> /dev/null; then
         echo "(I) Set Extra IPv6-Address of bat0 to $mesh_ipv6_extra_addr"
     fi
     if ! is_running "alfred"; then

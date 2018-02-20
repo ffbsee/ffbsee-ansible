@@ -154,7 +154,7 @@ if [ $run_mesh = true ]; then
         # set umask of socket from 0117 to 0111 so that data can be pushed to alfred.sock below
                 start-stop-daemon --start --quiet --pidfile /var/run/alfred/alfred.pid \
                     --umask 0111 --make-pidfile --chuid root:alfred \
-                    --background --exec `which alfred` --oknodo -- -i bat0 -u /var/run/alfred/alfred.sock
+                    --background --exec `which alfred` --oknodo -- --master -i bat0 -u /var/run/alfred/alfred.sock
         # wait for alfred to start up...
                 sleep 1
         if ! is_running "alfred"; then echo "(E) alfred is not running!"
@@ -162,10 +162,9 @@ if [ $run_mesh = true ]; then
     fi
     #announce status website via alfred
     {
-        echo -n "{\"link\" : \"https://map10.freifunk-ulm.de/index.html\", \"label\" : \"Freifunk Gateway $name\"}"
-    } | alfred -s 91 -u /var/run/alfred/alfred.sock
-    #announce map information via alfred
-    
+    echo -n "{\"link\" : \"http://[$mesh_ipv4_addr]/index.html\", \"label\" : \"Freifunk Gateway $name\"}"
+} | alfred -s 91 -u /var/run/alfred/alfred.sock
+
     # do we have a tunnel to the internet ?
     if [ $run_gateway = true ]; 
       then gateway="true" 

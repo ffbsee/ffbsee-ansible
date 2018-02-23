@@ -32,7 +32,7 @@ run_webserver: 'true'
 run_icvpn: 'false'
 run_map: 'true'
 run_stats: 'false'
-da_laueft_ein_dhcp_relay: 'true'
+da_laueft_ein_dhcp_relay: 'false'
 
 fastd_vpn_backbone_configs:
   - vpn1

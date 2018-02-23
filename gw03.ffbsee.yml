@@ -12,7 +12,7 @@
     - fastd-install # FastD
     - fastd-config  # FastD
     - firewall # Firewall
-    - dhcp-relay # DHCP
+    - dhcpd # DHCP
     - nginx # Webserver
     - gateway-page 
 

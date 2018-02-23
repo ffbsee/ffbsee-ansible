@@ -1,0 +1,4 @@
+---
+
+- name: dpkg reconfigure isc-dhcp-server
+  command: 'dpkg-reconfigure -f noninteractive isc-dhcp-server'

@@ -1,0 +1,26 @@
+---
+
+- name: Install isc-dhcp-server
+  apt:
+    pkg: 'isc-dhcp-server'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+
+
+- name: Copy ISC DHCP Gateway config (backup)
+  template:
+    src: 'templates/isc_dhcp_server'
+    dest: '/etc/default/isc-dhcp-server'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: Copy ISC DHCP config for this specific gateway
+  template:
+    src: 'templates/dhcpd_{{ hostname }}.conf'
+    dest: '/etc/dhcp/dhcpd.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+

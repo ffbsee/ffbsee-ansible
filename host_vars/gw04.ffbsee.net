@@ -35,11 +35,8 @@ run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'true'
 
 fastd_vpn_backbone_configs:
-  - vpn1
-  - vpn2
   - vpn3
   - vpn4
-  - vpn5
   - vpn6
   - vpn7
   - gw01

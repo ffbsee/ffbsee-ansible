@@ -40,7 +40,6 @@ fastd_vpn_backbone_configs:
   - vpn6
   - vpn7
   - gw01
-  - gw02
   - gw03
   - sn01
 

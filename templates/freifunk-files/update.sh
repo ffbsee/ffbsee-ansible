@@ -209,6 +209,7 @@ if [ $run_gateway = true ]; then
         if [ $dhcp_relay = true ]; then
                 systemctl restart isc-dhcp-relay.service
         else
+                rm /var/run/dhcpd.pid
                 systemctl restart isc-dhcp-server
         fi
         # Activate the gateway announcements on a node that has a DHCP server running

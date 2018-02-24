@@ -10,7 +10,7 @@
 
 - name: Copy ISC DHCP Gateway config (backup)
   template:
-    src: 'templates/isc_dhcp_server'
+    src: 'templates/dhcp/isc_dhcp_server'
     dest: '/etc/default/isc-dhcp-server'
     owner: 'root'
     group: 'root'
@@ -18,7 +18,7 @@
 
 - name: Copy ISC DHCP config for this specific gateway
   template:
-    src: 'templates/dhcpd_{{ hostname }}.conf'
+    src: 'templates/dhcp/dhcpd_{{ hostname }}.conf'
     dest: '/etc/dhcp/dhcpd.conf'
     owner: 'root'
     group: 'root'

@@ -25,7 +25,7 @@
 
 - name: Copy ISC DHCP Gateway config (backup)
   template:
-    src: 'templates/isc_dhcp_relay'
+    src: 'templates/dhcp/isc_dhcp_relay'
     dest: '/etc/default/isc-dhcp-relay'
     owner: 'root'
     group: 'root'

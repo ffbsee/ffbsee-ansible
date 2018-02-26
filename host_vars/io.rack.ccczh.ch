@@ -43,7 +43,7 @@ fastd_vpn_backbone_configs:
   - gw03
   - sn01
 
-ipv6_uplink_announcen: 'true'
+ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'
 
 debian: '9'

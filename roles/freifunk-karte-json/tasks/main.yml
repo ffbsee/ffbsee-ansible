@@ -1,0 +1,11 @@
+---
+
+- name: Standard HTML Page
+  template:
+    src: 'templates/gateway-page/index.html'
+    dest: '/var/www/{{ hostname }}/index.html'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0755'
+
+

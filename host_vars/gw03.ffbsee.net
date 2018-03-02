@@ -44,7 +44,7 @@ fastd_vpn_backbone_configs:
   - sn01
 
 ipv6_uplink_announcen: 'true'
-radv_AdvDefaultPreference: 'high'
+radv_AdvDefaultPreference: 'medium'
 
 debian: '9'
 

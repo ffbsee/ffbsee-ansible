@@ -1,3 +1,6 @@
 [submodule "templates/gateway-page"]
 	path = templates/gateway-page
 	url = https://github.com/ffbsee/gateway-page.git
+[submodule "templates/api"]
+	path = templates/api
+	url = git@github.com:ffbsee/api.git

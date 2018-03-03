@@ -24,13 +24,12 @@ wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_i
 fastd_secret_key: ''
 
 fastd_vpn_backbone_configs:
-  - vpn3
   - vpn4
-  - vpn6
-  - vpn7
   - gw02
   - gw03
   - sn01
 
 radv_AdvDefaultPreference: 'high'
+
+freifunk_karte_api: 'false'
 

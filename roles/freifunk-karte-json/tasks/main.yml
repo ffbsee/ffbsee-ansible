@@ -1,11 +1,56 @@
 ---
 
-- name: Standard HTML Page
+- name: JSON Update Script
   template:
-    src: 'templates/gateway-page/index.html'
-    dest: '/var/www/{{ hostname }}/index.html'
+    src: 'templates/api/ffbsee.nodes.pl'
+    dest: '/opt/freifunk/json-update.pl'
     owner: 'www-data'
     group: 'www-data'
-    mode: '0755'
+    mode: '0775'
+
+- name: Create JSON-API Directory
+  file:
+    path: '/var/www/{{ maps_webserver }}'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Reload nginx
+  service: name=nginx state=restarted
+
+- name: Create letsencrypt certificate
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ maps_webserver }}
+  args:
+    creates: /etc/letsencrypt/live/{{ maps_webserver }}
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/nginx/nginx-letsencrypt-api.conf
+    dest: /etc/nginx/sites-enabled/api-https
+
+- name: Reload nginx to activate specified site
+  service: name=nginx state=restarted
+
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ maps_webserver }} && service nginx reload
+    cron_file: '/etc/crontab'
+    user: 'root'
+
+- name: Clone api git
+  git:
+    repo: 'https://github.com/ffbsee/api.git'
+    dest: '{{ api_gitroot }}'
+    clone: yes
+    update: yes
+
+- name: Default Site API
+  copy:
+    src: 'files/www/403.html'
+    dest: '/var/www/{{ maps_webserver }}/index.html'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0775'
 
 

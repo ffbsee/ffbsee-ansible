@@ -35,20 +35,14 @@ run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'true'
 
 fastd_vpn_backbone_configs:
-  - vpn1
-  - vpn2
-  - vpn3
   - vpn4
-  - vpn5
-  - vpn6
-  - vpn7
   - gw01
   - gw02
   - gw03
-  - sn01
 
 ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'
 
 debian: '8'
+freifunk_karte_api: 'false'
 

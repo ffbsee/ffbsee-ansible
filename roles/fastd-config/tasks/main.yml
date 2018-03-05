@@ -77,7 +77,7 @@
 
 - name: Copy fastd configuration
   template:
-    src: 'templates/fastd/fastd.conf'
+    src: 'templates/fastd/fastd_{{ hostname }}.conf'
     dest: '/etc/fastd/fastd.conf'
     owner: nobody
     group: root

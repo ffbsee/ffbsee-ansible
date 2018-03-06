@@ -1,4 +1,6 @@
 ---
+- debug:
+    msg: "System has IPv4 address {{ ansible_eth0.ipv4.address }}"
 
 - name: Create user nobody for fastd
   user:
@@ -54,6 +56,15 @@
     group: 'root'
     mode: 'u=rw,g=r,o=r'
 
+- name: Put secret key to host as secret.txt
+  template:
+    src: 'templates/secret.txt'
+    dest: '/etc/fastd/secret.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'
+
+
 - name: Create fastd public key
   shell: 'fastd --config /etc/fastd/secret_key.txt --show-key --machine-readable > /etc/fastd/public.txt;'
   args:
@@ -77,7 +88,7 @@
 
 - name: Copy fastd configuration
   template:
-    src: 'templates/fastd/fastd_{{ hostname }}.conf'
+    src: 'templates/fastd/fastd.conf'
     dest: '/etc/fastd/fastd.conf'
     owner: nobody
     group: root

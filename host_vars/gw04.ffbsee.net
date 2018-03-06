@@ -18,6 +18,7 @@ ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
 wan_ipv6_network: ''
+wan_ipv6_ip: ''
 wan_base_interface: 'eth0'
 wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
@@ -39,7 +40,6 @@ fastd_vpn_backbone_configs:
   - gw01
   - gw02
   - gw03
-  - sn01
 
 ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'

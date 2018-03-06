@@ -52,10 +52,6 @@ There are some dedicated Servers, the Freifunk-Gateways:
   * EST Server - Germany
   * Unknown
   * AS21263
-* [sn01.ffbsee.net](https://sn01.ffbsee.de) - **Supernode #01**
-  * VM - Swiss
-  * Dual-Stack
-  * AS559
 
 ## Functions
 * Update Users

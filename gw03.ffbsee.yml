@@ -3,16 +3,16 @@
 - name: Install common packages
   hosts: gw03.ffbsee.net
   roles:
-#    - base-packages # Grundsystem installieren
-#    - ssh_authorized_keys # Admin User
-#    - home_enviroment # vimrc
-#    - network # interface
-#    - freifunk-backbone # FFBSee-Backbone
-#    - freifunk-update-script # FFBSee-Start-Script
-#    - fastd-install # FastD
-#    - fastd-config  # FastD
-#    - firewall # Firewall
-#    - dhcpd # DHCP
+    - base-packages # Grundsystem installieren
+    - ssh_authorized_keys # Admin User
+    - home_enviroment # vimrc
+    - network # interface
+    - freifunk-backbone # FFBSee-Backbone
+    - freifunk-update-script # FFBSee-Start-Script
+    - fastd-install # FastD
+    - fastd-config  # FastD
+    - firewall # Firewall
+    - dhcpd # DHCP
     - nginx # Webserver
     - gateway-page 
     - freifunk-karte-json # Freifunk API for freifunk-karte.de

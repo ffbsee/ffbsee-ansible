@@ -10,7 +10,7 @@ hostname: 'gw03.ffbsee.net'
 ipv4_mesh_address: '10.11.160.103'
 
 ipv6_suffix: ':1:3'
-ipv6_radv_suffix: ':1'
+ipv6_radv_suffix: ':1:3'
 ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
 mesh_ipv6_extra_addr: '{{ ipv6_prefix }}:4'
 mesh_ipv6_address: '{{ ipv6_address }}'

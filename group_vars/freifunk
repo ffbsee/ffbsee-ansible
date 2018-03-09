@@ -5,7 +5,7 @@ community_name: 'Bodensee'
 community_shortname: 'ffbsee'
 
 ipv6_prefix: 'fdef:1701:b5ee:42:'
-ipv4_dhcp_server: '10.11.160.8'
+ipv4_dhcp_server: '10.11.160.103 10.11.160.102'
 ipv4_dhcp_interface: 'bat0'
 
 batman_version: '2017.4'

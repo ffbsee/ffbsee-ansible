@@ -4,7 +4,7 @@
 #
 # Auch beim IPv6 gibt es bischen zu tun
 #
-{% if wan_ipv6_ip: != "" %}
+{% if wan_ipv6_ip != "" %}
 
 /sbin/ip6tables -A INPUT -i bat0 -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j DROP
 /sbin/ip6tables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT

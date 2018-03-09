@@ -22,7 +22,7 @@ wan_ipv6_ip: '2001:4ba0:ffa4:115::2'
 wan_base_interface: 'eth0'
 wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
-
+wan_ipv4_ip: '89.163.145.35'
 
 fastd_secret_key: ''
 

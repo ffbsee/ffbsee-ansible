@@ -22,7 +22,7 @@ wan_ipv6_ip: '2a02:168:4638:f0::10'
 wan_base_interface: 'enp1s0f0'
 wan_vlan_id: '240'
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
-
+wan_ipv4_ip: '10.0.240.10' 
 
 fastd_secret_key: ''
 

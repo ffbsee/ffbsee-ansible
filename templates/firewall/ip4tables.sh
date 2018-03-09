@@ -6,8 +6,8 @@
 #  Koennte sonst aerger mit Providern geben...
 #
 /sbin/iptables -A FORWARD -d 192.168.0.0/16  -j REJECT --reject-with icmp-net-prohibited               # RFC 1918
-/sbin/iptables -A FORWARD -d 172.16.0.0/12 -o enp1s0f0.240 -j REJECT --reject-with icmp-net-prohibited # RFC 1918
-/sbin/iptables -A FORWARD -d 10.0.0.0/8 -o enp1s0f0.240 -j REJECT --reject-with icmp-net-prohibited    # RFC 1918
+/sbin/iptables -A FORWARD -d 172.16.0.0/12 -o {{ wan_base_interface }} -j REJECT --reject-with icmp-net-prohibited # RFC 1918
+/sbin/iptables -A FORWARD -d 10.0.0.0/8 -o {{ wan_base_interface }} -j REJECT --reject-with icmp-net-prohibited    # RFC 1918
 /sbin/iptables -A FORWARD -d 169.254.0.0/16  -j REJECT --reject-with icmp-net-prohibited               # APIPA - link-local
 /sbin/iptables -A FORWARD -d 100.64.0.0/10  -j REJECT --reject-with icmp-net-prohibited                # ISP - carrier-grade NAT
 /sbin/iptables -A FORWARD -d 224.0.0.0/3 -j REJECT --reject-with icmp-net-prohibited                   # multicast

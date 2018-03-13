@@ -4,3 +4,6 @@
 [submodule "templates/api"]
 	path = templates/api
 	url = git@github.com:ffbsee/api.git
+[submodule "files/icvpn-meta"]
+	path = files/icvpn-meta
+	url = https://github.com/freifunk/icvpn-meta.git

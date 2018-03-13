@@ -1,40 +1,38 @@
-Ansible for Freifunk Bodensee Gateways
-==================================
+![Freifunk Bodensee](https://freifunk-bodensee.net/lib/tpl/dokuwiki-template/images/logo.svg "FFBSee")
 
-This is the Ansible Repository for the Freifunk Community Freifunk Bodensee.
-Here you can:
-* deploy *(new)* Freifunk Gateways *(or clone them)*
-* Deploy the same software Version on each gateway
-* Manage admin users
-* Update the infrastructure
-* ...
+ Ansible
+==========
 
-Clone Projekt
+Ansible is a radically simple IT automation engine that automates cloud provisioning, configuration management, application deployment, intra-service orchestration, and many other IT needs.
+Ansible works by connecting to your nodes and pushing out small programs, called "Ansible modules" to them. These programs are written to be resource models of the desired state of the system. Ansible then executes these modules (over SSH by default), and removes them when finished.
+[Learn more](https://www.ansible.com/overview/how-ansible-works)
+
+ How to Clone the Projekt
 ---
 ```
     # Clone the Git
     https://github.com/ffbsee/ansible.git
 
-    # Clone the Submodules
+    # Clone the Submodules too
     cd ansible
     git submodule update --init --recursive
 
 ```
 
-Usage
------
+ Usage
+---
 
-Run ansible with:
+There is an Ansible-Playbook for each Gateway. To deplay the latest changes on an gateway or the whole setup sinply execute on your own machine:
 
     ansible-playbook $GATEWAY.yml
 
-from the **top-level directory**.
+from the **top-level directory** of this git repository.
 
 
-Freifunk Bodensee Network
+ Freifunk Bodensee Network
 =========================
 
-There are some dedicated Servers, the Freifunk-Gateways:
+Right now there are some dedicated Servers, the Freifunk-Gateways:
 
 * [gw01.ffbsee.net](https://gw01.ffbsee.net) - **Gateway #01**
   * Hetzner Server - Germany
@@ -49,15 +47,11 @@ There are some dedicated Servers, the Freifunk-Gateways:
   * Dualstack
   * AS24961
 * [gw04.ffbsee.net](https://gw04.ffbsee.net) - **Gateway #04**
-  * EST Server - Germany
-  * Unknown
+  * Lake Constance Area, Germany
+  * IPv4 only
   * AS21263
 
-## Functions
-* Update Users
-*Update the User privileges, SSH-Keys, and could add new Admins on all nodes*
-````bash
-ansible-playbook updateUsers.yml
-````
+ Add another gateway:
+---
+To Add an other Gateway pleas read the [Instructions](https://github.com/ffbsee/ansible/blob/master/NEWGATEWAY.md) an Talk to us via IRC or Mailing List!
 
- 

@@ -1,5 +1,23 @@
  Einen neuen Gateway aufsetzen
 ===============================
+ Long Story short:
+----
+ 1. Gateway ist erreichbar.
+  + Dort läuft eine aktuelle Debian-Version?
+  + der user ``ansible`` exestiert und darf sudo ausführen?
+  + der public SSH Keys deiner Maschiene ist sowohl hier bei den Admins dabei als auch auf dem System beim User ansible?
+ 2. Unter ``ansible/hosts`` ist der neue Gateway eingetragen?
+  + Ggf. DNS Eintrag setzen
+ 3. ``hostvars/$hostname`` enthält alle host-spezifischen Angaben für das neue Gateway?
+ 4. ``$hostname.yml`` enthält das neue Playbook für den neuen Gateway?
+ 5. **Ansible ausführen!** 
+```bash
+ansible-playbook $hostname.yml
+```
+ 6. Mögliche auftretende Fehler beheben und zurück melden
+ 
+ TL; DR
+========
 
 Um einen neuen Gateway aufzusetzen ist einiges zu tun. Wir gehen mal davon aus, dass es sich bei dem Gateway um ein Debian handelt. Zum Beispiel Debian 9.
 Auf deinem Computer ist ein beliebiges Linux mit einer relativ aktuellen Version von [Ansible](https://ansible.org/).

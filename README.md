@@ -10,12 +10,12 @@ Ansible works by connecting to your nodes and pushing out small programs, called
  How to Clone the Projekt
 ---
 ```
-    # Clone the Git
-    https://github.com/ffbsee/ansible.git
+# Clone the Git
+https://github.com/ffbsee/ansible.git
 
-    # Clone the Submodules too
-    cd ansible
-    git submodule update --init --recursive
+# Clone the Submodules too
+cd ansible
+git submodule update --init --recursive
 
 ```
 
@@ -24,7 +24,7 @@ Ansible works by connecting to your nodes and pushing out small programs, called
 
 There is an Ansible-Playbook for each Gateway. To deplay the latest changes on an gateway or the whole setup sinply execute on your own machine:
 
-    ansible-playbook $GATEWAY.yml
+ansible-playbook $GATEWAY.yml
 
 from the **top-level directory** of this git repository.
 

@@ -7,3 +7,9 @@
 [submodule "files/icvpn-meta"]
 	path = files/icvpn-meta
 	url = https://github.com/freifunk/icvpn-meta.git
+[submodule "roles/unbound_freifunk_tlds"]
+	path = roles/unbound_freifunk_tlds
+	url = https://github.com/ffbsee/unbound_freifunk_tlds.git
+[submodule "roles/unbound"]
+	path = roles/unbound
+	url = https://github.com/ffbsee/unbound.git

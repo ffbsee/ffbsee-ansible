@@ -55,3 +55,9 @@ Right now there are some dedicated Servers, the Freifunk-Gateways:
 ---
 To Add an other Gateway pleas read the [Instructions](https://github.com/ffbsee/ansible/blob/master/NEWGATEWAY.md) an Talk to us via IRC or Mailing List!
 
+ Tipps:
+---
+If you nee a Jump-Host to reach an gateway simply use this command argues:
+```bash
+ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W %h:%p ansible@gw03.ffbsee.net'" $hostname.yml
+```

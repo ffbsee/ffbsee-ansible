@@ -1,7 +1,4 @@
 ---
-- debug:
-    msg: "System has IPv4 address {{ ansible_eth0.ipv4.address }}"
-
 - name: Create user nobody for fastd
   user:
     name: nobody

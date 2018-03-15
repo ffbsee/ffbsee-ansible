@@ -35,6 +35,7 @@ run_map: 'true'
 run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'false'
 
+fastd_peer_limit: ''
 fastd_vpn_backbone_configs:
   - vpn4
   - gw01

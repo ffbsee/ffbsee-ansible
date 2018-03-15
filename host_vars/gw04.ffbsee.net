@@ -38,6 +38,7 @@ fastd_vpn_backbone_configs:
   - gw01
   - gw02
   - gw03
+fastd_peer_limit: '20'
 
 ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'

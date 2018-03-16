@@ -200,6 +200,10 @@ if [ $run_mesh = true ]; then
     } | gzip -c - | alfred -s 64 -u /var/run/alfred/alfred.sock
 fi # run_mesh
 if [ $run_gateway = true ]; then
+        if ! is_running "unbound"; then
+                echo "(I) Start unbound."
+                systemctl restart unbound.service 
+            fi
         if [ $ipv6_uplink = true ]; then
             if ! is_running "radvd"; then
                 echo "(I) Start radvd."

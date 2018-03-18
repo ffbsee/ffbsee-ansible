@@ -11,5 +11,4 @@
     - freifunk-update-script # FFBSee-Start-Script
     - fastd-install # FastD
     - fastd-config  # FastD
-    - firewall # Firewall
     - nginx # Webserver

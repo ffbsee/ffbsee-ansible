@@ -19,6 +19,47 @@
     mode: 'u=rwx,g=rx,o=rx'
 
 
+- name: Create '/var/www/HOSTNAME/assets' directory
+  file:
+    path: '/var/www/{{ hostname }}/assets'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: Create '/var/www/HOSTNAME/images' directory
+  file:
+    path: '/var/www/{{ hostname }}/images'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Create '/var/www/HOSTNAME/assets/js' directory
+  file:
+    path: '/var/www/{{ hostname }}/assets/js'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: Create '/var/www/HOSTNAME/assets/font' directory
+  file:
+    path: '/var/www/{{ hostname }}/assets/font'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: Create '/var/www/HOSTNAME/assets/css' directory
+  file:
+    path: '/var/www/{{ hostname }}/assets/css'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
+- name: Create '/var/www/HOSTNAME/assets/js/ie' directory
+  file:
+    path: '/var/www/{{ hostname }}/assets/js/ie'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+
 - name: Standard HTML Page
   template:
     src: 'templates/gateway-page/index.html'
@@ -26,5 +67,29 @@
     owner: 'www-data'
     group: 'www-data'
     mode: '0755'
+
+- name: Standard HTML Page
+    src: 'templates/gateway-page/{{ item }}'
+    dest: '/var/www/{{ hostname }}/{{ item }}'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0755'
+  with_items:
+    - "images/bg01.jpg" 
+    - "images/bg02.jpg"
+    - "images/bg03.jpg"
+    - "assets/css/main.css"
+    - "assets/css/font-awesome.min.css"
+    - "assets/css/ie8.css"
+    - "assets/css/ie9.css"
+    - "assets/fonts/FontAwesome.otf"
+    - "assets/fonts/fontawesome-webfont.eot"
+    - "assets/fonts/fontawesome-webfont.svg"
+    - "assets/fonts/fontawesome-webfont.ttf"
+    - "assets/fonts/fontawesome-webfont.woff"
+    - "assets/fonts/fontawesome-webfont.woff2"
+    - "assets/js/main.js"
+    - "assets/js/ie/html5shiv.js"
+    - "assets/js/ie/respond.min.js"
 
 

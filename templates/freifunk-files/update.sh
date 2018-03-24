@@ -231,8 +231,8 @@ fi # run_map
 {% if hostname == "meta.ffbsee.net" %}
 if [ $run_webserver = true ]; then
     if ! is_running "nginx"; then
-        echo "(I) Start nginx."
-        systemctl start nginx.service
+        echo "(I) Start apache."
+        systemctl start apache2.service
     fi
 fi # run_webserver
 {% else %}

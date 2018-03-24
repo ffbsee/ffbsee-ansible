@@ -26,6 +26,10 @@
     - jq
     - git
     - perl
+    - wget
+    - mtr
+    - bash-completion
+    - unzip
 
 - name: Install some common Debian specific packages
   apt:

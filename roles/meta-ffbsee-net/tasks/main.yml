@@ -1,0 +1,23 @@
+---
+- name: Packages for Icinga2
+  apt:
+    pkg: '{{ item }}'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  with_items:
+    - libapache2-mod-php7.0
+    - php7.0-xml
+    - php7.0-opcache
+    - php7.0-xml
+    - php7.0-mbstring
+    - php7.0-json
+    - php7.0-curl
+    - php7.0-ldap
+    - php7.0-cli
+    - php7.0-gd
+    - php7.0-intl
+    - php7.0-readline
+
+
+

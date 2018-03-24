@@ -6,9 +6,19 @@
     - base-packages # Grundsystem installieren
     - ssh_authorized_keys # Admin User
     - home_enviroment # vimrc
+
+- name: Configure Network
+  hosts: meta.ffbsee.net
+  roles:
     - network # interface
     - freifunk-backbone # FFBSee-Backbone
     - freifunk-update-script # FFBSee-Start-Script
     - fastd-install # FastD
     - fastd-config  # FastD
-    - nginx # Webserver
+    - gateway-page # Gateway Page
+
+- name: Specific Web Setup
+  hosts: meta.ffbsee.net
+  roles:
+    - apache # Apache Webserver
+    - meta-ffbsee-net # Nodespecific Role

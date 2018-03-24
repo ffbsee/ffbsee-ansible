@@ -228,12 +228,21 @@ if [ $run_map = true ]; then
         # create map data (meshviewer)
         ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes.json --meshviewer-graph /var/www/{{ hostname }}/graph.json
 fi # run_map
+{% if hostname == "meta.ffbsee.net" %}
 if [ $run_webserver = true ]; then
     if ! is_running "nginx"; then
         echo "(I) Start nginx."
         systemctl start nginx.service
     fi
 fi # run_webserver
+{% else %}
+if [ $run_webserver = true ]; then
+    if ! is_running "nginx"; then
+        echo "(I) Start nginx."
+        systemctl start nginx.service
+    fi
+fi # run_webserver
+{% endif %}
 if [ $run_icvpn = true ]; then
     if ! is_running "tincd"; then
         echo "(I) Start tincd."

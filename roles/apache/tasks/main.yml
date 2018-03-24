@@ -2,7 +2,7 @@
 - debug:
     msg: "System {{ ansible_distribution }} has vers {{ ansible_distribution_major_version }}"
 
-- name: Prepare nginx
+- name: Prepare Apache2
   apt:
     pkg: '{{ item }}'
     state: 'latest'
@@ -35,23 +35,30 @@
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Remove default nginx config
+- name: Remove default apache2 config
   file: 
-    path: '/etc/nginx/sites-enabled/default'
+    path: '/etc/apache2/sites-enabled/000-default.conf'
     state: absent
 
-- name: Install system nginx config
-  template:
-    src: templates/nginx/nginx.conf
-    dest: /etc/nginx/nginx.conf
+- name: Set temporary apache value
+  set_fact: apache_test="True"
 
-- name: Install nginx site for letsencrypt requests
+- name: Install system apache config
   template:
-    src: templates/nginx/nginx-http
-    dest: /etc/nginx/sites-enabled/http
+    src: templates/apache/site.conf
+    dest: /etc/apache2/sites-available/{{ hostname }}.conf
 
-- name: Reload nginx to activate letsencrypt site
-  service: name=nginx state=restarted
+- name: Install apache site
+  template:
+    src: templates/apache/site.conf
+    dest: /etc/apache2/sites-enabled/{{ hostname }}.conf
+
+- name: Set temp, apache value
+  set_fact: apache_test="False"
+
+
+- name: Reload apache2 to activate letsencrypt site
+  service: name=apache2 state=restarted
 
 - name: Create letsencrypt certificate
   shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ hostname }}
@@ -59,23 +66,26 @@
     creates: /etc/letsencrypt/live/{{ hostname }}
 
 - name: Generate dhparams
-  shell: openssl dhparam -out /etc/nginx/dhparams.pem 4096
+  shell: openssl dhparam -out /etc/apache2/dhparams.pem 4096
   args:
-    creates: /etc/nginx/dhparams.pem
+    creates: /etc/apache2/dhparams.pem
 
-- name: Install apache2 site for specified site
+- name: Install system apache config
   template:
-    src: templates/apache/hostname.conf
-    dest: /etc/apache2/sietes/enabled/{{ hostname }}.conf
+    src: templates/apache/site.conf
+    dest: /etc/apache2/sites-available/{{ hostname }}.conf
 
-- name: Reload apache2 to activate specified site
-  service: name=apache2 state=restarted
+- name: Install apache site
+  template:
+    src: templates/apache/site.conf
+    dest: /etc/apache2/sites-enabled/{{ hostname }}.conf
+
 
 - name: Add letsencrypt cronjob for cert renewal
   cron:
     name: letsencrypt_renewal
     special_time: weekly
-    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ hostname }} && systemctl restart apache2
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ hostname }} && service nginx reload
     cron_file: '/etc/crontab'
     user: 'root'
 

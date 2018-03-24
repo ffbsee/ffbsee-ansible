@@ -59,5 +59,5 @@ To Add an other Gateway pleas read the [Instructions](https://github.com/ffbsee/
 ---
 If you nee a Jump-Host to reach an gateway simply use this command argues:
 ```bash
-ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W %h:%p ansible@gw03.ffbsee.net'" $hostname.yml
+ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W [%h]:%p ansible@gw03.ffbsee.net'" gw02.ffbsee.yml
 ```

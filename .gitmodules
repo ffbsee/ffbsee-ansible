@@ -13,3 +13,6 @@
 [submodule "roles/unbound"]
 	path = roles/unbound
 	url = git@github.com:ffbsee/unbound.git
+[submodule "templates/FFNodeList"]
+	path = templates/FFNodeList
+	url = git@github.com:ffbsee/FFNodeList.git

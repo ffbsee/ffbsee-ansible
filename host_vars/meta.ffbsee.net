@@ -30,7 +30,7 @@ run_mesh: 'true'
 run_gateway: 'false'
 run_webserver: 'true'
 run_icvpn: 'false'
-run_map: 'false'
+run_map: 'true'
 run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'true'
 

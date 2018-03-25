@@ -12,20 +12,25 @@
     - libjson-pp-perl
     - libwww-perl
 
-- name: Clone FFNodeList
-  git:
-    repo: 'https://github.com/ffbsee/FFNodeList.git'
-    dest: '/var/www/FFNodeList'
-    clone: yes
-    update: yes
+- name: Create '/var/www/HOSTNAME/FFNodeList' directory
+  file:
+    path: '/var/www/{{ hostname }}/FFNodeList'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
 
-- name: Add cronjob for FFNodeList
-  cron:
-    name: 'Git pull'
-    special_time: daily
-    job: 'cd /var/www/FFNodeList; /usr/bin/git pull > /dev/null'
-    cron_file: '/etc/crontab'
-    user: 'root'
+- name: FFNodeList Template
+  template:
+    src: 'templates/FFNodeList/generateList.pl'
+    dest: '/opt/freifunk/genNodeList.pl'
+    mode: '0755'
+
+- name: FFNodeList JavaScript
+  copy:
+    src: 'templates/FFNodeList/sortableTables.js'
+    dest: '/var/www/{{ hostname }}/FFNodeList/sortableTables.js'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0755'
 
 - name: Install Perl modules
   cpanm:

@@ -74,6 +74,7 @@
     - { src: "templates/gateway-page/images/bg01.jpg", dest: "/var/www/{{ hostname }}/images/bg01.jpg" }
     - { src: "templates/gateway-page/images/bg02.jpg", dest: "/var/www/{{ hostname }}/images/bg02.jpg" }
     - { src: "templates/gateway-page/images/bg03.jpg", dest: "/var/www/{{ hostname }}/images/bg03.jpg" }
+    - { src: "templates/gateway-page/images/bg04.jpg", dest: "/var/www/{{ hostname }}/images/bg04.jpg" }
     - { src: "templates/gateway-page/assets/css/main.css", dest: "/var/www/{{ hostname }}/assets/css/main.css" }
     - { src: "templates/gateway-page/assets/css/font-awesome.min.css", dest: "/var/www/{{ hostname }}/assets/css/font-awesome.min.css" }
     - { src: "templates/gateway-page/assets/css/ie8.css", dest: "/var/www/{{ hostname }}/assets/css/ie8.css" }

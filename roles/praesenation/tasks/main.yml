@@ -1,0 +1,37 @@
+---
+
+- name: Clone Praesentation git
+  git:
+    repo: 'https://github.com/ffbsee/praesentation.git'
+    dest: '/var/www/{{ praesi_webserver }}'
+    clone: yes
+    update: yes
+
+- name: Reload nginx
+  service: name=nginx state=restarted
+
+- name: Create letsencrypt certificate
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ praesi_webserver }}
+  args:
+    creates: /etc/letsencrypt/live/{{ praesi_webserver }}
+
+- set_fact:
+    webserver: '{{ praesi_webserver }}'
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/nginx/nginx-letsencrypt-api.conf
+    dest: /etc/nginx/sites-enabled/praesi-https
+
+- name: Reload nginx to activate specified site
+  service: name=nginx state=restarted
+
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ praesi_webserver }} && service nginx reload
+    cron_file: '/etc/crontab'
+    user: 'root'
+
+

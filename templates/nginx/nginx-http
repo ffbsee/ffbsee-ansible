@@ -12,6 +12,7 @@ server {
 
     location / {
         rewrite ^ https://{{ hostname }}$request_uri? permanent;
-    }
+{% if hostname == gw03.ffbsee.net %}        rewrite ^ https://{{ praesi_webserver }}$request_uri? permanent;
+{% endif %}    }
 }
 

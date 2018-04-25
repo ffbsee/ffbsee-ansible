@@ -19,6 +19,7 @@ fastd_libsodium_sha256sum: '3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
 maps_webserver: 'api.ffbsee.net'
+praesi_webserver: 'about.ffbsee.net'
 json_api_path: '/var/www/{{ maps_webserver }}'
 api_gitroot: '/root/freifunk-json-api'
 

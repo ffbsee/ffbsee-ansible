@@ -22,6 +22,9 @@
   args:
     creates: /etc/letsencrypt/live/{{ maps_webserver }}
 
+- set_fact:
+    webserver: '{{ maps_webserver }}'
+
 - name: Install nginx site for specified site
   template:
     src: templates/nginx/nginx-letsencrypt-api.conf

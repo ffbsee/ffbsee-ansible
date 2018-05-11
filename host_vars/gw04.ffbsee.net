@@ -46,3 +46,4 @@ radv_AdvDefaultPreference: 'low'
 debian: '8'
 freifunk_karte_api: 'false'
 
+nodelist: 'false'

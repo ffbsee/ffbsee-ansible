@@ -227,7 +227,7 @@ if [ $run_map = true ]; then
         alfred -r 64 -u /var/run/alfred/alfred.sock > /tmp/maps.txt
         # create map data (meshviewer)
         ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes.json --meshviewer-graph /var/www/{{ hostname }}/graph.json
-{% if hostname == 'meta.ffbsee.net' %}
+{% if nodelist == true %}
         /opt/freifunk/genNodeList.pl
 {% endif %}
 

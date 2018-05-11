@@ -18,3 +18,5 @@
     - freifunk-karte-json # Freifunk API for freifunk-karte.de
     - unbound # Recursive DNS Resolver
     - unbound_freifunk_tlds # Resolve Freifunk TLDs
+    - FFNodeList
+

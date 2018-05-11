@@ -17,3 +17,4 @@
     - gateway-page 
     - unbound # Recursive DNS Resolver
     - unbound_freifunk_tlds # Resolve Freifunk TLDs
+    - FFNodeList

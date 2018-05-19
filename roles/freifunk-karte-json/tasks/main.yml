@@ -57,3 +57,12 @@
     mode: '0775'
 
 
+- name: Update Freifunk Community Files
+  cron:
+    name: community_update
+    special_time: daily
+    job: '/opt/freifunk/json-update.pl'
+    cron_file: '/etc/crontab'
+    user: 'root'
+
+

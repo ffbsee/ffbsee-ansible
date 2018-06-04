@@ -1,0 +1,32 @@
+---
+
+- name: Clone current icvpn-meta from github
+  git:
+    repo: 'https://github.com/freifunk/icvpn-meta.git'
+    dest: /opt/freifunk/icvpn-meta
+    clone: yes
+    update: yes 
+
+- name: Clone current icvpn-scripts from gitthub        
+  git:
+    repo: 'https://github.com/freifunk/icvpn-scripts.git'
+    dest: /opt/freifunk/icvpn-scripts
+    clone: yes
+    update: yes
+
+- name: Copy icvpn update script
+  template:
+    src: 'templates/freifunk-files/update-icvpn.sh'
+    dest: '/opt/freifunk/update-icvpn.sh'
+    owner: 'root'
+    group: 'root'
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Add cron job for updating icvpn
+  cron:
+    name: 'Update icvpn-meta'
+    job: '/opt/freifunk/update-icvpn.sh > /dev/null'
+    day: '*/1'
+    user: 'root'
+    state: 'present'
+    cron_file: '/etc/crontab'

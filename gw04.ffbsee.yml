@@ -14,4 +14,4 @@
     - firewall # Firewall
     - dhcp-relay # DHCP
     - unbound # Recursive DNS Resolver
-    - unbound_freifunk_tlds # Resolve Freifunk TLDs
+    - freifunk-icvpn # Resolve Freifunk TLDs

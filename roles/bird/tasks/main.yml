@@ -16,8 +16,8 @@
 
 
 - name: Copy bird and bird6 config for this specific gateway
-  template:
-    src: 'templates/bird/bird_{{ hostname }}'
+  copy:
+    src: 'templates/bird/bird_{{ hostname }}/'
     dest: '/etc/bird'
     owner: 'root'
     group: 'root'

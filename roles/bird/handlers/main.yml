@@ -1,0 +1,7 @@
+---
+
+- name: dpkg reconfigure bird
+  command: 'dpkg-reconfigure -f noninteractive bird'
+
+- name: dpkg reconfigure bird6
+  command: 'dpkg-reconfigure -f noninteractive bird6'

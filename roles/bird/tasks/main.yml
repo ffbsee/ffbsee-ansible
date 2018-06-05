@@ -1,0 +1,25 @@
+---
+
+- name: Install bird 
+  apt:
+    pkg: 'bird'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Install bird6
+  apt:
+    pkg: 'bird6'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+
+
+- name: Copy bird and bird6 config for this specific gateway
+  template:
+    src: 'templates/bird/bird_{{ hostname }}'
+    dest: '/etc/bird'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+

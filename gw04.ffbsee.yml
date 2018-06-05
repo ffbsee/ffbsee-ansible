@@ -15,3 +15,4 @@
     - dhcp-relay # DHCP
     - unbound # Recursive DNS Resolver
     - freifunk-icvpn # Resolve Freifunk TLDs
+    - bird

@@ -7,13 +7,6 @@
     update_cache: yes
     cache_valid_time: 86400
 
-- name: Install bird6
-  apt:
-    pkg: 'bird6'
-    state: 'latest'
-    update_cache: yes
-    cache_valid_time: 86400
-
 
 - name: Copy bird and bird6 config for this specific gateway
   copy:

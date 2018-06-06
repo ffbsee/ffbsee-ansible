@@ -16,6 +16,6 @@
     - nginx # Webserver
     - gateway-page 
     - unbound # Recursive DNS Resolver
-    - freifunk_icvpn # Resolve Freifunk TLDs
+    - freifunk-icvpn # Resolve Freifunk TLDs
     - FFNodeList
     - bird

@@ -225,6 +225,7 @@ fi # run_gateway
 if [ $run_map = true ]; then
         #collect all map pieces
         alfred -r 64 -u /var/run/alfred/alfred.sock > /tmp/maps.txt
+        sed -i 's/  */ /g' /tmp/maps.txt # clean up extra whitespace stuff that gives us errors (for example from FUTROs)
         # create map data (meshviewer)
         ./map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes.json --meshviewer-graph /var/www/{{ hostname }}/graph.json
         /opt/freifunk/v2_map-backend.py -m /tmp/maps.txt --meshviewer-nodes /var/www/{{ hostname }}/nodes_v2.json --meshviewer-graph /var/www/{{ hostname }}/graph_v2.json

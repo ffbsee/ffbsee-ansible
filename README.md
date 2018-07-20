@@ -22,7 +22,7 @@ git submodule update --init --recursive
  Usage
 ---
 
-There is an Ansible-Playbook for each Gateway. To deplay the latest changes on an gateway or the whole setup sinply execute on your own machine:
+There is an Ansible-Playbook for each Gateway. To deplay the latest changes on an gateway or the whole setup simply execute on your own machine:
 
 ansible-playbook $GATEWAY.yml
 

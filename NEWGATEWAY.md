@@ -5,7 +5,7 @@
  1. Der Gateway ist erreichbar?
   + Dort läuft eine aktuelle Debian-Version?
   + der user ``ansible`` exestiert und darf sudo ausführen?
-  + der public SSH Keys deiner Maschiene ist sowohl in diesem ansible hinterlegt, als auch auf dem neuen System beim User ansible?
+  + der public SSH Keys deiner Maschine ist sowohl in diesem ansible hinterlegt, als auch auf dem neuen System beim User ansible?
  2. Unter ``ansible/hosts`` ist der neue Gateway eingetragen?
   + Ggf. DNS Eintrag setzen
  3. ``hostvars/$hostname`` enthält alle host-spezifischen Angaben für das neue Gateway?

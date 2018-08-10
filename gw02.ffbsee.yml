@@ -1,7 +1,7 @@
 ---
 
 - name: Install common packages
-  hosts: io.rack.ccczh.ch
+  hosts: gw02.ffbsee.net
   roles:
     - base-packages # Grundsystem installieren
     - ssh_authorized_keys # Admin User

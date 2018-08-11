@@ -1,7 +1,6 @@
 ---
 
-- name: Develop stuf
+- name: Update admin user accounts
   hosts: all
   roles:
     - ssh_authorized_keys
-

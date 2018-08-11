@@ -1,0 +1,5 @@
+---
+
+- name: Install common packages
+  hosts: gw01.ffbsee.net
+  roles:

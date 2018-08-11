@@ -9,6 +9,7 @@ Ansible works by connecting to your nodes and pushing out small programs, called
 
  How to Clone the Projekt
 ---
+
 ```
 # Clone the Git
 https://github.com/ffbsee/ansible.git
@@ -16,7 +17,6 @@ https://github.com/ffbsee/ansible.git
 # Clone the Submodules too
 cd ansible
 git submodule update --init --recursive
-
 ```
 
  Usage
@@ -24,7 +24,9 @@ git submodule update --init --recursive
 
 There is an Ansible-Playbook for each Gateway. To deplay the latest changes on an gateway or the whole setup simply execute on your own machine:
 
+```
 ansible-playbook $GATEWAY.yml
+```
 
 from the **top-level directory** of this git repository.
 
@@ -40,23 +42,25 @@ Right now there are some dedicated Servers, the Freifunk-Gateways:
   * AS24940
 * [gw02.ffbsee.net](https://gw02.ffbsee.net) - **Gateway #02**
   * CCCZH Server - Swiss
-  * In: IPv6, out: Dualstack
+  * In: IPv6, out: Dual-Stack
   * AS13030
 * [gw03.ffbsee.net](https://gw03.ffbsee.net) - **Gateway #03**
   * MyLoc Server - Germany
-  * Dualstack
+  * Dual-Stack
   * AS24961
 * [gw04.ffbsee.net](https://gw04.ffbsee.net) - **Gateway #04**
   * Lake Constance Area, Germany
   * IPv4 only
   * AS21263
 
- Add another gateway:
+ Add another gateway
 ---
 To Add an other Gateway pleas read the [Instructions](https://github.com/ffbsee/ansible/blob/master/NEWGATEWAY.md) an Talk to us via IRC or Mailing List!
 
- Tipps:
----
+
+ Tipps
+=====
+
 If you need a Jump-Host to reach an gateway simply use this command argues:
 ```bash
 ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W [%h]:%p ansible@gw03.ffbsee.net'" gw02.ffbsee.yml

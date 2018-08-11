@@ -1,5 +1,31 @@
 ---
 
-- name: Install common packages
+- name: Install common packages for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
   roles:
+    #- base-packages
+    #- ssh_authorized_keys
+    #- home_enviroment
+
+- name: Configure network setup for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  roles:
+    #- network
+    #- freifunk-backbone
+    #- freifunk-update-script
+    #- fastd-install
+    #- fastd-config
+    #- firewall
+    #- dhcpd
+    #- dhcp-relay
+    #- unbound
+    #- freifunk-icvpn
+    #- bird
+
+- name: Configure web setup for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  roles:
+    #- nginx
+    #- gateway-page
+    #- freifunk-karte-json
+    #- FFNodeList

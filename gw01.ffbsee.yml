@@ -4,8 +4,8 @@
   hosts: gw01.ffbsee.net
   roles:
     - base-packages
-    #- ssh_authorized_keys
-    #- home_environment
+    - ssh_authorized_keys
+    - home_environment
 
 - name: Configure network setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

@@ -5,7 +5,7 @@
   roles:
     - base-packages
     - ssh_authorized_keys
-    - home_enviroment
+    - home_environment
 
 - name: Configure network setup for gw02.ffbsee.net
   hosts: gw02.ffbsee.net

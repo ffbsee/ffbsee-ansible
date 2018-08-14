@@ -1,25 +1,53 @@
 ---
 
-- name: Create /root/.ssh directory
+- name: Create .ssh directory for root
   file:
     path: '/root/.ssh'
     state: directory
-    group: 'root'
-    owner: 'root'
-    mode: '0700'
+    owner: root
+    group: root
+    mode: 'u=rwx,g=,o='
 
-- name: Add ssh keys for admins at user root
+- name: Add ssh keys for admin users to user root
   template:
     src: 'authorized_keys.j2'
     dest: '/root/.ssh/authorized_keys'
     owner: root
     group: root
-    mode: "u=rw,g=,o="
+    mode: 'u=rw,g=,o='
+
 
 - name: Add admin group
   group:
     name: 'admins'
     state: present
+
+- name: Add admin users
+  user:
+    name: '{{ item }}'
+    shell: '/bin/bash'
+    groups: 'admins'
+    append: yes
+  with_items: '{{ admins }}'
+
+- name: Create .ssh directory for all admin users
+  file:
+    path: '/home/{{ item }}/.ssh'
+    state: directory
+    owner: '{{ item }}'
+    group: admins
+    mode: 'u=rwx,g=,o='
+  with_items: '{{ admins }}'
+
+- name: Add ssh keys for admin users to their users
+  copy:
+    src: 'files/admin_ssh_keys/{{ item }}_id.pub'
+    dest: '/home/{{ item }}/.ssh/authorized_keys'
+    owner: '{{ item }}'
+    group: admins
+    mode: 'u=rw,g=,o='
+  with_items: '{{ admins }}'
+
 
 - name: Add ansible user
   user:
@@ -28,62 +56,36 @@
     groups: 'admins'
     append: yes
 
-
-- name: Add admins at the gateway
-  user:
-    name: '{{ item }}'
-    shell: '/bin/bash'
-    groups: 'admins'
-    append: yes
-  with_items: '{{ admins }}'
-
-- name: Create .ssh directory
-  file:
-    path: '/home/{{ item }}/.ssh'
-    state: directory
-    group: 'admins'
-    owner: '{{ item }}'
-    mode: '0700'
-  with_items: '{{ admins }}'
-
 - name: Create .ssh directory for user ansible
   file:
     path: '/home/ansible/.ssh'
     state: directory
-    group: 'admins'
-    owner: 'ansible'
-    mode: '0700'
+    owner: ansible
+    group: admins
+    mode: 'u=rwx,g=,o='
 
-- name: Add ssh keys for admins at user ansible
+- name: Add ssh keys for admins to user ansible
   template:
     src: 'authorized_keys.j2'
     dest: '/home/ansible/.ssh/authorized_keys'
-    owner: 'ansible'
-    group: 'admins'
-    mode: "u=rwx,g=x,o="
+    owner: ansible
+    group: admins
+    mode: 'u=rw,g=,o='
 
-- name: Copy ansible .bashrc
+
+- name: Copy .bashrc for user ansible
   copy:
     src: 'files/home_enviroment/bashrc'
     dest: '/home/ansible/.bashrc'
-    owner: 'ansible'
-    group: 'admins'
-    mode: 0750
+    owner: ansible
+    group: admins
+    mode: 'u=rw,g=r,o='
 
-- name: Copy ssh authorized_keys from admins
-  copy:
-    src: 'files/admin_ssh_keys/{{ item }}_id.pub'
-    dest: '/home/{{ item }}/.ssh/authorized_keys'
-    owner: '{{ item }}'
-    group: 'admins'
-    mode: "u=rwx,g=,o="
-  with_items: '{{ admins }}'
 
-- name: Superkräfte vergeben
+- name: Copy sudoers file
   copy:
     src: 'files/home_enviroment/sudoers'
     dest: '/etc/sudoers.d/ansible'
-    owner: 'root'
-    group: 'root'
-    mode: "u=r,g=r,o="
-
+    owner: root
+    group: root
+    mode: 'u=r,g=r,o='

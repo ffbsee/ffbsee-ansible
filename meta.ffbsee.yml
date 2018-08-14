@@ -1,25 +1,25 @@
 ---
 
-- name: Install common packages
+- name: Install common packages for meta.ffbsee.net
   hosts: meta.ffbsee.net
   roles:
-    - base-packages # Grundsystem installieren
-    - ssh_authorized_keys # Admin User
-    - home_enviroment # vimrc
+    - base-packages
+    - ssh_authorized_keys
+    - home_enviroment
 
-- name: Configure Network
+- name: Configure network setup for meta.ffbsee.net
   hosts: meta.ffbsee.net
   roles:
-    - network # interface
-    - freifunk-backbone # FFBSee-Backbone
-    - freifunk-update-script # FFBSee-Start-Script
-    - fastd-install # FastD
-    - fastd-config  # FastD
-    - gateway-page # Gateway Page
+    - network
+    - freifunk-backbone
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
+    - gateway-page
 
-- name: Specific Web Setup
+- name: Configure web setup for meta.ffbsee.net
   hosts: meta.ffbsee.net
   roles:
-    - apache # Apache Webserver
-    - meta-ffbsee-net # Nodespecific Role
-    - FFNodeList # Freifunk Node List
+    - apache
+    - meta-ffbsee-net
+    - FFNodeList

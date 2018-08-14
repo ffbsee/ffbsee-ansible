@@ -1,21 +1,31 @@
 ---
 
-- name: Install common packages
+- name: Install common packages for gw02.ffbsee.net
   hosts: gw02.ffbsee.net
   roles:
-    - base-packages # Grundsystem installieren
-    - ssh_authorized_keys # Admin User
-    - home_enviroment # vimrc
-    - network # interface
-    - freifunk-backbone # FFBSee-Backbone
-    - freifunk-update-script # FFBSee-Start-Script
-    - fastd-install # FastD
-    - fastd-config  # FastD
-    - firewall # Firewall
-    - dhcpd # DHCP
-    - nginx # Webserver
-    - gateway-page 
-    - unbound # Recursive DNS Resolver
-    - freifunk-icvpn # Resolve Freifunk TLDs
-    - FFNodeList
+    - base-packages
+    - ssh_authorized_keys
+    - home_enviroment
+
+- name: Configure network setup for gw02.ffbsee.net
+  hosts: gw02.ffbsee.net
+  roles:
+    - network
+    - freifunk-backbone
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
+    - firewall
+    - dhcpd
+    #- dhcp-relay
+    - unbound
+    - freifunk-icvpn
     - bird
+
+- name: Configure web setup for gw02.ffbsee.net
+  hosts: gw02.ffbsee.net
+  roles:
+    - nginx
+    - gateway-page
+    #- freifunk-karte-json
+    - FFNodeList

@@ -75,7 +75,7 @@
 
 - name: Copy .bashrc for user ansible
   copy:
-    src: 'files/home_enviroment/bashrc'
+    src: 'files/home_environment/bashrc'
     dest: '/home/ansible/.bashrc'
     owner: ansible
     group: admins
@@ -84,7 +84,7 @@
 
 - name: Copy sudoers file
   copy:
-    src: 'files/home_enviroment/sudoers'
+    src: 'files/home_environment/sudoers'
     dest: '/etc/sudoers.d/ansible'
     owner: root
     group: root

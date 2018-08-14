@@ -3,9 +3,9 @@
 - name: Install common packages for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
   roles:
-    #- base-packages
+    - base-packages
     #- ssh_authorized_keys
-    #- home_enviroment
+    #- home_environment
 
 - name: Configure network setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

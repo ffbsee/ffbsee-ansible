@@ -2,7 +2,7 @@
 
 - name: Create a global bashrc configuration
   copy:
-    src: 'files/home_enviroment/bash.bashrc'
+    src: 'files/home_environment/bash.bashrc'
     dest: '/etc/bash.bashrc'
     owner: root
     group: root
@@ -10,7 +10,7 @@
 
 - name: Copy bashrc configuration to admin users
   copy:
-    src: 'files/home_enviroment/bashrc'
+    src: 'files/home_environment/bashrc'
     dest: '/home/{{ item }}/.bashrc'
     owner: '{{ item }}'
     group: admins
@@ -20,7 +20,7 @@
 
 - name: Copy vimrc configuration to root
   copy:
-    src: 'files/home_enviroment/vimrc'
+    src: 'files/home_environment/vimrc'
     dest: '/root/.vimrc'
     owner: root
     group: root
@@ -28,7 +28,7 @@
 
 - name: Copy vimrc configuration to admin users
   copy:
-    src: 'files/home_enviroment/vimrc'
+    src: 'files/home_environment/vimrc'
     dest: '/home/{{ item }}/.vimrc'
     owner: '{{ item }}'
     group: admins
@@ -37,5 +37,5 @@
 
 
 - name: Set fancy motd
-  script: 'files/home_enviroment/motd.sh {{ hostname }}'
+  script: 'files/home_environment/motd.sh {{ hostname }}'
   # TODO: Replace with flat file copy for idempotency

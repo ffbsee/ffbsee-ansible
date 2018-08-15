@@ -12,7 +12,8 @@ server {
 
     location / {
         rewrite ^ https://{{ hostname }}$request_uri? permanent;
-{% if hostname == gw03.ffbsee.net %}        rewrite ^ https://{{ praesi_webserver }}$request_uri? permanent;
-{% endif %}    }
+        {% if hostname == presentation_webserver %}
+        rewrite ^ https://{{ presentation_domain }}$request_uri? permanent;
+        {% endif %}
+    }
 }
-

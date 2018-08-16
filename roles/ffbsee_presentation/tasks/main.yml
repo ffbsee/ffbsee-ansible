@@ -1,0 +1,45 @@
+---
+
+- name: Clone presentation git
+  git:
+    repo: 'https://github.com/ffbsee/praesentation.git'
+    dest: '/var/www/{{ presentation_domain }}'
+    clone: yes
+    update: yes
+
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: restarted
+
+
+- name: Create letsencrypt certificate
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ presentation_domain }}
+  args:
+    creates: '/etc/letsencrypt/live/{{ presentation_domain }}'
+
+
+- set_fact:
+    webserver: '{{ presentation_domain }}'
+
+
+- name: Install nginx site for specified site
+  template:
+    src: 'templates/nginx/nginx-letsencrypt-api.conf'
+    dest: '/etc/nginx/sites-enabled/presentation-https'
+
+
+- name: Reload nginx to activate specified site
+  service:
+    name: nginx
+    state: restarted
+
+
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ presentation_domain }} && service nginx reload
+    cron_file: '/etc/crontab'
+    user: 'root'

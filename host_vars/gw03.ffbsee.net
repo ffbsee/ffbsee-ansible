@@ -37,9 +37,9 @@ da_laueft_ein_dhcp_relay: 'false'
 
 fastd_peer_limit: ''
 fastd_vpn_backbone_configs:
-  - vpn4
   - gw01
   - gw02
+  - gw04
 
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'

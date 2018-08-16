@@ -63,19 +63,11 @@
   args:
     creates: /etc/nginx/dhparams.pem
 
-- name: Install apache2 site for specified site
-  template:
-    src: templates/apache/hostname.conf
-    dest: /etc/apache2/sietes/enabled/{{ hostname }}.conf
-
-- name: Reload apache2 to activate specified site
-  service: name=apache2 state=restarted
-
 - name: Add letsencrypt cronjob for cert renewal
   cron:
     name: letsencrypt_renewal
     special_time: weekly
-    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ hostname }} && systemctl restart apache2
+    job: certbot renew  && systemctl restart nginx
     cron_file: '/etc/crontab'
     user: 'root'
 

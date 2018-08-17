@@ -16,3 +16,6 @@
 [submodule "templates/FFNodeList"]
 	path = templates/FFNodeList
 	url = git@github.com:ffbsee/FFNodeList.git
+[submodule "roles/ssh_authorized_keys"]
+	path = roles/ssh_authorized_keys
+	url = https://github.com/ffbsee/role-ssh_authorized_keys.git

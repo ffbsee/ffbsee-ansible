@@ -32,7 +32,7 @@
     - git
     - perl
     - wget
-    - mtr
+    - mtr-tiny
     - bash-completion
     - unzip
 
@@ -49,4 +49,4 @@
 
 - name: Update all packages to the latest version
   apt:
-    upgrade: dist
+    upgrade: safe

@@ -12,7 +12,7 @@
   hosts: gw01.ffbsee.net
   tags: network
   roles:
-    #- network
+    - network
     #- freifunk-backbone
     #- freifunk-update-script
     #- fastd-install

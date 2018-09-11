@@ -20,31 +20,36 @@
 - name: Download libsodium
   get_url:
     url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
-    dest: '/tmp/fastd_libsodium.tar.gz'
+    dest: '/tmp/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
     checksum: sha256:{{ fastd_libsodium_sha256sum }}
+  register: libsodium_install
 
 - name: Create '/tmp/fastd_libsodium/' Directory
   file:
     path: '/tmp/fastd_libsodium'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: libsodium_install.changed
 
 - name: Unpack libsodium archive
   unarchive:
-    src: '/tmp/fastd_libsodium.tar.gz'
+    src: '/tmp/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
     dest: '/tmp/fastd_libsodium/'
     remote_src: yes
+  when: libsodium_install.changed
 
 - name: Configure libsodium
   shell: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}/configure'
   args:
     chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
+  when: libsodium_install.changed
 
 - name: Make libsodium
   make:
     chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
     params:
       NUM_THREADS: 4
+  when: libsodium_install.changed
 
 - name: Make install libsodium
   make:
@@ -52,44 +57,52 @@
     target: install
     params:
       NUM_THREADS: 4
+  when: libsodium_install.changed
 
 - name: Execute ldconfig
   shell: ldconfig
+  when: libsodium_install.changed
 
 - name: Download libuecc
   get_url:
-    url: 'https://projects.universe-factory.net/attachments/download/85'
-    dest: '/tmp/libuecc-7.tar.xz'
-    checksum: sha256:b94aef08eab5359d0facaa7ead2ce81b193eef0c61379d9835213ebc0a46257a
+    url: '{{ libuecc_url_head }}{{libuecc_url_tail }}'
+    dest: '/tmp/libuecc-7.{libuecc_url_tail }}.tar.xz'
+    checksum: sha256:{{ libuecc_checksum }}
+  register: libuecc_install
 
 - name: Create '/tmp/libuecc/' Directory
   file:
     path: '/tmp/libuecc'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: libuecc_install.changed
 
 - name: Create '/tmp/libuecc/build' Directory
   file:
     path: '/tmp/libuecc/build'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: libuecc_install.changed
 
 - name: Unpack libuecc archive
   unarchive:
-    src: '/tmp/libuecc-7.tar.xz'
+    src: '/tmp/libuecc-7.{libuecc_url_tail }}.tar.xz'
     dest: '/tmp/libuecc/'
     remote_src: yes
+  when: libuecc_install.changed
 
 - name: Cmake libuecc
   shell: 'cmake /tmp/libuecc/libuecc-7'
   args:
     chdir: '/tmp/libuecc/build'
+  when: libuecc_install.changed
 
 - name: Make libuecc
   make:
     chdir: '/tmp/libuecc/build'
     params:
       NUM_THREADS: 4
+  when: libuecc_install.changed
 
 - name: Make install libuecc
   make:
@@ -97,46 +110,52 @@
     target: install
     params:
       NUM_THREADS: 4
+  when: libuecc_install.changed
 
 - name: Execute ldconfig
   shell: ldconfig
+  when: libuecc_install.changed
 
 - name: Download fastd
   get_url:
-    #url: 'https://projects.universe-factory.net/attachments/download/86'
-    #checksum: sha256:714ff09d7bd75f79783f744f6f8c5af2fe456c8cf876feaa704c205a73e043c9
-    url: 'https://git.universe-factory.net/fastd/snapshot/fastd-18.tar'
-    checksum: sha256:dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491a
-    dest: '/tmp/fastd-18.tar'
+    url: '{{ fastd_url }}'
+    checksum: sha256:{{ fastd_checksum }}
+    dest: '/tmp/fastd_{{ fastd_url_string }}.tar'
+  register: fastd_install
 
 - name: Create '/tmp/fastd' Directory
   file:
     path: '/tmp/fastd'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: fastd_install.changed
 
 - name: Create '/tmp/fastd/build' Directory
   file:
     path: '/tmp/fastd/build'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: fastd_install.changed
 
 - name: Unpack fastd archive
   unarchive:
-    src: '/tmp/fastd-18.tar'
+    src: '/tmp/fastd_{{ fastd_url_string }}.tar'
     dest: '/tmp/fastd/'
     remote_src: yes
+  when: fastd_install.changed
 
 - name: Cmake fastd
   shell: 'cmake /tmp/fastd/fastd-18'
   args:
     chdir: '/tmp/fastd/build'
+  when: fastd_install.changed
 
 - name: Make fastd
   make:
     chdir: '/tmp/fastd/build'
     params:
       NUM_THREADS: 4
+  when: fastd_install.changed
 
 - name: Make install fastd
   make:
@@ -144,3 +163,4 @@
     target: install
     params:
       NUM_THREADS: 4
+  when: fastd_install.changed

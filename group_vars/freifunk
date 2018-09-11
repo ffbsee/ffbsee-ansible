@@ -16,7 +16,13 @@ alfred_sha256sum: 'c4ea1afa75628667693d14ee95f08c9943b9f0001b8c442c9a2974f26c75d
 
 fastd_libsodium_version: '1.0.14'
 fastd_libsodium_sha256sum: '3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7'
-
+libuecc_url_head: 'https://projects.universe-factory.net/attachments/download/'
+libuecc_url_tail: '85'
+libuecc_checksum: 'b94aef08eab5359d0facaa7ead2ce81b193eef0c61379d9835213ebc0a46257a'
+fastd_url_string: 'fastd-18'
+fastd_url: 'https://git.universe-factory.net/fastd/snapshot/{{ fastd_url_string }}.tar'
+fastd_checksum: 'dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491a'
+ 
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
 presentation_webserver: 'gw03.ffbsee.net'

@@ -2,11 +2,13 @@
 
 - name: Update admin user accounts
   hosts: all
+  tags: ssh
   roles:
     - ssh_authorized_keys
 
 - name: Update Packages
   hosts: all
+  tags: update
   roles:
     - base-packages
 

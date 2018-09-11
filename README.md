@@ -72,3 +72,10 @@ If you need a jump host to reach a gateway simply use this command:
 ```bash
 ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W [%h]:%p ansible@gw03.ffbsee.net'" gw02.ffbsee.yml
 ```
+
+Only run the roles with the "update" tag and not the full playbook:
+```bash
+ansible-playbook update_admins.yml --tags "update"
+```
+
+

@@ -2,6 +2,7 @@
 
 - name: Install common packages for gw03.ffbsee.net
   hosts: gw03.ffbsee.net
+  tags: base
   roles:
     - base-packages
     - ssh_authorized_keys
@@ -9,6 +10,7 @@
 
 - name: Configure network setup for gw03.ffbsee.net
   hosts: gw03.ffbsee.net
+  tags: network
   roles:
     - network
     - freifunk-backbone
@@ -24,6 +26,7 @@
 
 - name: Configure web setup for gw03.ffbsee.net
   hosts: gw03.ffbsee.net
+  tags: web
   roles:
     - nginx
     - gateway-page

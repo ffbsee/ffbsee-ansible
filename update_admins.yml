@@ -4,3 +4,9 @@
   hosts: all
   roles:
     - ssh_authorized_keys
+
+- name: Update Packages
+  hosts: all
+  roles:
+    - base-packages
+

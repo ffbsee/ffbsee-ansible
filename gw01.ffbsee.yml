@@ -13,7 +13,7 @@
   tags: network
   roles:
     - network
-    #- freifunk-backbone
+    - freifunk-backbone
     #- freifunk-update-script
     #- fastd-install
     #- fastd-config

@@ -19,29 +19,39 @@
     - libcap2-bin
     - radvd
 
+- name: Create '/root/download/' directory
+  file:
+    path: '/root/download'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Download 'B.A.T.M.A.N.' Advanced
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz'
-    dest: '/tmp/batman-adv.tar.gz'
+    dest: '/root/download/batman-adv.{{ batman_version }}.tar.gz'
     checksum: sha256:{{ batman_sha256sum }}
+  register: batmanadv
 
 - name: Create '/tmp/batman-adv/' directory
   file:
     path: '/tmp/batman-adv'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: batmanadv.changed
 
 - name: Unpack batman-adv archive
   unarchive:
-    src: '/tmp/batman-adv.tar.gz'
+    src: '/root/download/batman-adv.{{ batman_version }}.tar.gz'
     dest: '/tmp/batman-adv/'
     remote_src: yes
+  when: batmanadv.changed
 
 - name: Make batman-adv
   make:
     chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
     params:
       NUM_THREADS: 4
+  when: batmanadv.changed
 
 - name: Make install batman-adv
   make:
@@ -49,30 +59,35 @@
     target: install
     params:
       NUM_THREADS: 4
+  when: batmanadv.changed
 
 - name: Download batctl
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'
-    dest: '/tmp/batctl.tar.gz'
+    dest: '/root/download/batctl.{{ batman_version }}.tar.gz'
     checksum: sha256:{{ batctl_sha256sum }}
+  register: batctldl
 
 - name: Create '/tmp/batctl/' Directory
   file:
     path: '/tmp/batctl'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: batctldl.changed
 
 - name: Unpack batctl archive
   unarchive:
-    src: '/tmp/batctl.tar.gz'
+    src: '/root/download/batctl.{{ batman_version }}.tar.gz'
     dest: '/tmp/batctl/'
     remote_src: yes
+  when: batctldl.changed
 
 - name: Make batctl
   make:
     chdir: '/tmp/batctl/batctl-{{ batman_version }}'
     params:
       NUM_THREADS: 4
+  when: batctldl.changed
 
 - name: Make install batctl
   make:
@@ -80,6 +95,7 @@
     target: install
     params:
       NUM_THREADS: 4
+  when: batctldl.changed
 
 - name: Create alfred group
   group:
@@ -98,20 +114,23 @@
 - name: Download alfred
   get_url:
     url: 'https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
-    dest: '/tmp/alfred.tar.gz'
+    dest: '/root/download/alfred.{{ batman_version }}.tar.gz'
     checksum: sha256:{{ alfred_sha256sum }}
+  register: alfreddl
 
 - name: Create '/tmp/alfred/' Directory
   file:
     path: '/tmp/alfred'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: alfreddl.changed
 
 - name: Unpack alfred archive
   unarchive:
-    src: '/tmp/alfred.tar.gz'
+    src: '/root/download/alfred.{{ batman_version }}.tar.gz'
     dest: '/tmp/alfred/'
     remote_src: yes
+  when: alfreddl.changed
 
 - name: Make alfred
   make:
@@ -120,6 +139,7 @@
       NUM_THREADS: 4
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
+  when: alfreddl.changed
 
 - name: Make install alfred
   make:
@@ -129,12 +149,14 @@
       NUM_THREADS: 4
       CONFIG_ALFRED_GPSD: n
       CONFIG_ALFRED_VIS: n
+  when: alfreddl.changed
 
 - name: Set Linux capabilities for alfred
   capabilities:
     path: '/usr/local/sbin/alfred'
     capability: 'cap_net_raw+ep'
     state: present
+  when: alfreddl.changed
 
 - name: Copy Router-Advertisement configuration
   template:

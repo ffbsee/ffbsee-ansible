@@ -17,10 +17,16 @@
     - libjson-c-dev
     - cmake-curses-gui
 
+- name: Create '/root/download/' directory
+  file:
+    path: '/root/download'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Download libsodium
   get_url:
     url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
-    dest: '/tmp/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
+    dest: '/root/download/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
     checksum: sha256:{{ fastd_libsodium_sha256sum }}
   register: libsodium_install
 
@@ -33,7 +39,7 @@
 
 - name: Unpack libsodium archive
   unarchive:
-    src: '/tmp/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
+    src: '/root/download/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
     dest: '/tmp/fastd_libsodium/'
     remote_src: yes
   when: libsodium_install.changed
@@ -66,7 +72,7 @@
 - name: Download libuecc
   get_url:
     url: '{{ libuecc_url_head }}{{libuecc_url_tail }}'
-    dest: '/tmp/libuecc-7.{libuecc_url_tail }}.tar.xz'
+    dest: '/root/download/libuecc-7.{libuecc_url_tail }}.tar.xz'
     checksum: sha256:{{ libuecc_checksum }}
   register: libuecc_install
 
@@ -86,7 +92,7 @@
 
 - name: Unpack libuecc archive
   unarchive:
-    src: '/tmp/libuecc-7.{libuecc_url_tail }}.tar.xz'
+    src: '/root/download/libuecc-7.{libuecc_url_tail }}.tar.xz'
     dest: '/tmp/libuecc/'
     remote_src: yes
   when: libuecc_install.changed
@@ -120,7 +126,7 @@
   get_url:
     url: '{{ fastd_url }}'
     checksum: sha256:{{ fastd_checksum }}
-    dest: '/tmp/fastd_{{ fastd_url_string }}.tar'
+    dest: '/root/download/fastd_{{ fastd_url_string }}.tar'
   register: fastd_install
 
 - name: Create '/tmp/fastd' Directory
@@ -139,7 +145,7 @@
 
 - name: Unpack fastd archive
   unarchive:
-    src: '/tmp/fastd_{{ fastd_url_string }}.tar'
+    src: '/root/download/fastd_{{ fastd_url_string }}.tar'
     dest: '/tmp/fastd/'
     remote_src: yes
   when: fastd_install.changed
@@ -164,3 +170,4 @@
     params:
       NUM_THREADS: 4
   when: fastd_install.changed
+

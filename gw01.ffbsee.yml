@@ -13,10 +13,15 @@
   tags: network
   roles:
     - network
-    #- freifunk-backbone
+    - freifunk-backbone
     #- freifunk-update-script
     #- fastd-install
     #- fastd-config
+
+- name: Configure network routing for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  tags: routing
+  roles:
     #- firewall
     #- dhcpd
     #- dhcp-relay
@@ -30,5 +35,5 @@
   roles:
     #- nginx
     #- gateway-page
-    #- freifunk-karte-json
-    #- FFNodeList
+    - freifunk-karte-json
+    - FFNodeList

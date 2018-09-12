@@ -35,7 +35,15 @@
     mode: 'u=rw,g=r,o='
   with_items: '{{ admins }}'
 
+- name: Copy motd.sh to gateway
+  template:
+    src: 'files/home_environment/motd.sh'
+    dest: '/etc/motd.sh'
+    owner: 'root'
+    group: 'admins'
+    mode: 'u=rwx,g=rx,o='
+  register: motdsh
 
 - name: Set fancy motd
   script: 'files/home_environment/motd.sh {{ hostname }}'
-  # TODO: Replace with flat file copy for idempotency
+  when: motdsh.changed

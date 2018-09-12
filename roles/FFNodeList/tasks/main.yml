@@ -11,18 +11,21 @@
     - cpanminus
     - libjson-pp-perl
     - libwww-perl
+  when: nodelist
 
 - name: Create '/var/www/HOSTNAME/FFNodeList' directory
   file:
     path: '/var/www/{{ hostname }}/FFNodeList'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: nodelist
 
 - name: FFNodeList Template
   template:
     src: 'templates/FFNodeList/generateList.pl'
     dest: '/opt/freifunk/genNodeList.pl'
     mode: '0755'
+  when: nodelist
 
 - name: FFNodeList JavaScript
   copy:
@@ -31,6 +34,7 @@
     owner: 'www-data'
     group: 'www-data'
     mode: '0755'
+  when: nodelist
 
 - name: Install Perl modules
   cpanm:
@@ -40,3 +44,5 @@
     - 'LWP::Simple'
     - 'utf8'
     - 'JSON'
+  when: nodelist
+

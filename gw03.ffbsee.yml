@@ -17,6 +17,11 @@
     - freifunk-update-script
     - fastd-install
     - fastd-config
+
+- name: Configure network routing for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags: routing
+  roles:
     - firewall
     - dhcpd
     #- dhcp-relay

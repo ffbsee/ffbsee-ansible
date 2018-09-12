@@ -7,31 +7,38 @@
     owner: 'www-data'
     group: 'www-data'
     mode: '0775'
+  when: freifunk_karte_api
 
 - name: Create JSON-API Directory
   file:
     path: '/var/www/{{ maps_webserver }}'
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
+  when: freifunk_karte_api
 
 - name: Reload nginx
   service: name=nginx state=restarted
+  when: freifunk_karte_api
 
 - name: Create letsencrypt certificate
   shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ maps_webserver }}
   args:
     creates: /etc/letsencrypt/live/{{ maps_webserver }}
+  when: freifunk_karte_api
 
 - set_fact:
     webserver: '{{ maps_webserver }}'
+  when: freifunk_karte_api
 
 - name: Install nginx site for specified site
   template:
     src: templates/nginx/nginx-letsencrypt-api.conf
     dest: /etc/nginx/sites-enabled/api-https
+  when: freifunk_karte_api
 
 - name: Reload nginx to activate specified site
   service: name=nginx state=restarted
+  when: freifunk_karte_api
 
 - name: Add letsencrypt cronjob for cert renewal
   cron:
@@ -40,6 +47,7 @@
     job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ maps_webserver }} && service nginx reload
     cron_file: '/etc/crontab'
     user: 'root'
+  when: freifunk_karte_api
 
 - name: Clone api git
   git:
@@ -47,6 +55,7 @@
     dest: '{{ api_gitroot }}'
     clone: yes
     update: yes
+  when: freifunk_karte_api
 
 - name: Default Site API
   copy:
@@ -55,6 +64,7 @@
     owner: 'www-data'
     group: 'www-data'
     mode: '0775'
+  when: freifunk_karte_api
 
 
 - name: Update Freifunk Community Files
@@ -64,5 +74,6 @@
     job: '/opt/freifunk/json-update.pl'
     cron_file: '/etc/crontab'
     user: 'root'
+  when: freifunk_karte_api
 
 

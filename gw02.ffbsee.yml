@@ -17,6 +17,11 @@
     - freifunk-update-script
     - fastd-install
     - fastd-config
+
+- name: Configure network routing for gw02.ffbsee.net
+  hosts: gw02.ffbsee.net
+  tags: routing
+  roles:
     - firewall
     - dhcpd
     #- dhcp-relay
@@ -30,5 +35,5 @@
   roles:
     - nginx
     - gateway-page
-    #- freifunk-karte-json
+    - freifunk-karte-json
     - FFNodeList

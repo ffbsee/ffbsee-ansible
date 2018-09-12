@@ -37,7 +37,7 @@
 
 - name: Copy motd.sh to gateway
   template:
-    src: 'files/home_environment/motd.sh '
+    src: 'files/home_environment/motd.sh'
     dest: '/etc/motd.sh'
     owner: 'root'
     group: 'admins'

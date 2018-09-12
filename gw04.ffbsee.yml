@@ -36,4 +36,4 @@
     #- nginx
     #- gateway-page
     - freifunk-karte-json
-    #- FFNodeList
+    - FFNodeList

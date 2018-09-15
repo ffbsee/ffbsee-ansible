@@ -2,6 +2,7 @@
 
 - name: Install common packages for meta.ffbsee.net
   hosts: meta.ffbsee.net
+  tags: base
   roles:
     - base-packages
     - ssh_authorized_keys
@@ -9,6 +10,7 @@
 
 - name: Configure network setup for meta.ffbsee.net
   hosts: meta.ffbsee.net
+  tags: network
   roles:
     - network
     - freifunk-backbone
@@ -17,8 +19,14 @@
     - fastd-config
     - gateway-page
 
+- name: Configure network routing for gw04.ffbsee.net
+  hosts: meta.ffbsee.net
+  tags: routing
+  roles:
+
 - name: Configure web setup for meta.ffbsee.net
   hosts: meta.ffbsee.net
+  tags: web
   roles:
     - apache
     - meta-ffbsee-net

@@ -46,3 +46,14 @@
     - 'JSON'
   when: nodelist
 
+
+- name: Add cron job for FFNodeList script
+  cron:
+    name: 'gen FFNodeList'
+    job: '/opt/freifunk/genNodeList.pl > /dev/null'
+    minute: '*/5'
+    user: 'root'
+    state: 'present'
+    cron_file: '/etc/crontab'
+
+

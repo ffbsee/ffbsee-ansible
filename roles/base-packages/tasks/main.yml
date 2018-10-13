@@ -2,11 +2,12 @@
 
 - name: Install some common base packages
   apt:
-    pkg: '{{ item }}'
     state: 'latest'
+    name: "{{ packages }}"
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
+  vars:
+    packages:
     - tmux
     - aptitude
     - htop
@@ -38,11 +39,12 @@
 
 - name: Install some common Debian specific packages
   apt:
-    pkg: '{{ item }}'
+    name: '{{ packages }}'
     state: latest
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
+  vars:
+    packages:
     - debian-goodies
     - apt-dater-host
   when: ansible_distribution == 'Debian'

@@ -36,6 +36,7 @@
     - mtr-tiny
     - bash-completion
     - unzip
+    - python3-pip 
 
 - name: Install some common Debian specific packages
   apt:

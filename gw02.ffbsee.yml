@@ -29,6 +29,12 @@
     - freifunk-icvpn
     - bird
 
+- name: Configure ovh dns script for gw02.ffbsee.net
+  hosts: gw02.ffbsee.net
+  tags: ovh
+  roles:
+    - ovh-dns-update
+
 - name: Configure web setup for gw02.ffbsee.net
   hosts: gw02.ffbsee.net
   tags: web

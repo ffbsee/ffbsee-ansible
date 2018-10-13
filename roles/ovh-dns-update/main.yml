@@ -1,0 +1,43 @@
+---
+
+- name: Copy Python Script to gateway
+  copy:
+    src: 'files/ovh/change-a-record.py'
+    dest: '/opt/freifunk/change-a-record.py'
+    mode: 0755
+
+
+- name: Install Python packages
+  pip:
+    name: {{ packages }}
+  vars:
+    packages:
+    - configparser
+    - ovh
+
+- name: Check that the ovh.conf exists
+    stat:
+      path: '/tmp/ovh.conf'
+    register: ovh-config
+
+- fail:
+    msg: "Require config file at /etc/ovh.conf for dns update"
+  when: ovh-config.exists == False
+
+- name: Copy Python Script to gateway
+  copy:
+    src: 'files/ovh/example.conf'
+    dest: '/etc/ovh.conf'
+    mode: 0755
+  when: ovh-config.exists == True
+
+- name: Create Cronjob to check dns
+  cron:
+    name: "Check DNS"
+    job: "/usr/bin/python /opt/freifunk/change-a-record.py > /dev/null"
+    minute: '*/5'
+    user: 'root'
+    state: 'present'
+    cron_file: '/etc/crontab'
+
+

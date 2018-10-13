@@ -2,11 +2,12 @@
 
 - name: Install dependencies for batman-adv batctl and alfred
   apt:
-    pkg: '{{ item }}'
+    name: '{{ packages }}'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
+  vars:
+    packages:
     - wget
     - git
     - build-essential

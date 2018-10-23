@@ -46,11 +46,12 @@ adduser --disabled-password --shell /bin/bash --gecos "" ansible
 Er sollte aber Superkräfte *(sudo/root)* haben. Und unter `~/.ssh/authorized_keys` sollte selbstverständlich dein SSH Public-Key liegen.
 
 ```bash
+apt update
 apt install sudo
 echo 'ansible ALL=NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
 
 mkdir /home/ansible/.ssh
-echo "YOUR SSH-KEY" > /home/ansible/.ssh/authorized_keys
+curl "https://raw.githubusercontent.com/ffbsee/ansible/master/files/admin_ssh_keys/l3d_id.pub" > /home/ansible/.ssh/authorized_keys # Add your SSH Key
 chmod -R 700 /home/ansible/.ssh
 chown -R ansible.ansible /home/ansible/.ssh
 ```

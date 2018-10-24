@@ -17,8 +17,9 @@ batctl_sha256sum: '27877d0da6916f88a6cecbbb3f3d23cc4558ef7c7294324bf4fd050ed606b
 alfred_sha256sum: '808fa6acf65c7a8e26405115176a5587157f746108cbe5dd974788eb05416d76'
  # https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
 
-fastd_libsodium_version: '1.0.14'
-fastd_libsodium_sha256sum: '3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7'
+fastd_libsodium_version: '1.0.16'
+fastd_libsodium_sha256sum: 'eeadc7e1e1bcef09680fb4837d448fbdf57224978f865ac1c16745868fbd0533'
+# https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz
 libuecc_url_head: 'https://projects.universe-factory.net/attachments/download/'
 libuecc_url_tail: '85'
 libuecc_checksum: 'b94aef08eab5359d0facaa7ead2ce81b193eef0c61379d9835213ebc0a46257a'

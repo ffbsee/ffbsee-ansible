@@ -9,10 +9,13 @@ ipv4_dhcp_server: '10.11.160.103 10.11.160.102'
 ipv4_dhcp_interface: 'bat0'
 ipv4_netz: '10.11.160.0/20'
 
-batman_version: '2017.4'
-batman_sha256sum: '8a50ffacd2bd5b65b2987eb2ae06fb9338c6af46935ec38ba869cca545719a4c'
-batctl_sha256sum: '047d6aac4da51dbfb5721df0bbc9b1699c8431e4707157f939c6d6c4f214e464'
-alfred_sha256sum: 'c4ea1afa75628667693d14ee95f08c9943b9f0001b8c442c9a2974f26c75dc88'
+batman_version: '2018.1'
+batman_sha256sum: 'b866b28dbbe5c9238abbdf5abbc30fc526dea56898ce4c1bd76d5c017843048b'
+ # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz
+batctl_sha256sum: '27877d0da6916f88a6cecbbb3f3d23cc4558ef7c7294324bf4fd050ed606b553'
+ # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz
+alfred_sha256sum: '808fa6acf65c7a8e26405115176a5587157f746108cbe5dd974788eb05416d76'
+ # https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
 
 fastd_libsodium_version: '1.0.14'
 fastd_libsodium_sha256sum: '3cfc84d097fdc891b40d291f2ac2c3f99f71a87e36b20cc755c6fa0e97a77ee7'

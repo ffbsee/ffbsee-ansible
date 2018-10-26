@@ -14,9 +14,9 @@
   roles:
     - network
     - freifunk-backbone
-    #- freifunk-update-script
-    #- fastd-install
-    #- fastd-config
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
 
 - name: Configure network routing for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

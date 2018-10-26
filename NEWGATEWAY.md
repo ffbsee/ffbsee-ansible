@@ -47,7 +47,7 @@ Er sollte aber Superkräfte *(sudo/root)* haben. Und unter `~/.ssh/authorized_ke
 
 ```bash
 apt update
-apt install sudo
+apt install sudo curl
 echo 'ansible ALL=NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
 
 mkdir /home/ansible/.ssh

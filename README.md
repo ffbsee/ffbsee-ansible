@@ -37,7 +37,7 @@ Freifunk Bodensee Network
 
 Right now, there are some dedicated servers, the Freifunk-Gateways:
 
-* [gw01.ffbsee.net](https://gw01.ffbsee.net) - **Gateway 01**
+* [gw01.ffbsee.net](https://gw01.ffbsee.net:444) - **Gateway 01**
   * Hetzner Server
   * Germany
   * Dual-Stack
@@ -45,7 +45,7 @@ Right now, there are some dedicated servers, the Freifunk-Gateways:
 * [gw02.ffbsee.net](https://gw02.ffbsee.net) - **Gateway 02**
   * CCCZH Server
   * Swiss
-  * In: IPv6, out: Dual-Stack
+  * fastd: Dual-Stack; web, ssh etc: IPv6
   * AS 13030
 * [gw03.ffbsee.net](https://gw03.ffbsee.net) - **Gateway 03**
   * MyLoc Server

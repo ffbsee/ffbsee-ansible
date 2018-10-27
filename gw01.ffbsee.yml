@@ -26,8 +26,8 @@
     #- dhcpd
     - dhcp-relay
     - unbound
-    #- freifunk-icvpn
-    #- bird
+    - freifunk-icvpn
+    - bird
 
 - name: Configure web setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

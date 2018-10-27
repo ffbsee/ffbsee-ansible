@@ -27,5 +27,5 @@
 # ICVPN Firewall Optionen
 #
 /sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ icvpn_interface }} -j ACCEPT
-/sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }}-j ACCEPT
+/sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }} -j ACCEPT
 {% endif %}

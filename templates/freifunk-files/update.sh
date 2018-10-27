@@ -252,17 +252,17 @@ fi # run_webserver
 if [ $run_icvpn = true ]; then
     if ! is_running "tincd"; then
         echo "(I) Start tincd."
-        service tinc@icvpn start
+        systemctl start tinc@icvpn
     fi
-    if ! is_running "bird"; then
-        echo "(I) Start bird."
-        service bird start
-    fi
-    if ! is_running "bird6"; then
-        echo "(I) Start bird6."
-        service bird6 start
-    fi  
 fi # run icvpn
+if ! is_running "bird"; then
+    echo "(I) Start bird."
+    systemctl start bird.service
+fi
+if ! is_running "bird6"; then
+    echo "(I) Start bird6."
+    systemctl start bird6.service
+fi  
 echo "update done"
 
 

@@ -11,5 +11,9 @@
 /sbin/ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
 /sbin/ip6tables -A FORWARD -i bat0 -o {{ wan_interface }} -j ACCEPT
 /sbin/ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}
-
-{% endif %}
+{% if vpn_on_port_443 == 'true' %}#
+# ICVPN Firewall Optionen
+#
+/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ icvpn_interface }} -j ACCEPT
+/sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }}-j ACCEPT
+{% endif %}{% endif %}

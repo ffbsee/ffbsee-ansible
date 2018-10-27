@@ -25,7 +25,7 @@ wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_i
 wan_ipv4_ip: '89.163.145.35'
 
 fastd_secret_key: ''
-
+vpn_on_port_443: 'false'
 
 run_mesh: 'true'
 run_gateway: 'true'

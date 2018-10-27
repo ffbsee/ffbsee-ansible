@@ -22,10 +22,10 @@
   hosts: gw01.ffbsee.net
   tags: routing
   roles:
-    #- firewall
+    - firewall
     #- dhcpd
-    #- dhcp-relay
-    #- unbound
+    - dhcp-relay
+    - unbound
     #- freifunk-icvpn
     #- bird
 

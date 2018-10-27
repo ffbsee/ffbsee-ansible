@@ -7,6 +7,7 @@ community_shortname: 'ffbsee'
 ipv6_prefix: 'fdef:1701:b5ee:42:'
 ipv4_dhcp_server: '10.11.160.103 10.11.160.102'
 ipv4_dhcp_interface: 'bat0'
+icvpn_interface: 'icvpn'
 ipv4_netz: '10.11.160.0/20'
 
 batman_version: '2018.1'

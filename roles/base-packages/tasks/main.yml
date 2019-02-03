@@ -37,6 +37,8 @@
     - bash-completion
     - unzip
     - python3-pip 
+    - ranger
+    - net-tools
 
 - name: Install some common Debian specific packages
   apt:

@@ -36,7 +36,7 @@ da_laueft_ein_dhcp_relay: 'true'
 
 fastd_vpn_backbone_configs:
   - gw01
-  - gw02
+  - gw02_on-gw04
   - gw03
 fastd_peer_limit: '20'
 

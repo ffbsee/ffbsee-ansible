@@ -2,7 +2,9 @@
 
 admins:
   - l3d
+  - xperimental
   - mart
+ 
 
 hostname: 'meta.ffbsee.net'
 

@@ -1,34 +1,55 @@
 ---
 
-- name: Install common packages for gw01.ffbsee.net
-  hosts: gw01.ffbsee.net
-  tags: base
+- name: Update packages and users on all nodes
+  hosts: freifunk
+  tags: 
+  - base
+  - users
+  - home
+  - base-packages
+  - ssh_authorized_keys
+  - home_environment
+  - new-user
   roles:
     - base-packages
     - ssh_authorized_keys
     - home_environment
 
-- name: Configure network setup for gw01.ffbsee.net
+- name: Configure basic network setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
-  tags: network
+  tags:
+  - network
+  - interfaces
   roles:
     - network
-    - freifunk-backbone
-    - freifunk-update-script
-    - fastd-install
-    - fastd-config
+  
+- name: Configure freifunk network setup for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  tags:
+  - backbone
+  - fastd
+  - freifunk-backbone
+  - freifunk-update-script
+  - fastd-install
+  - fastd-config
+  roles:
+#    - freifunk-backbone
+#    - freifunk-update-script
+#    - fastd-install
+#    - fastd-config
 
 - name: Configure network routing for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
-  tags: routing
+  tags: 
+  - routing
   roles:
-    - firewall
-    #- dhcpd
-    - dhcp-relay
-    - unbound
-    - freifunk-icvpn
-    - bird
-    - tinc
+#    - firewall
+#    #- dhcpd
+#    - dhcp-relay
+#    - unbound
+#    - freifunk-icvpn
+#    - bird
+#    - tinc
 
 - name: Configure web setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
@@ -36,5 +57,5 @@
   roles:
     #- nginx
     #- gateway-page
-    - freifunk-karte-json
-    - FFNodeList
+#    - freifunk-karte-json
+#    - FFNodeList

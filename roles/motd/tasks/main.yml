@@ -1,0 +1,14 @@
+---
+- name: Copy motd.sh to gateway
+  template:
+    src: 'files/motd.sh'
+    dest: '/etc/motd.sh'
+    owner: 'root'
+    group: 'admins'
+    mode: 'u=rwx,g=rx,o='
+  register: motdsh
+
+- name: Set fancy motd
+  script: 'files/home_environment/motd.sh {{ hostname }}'
+  when: motdsh.changed
+

@@ -16,6 +16,15 @@
     - sshd
     - home_environment
 
+- name: Update packages and users on all nodes
+  hosts: freifunk
+  tags: 
+  - home_environment
+  - motd
+  roles:
+    - home_environment
+    - motd
+
 - name: Configure basic network setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net
   tags:

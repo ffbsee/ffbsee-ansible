@@ -1,15 +1,17 @@
----
 
+# Some general information about this Freifunk community
 community: 'bodensee'
 community_name: 'Bodensee'
 community_shortname: 'ffbsee'
 
+# Some tecnical information like internal IP Adresses
 ipv6_prefix: 'fdef:1701:b5ee:42:'
 ipv4_dhcp_server: '10.11.160.103 10.11.160.102'
 ipv4_dhcp_interface: 'bat0'
 icvpn_interface: 'icvpn'
 ipv4_netz: '10.11.160.0/20'
 
+# some more advanced informations like B.A.T.M.A.N Download Informations
 batman_version: '2018.1'
 batman_sha256sum: 'b866b28dbbe5c9238abbdf5abbc30fc526dea56898ce4c1bd76d5c017843048b'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz
@@ -27,12 +29,7 @@ libuecc_checksum: 'b94aef08eab5359d0facaa7ead2ce81b193eef0c61379d9835213ebc0a462
 fastd_url_string: 'fastd-18'
 fastd_url: 'https://git.universe-factory.net/fastd/snapshot/{{ fastd_url_string }}.tar'
 fastd_checksum: 'dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491a'
- 
+
+# tecnical informations for TLS
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
-presentation_webserver: 'gw03.ffbsee.net'
-presentation_domain: 'about.ffbsee.net'
-
-maps_webserver: 'api.ffbsee.net'
-json_api_path: '/var/www/{{ maps_webserver }}'
-api_gitroot: '/root/freifunk-json-api'

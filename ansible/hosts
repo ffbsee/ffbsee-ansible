@@ -1,6 +1,3 @@
 [freifunk]
 gw01.ffbsee.net ansible_host="preview.gw01.ffbsee.net"
-gw02.ffbsee.net
-gw03.ffbsee.net
-gw04.ffbsee.net
-meta.ffbsee.net
+

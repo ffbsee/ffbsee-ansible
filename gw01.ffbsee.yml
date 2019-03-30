@@ -13,6 +13,7 @@
   roles:
     - base-packages
     - ssh_authorized_keys
+    - sshd
     - home_environment
 
 - name: Configure basic network setup for gw01.ffbsee.net

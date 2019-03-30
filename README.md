@@ -71,13 +71,22 @@ Right now, there are some dedicated servers, the Freifunk-Gateways:
   * AS 21263
 -->
 
-Add another gateway
-===================
+ Adresses:
+-----------
+Please visit [ICVPN META](https://github.com/freifunk/icvpn-meta/blob/master/bodensee)
+```bash
+  fdef:1702:b5ee::/48
+  10.11.160.0/20
+  10.15.224.0/20 
+```
+
+ Add another gateway
+---------------------
 
 To add an other gateway please read the [Instructions](https://github.com/ffbsee/ansible/blob/master/NEWGATEWAY.md) and talk to us via [#ffbsee](https://webirc.hackint.org/#irc://irc.hackint.org/#ffbsee) or mailing list!
 
 
-Tipps
+ Tipps
 =====
 
 If you need a jump host to reach a gateway simply use this command:

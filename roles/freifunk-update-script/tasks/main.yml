@@ -37,8 +37,6 @@
     state: 'present'
     cron_file: '/etc/crontab'
 
-
-
 - name: Copy map-backend.py (deprecated, but required)
   copy:
     src: 'files/freifunk-files/map-backend.py'

@@ -5,11 +5,11 @@ community_name: 'Bodensee'
 community_shortname: 'ffbsee'
 
 # Some tecnical information like internal IP Adresses
-ipv6_prefix: 'fdef:1701:b5ee:42:'
+### FYI: We use new addresses on B.A.T.M.A.N. V
+ipv6_prefix: 'fdef:1701:b5ee:23:'
+ipv4_netz: '10.11.160.0/20'
 ipv4_dhcp_server: '10.11.160.103 10.11.160.102'
 ipv4_dhcp_interface: 'bat0'
-icvpn_interface: 'icvpn'
-ipv4_netz: '10.11.160.0/20'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations
 batman_version: '2018.1'

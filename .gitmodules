@@ -21,4 +21,7 @@
 	url = https://github.com/ffbsee/role-ssh_authorized_keys.git
 [submodule "roles/base-packages"]
 	path = roles/base-packages
-	url = https://github.com/ffbsee/role-base_packages.git
+	url = https://gitea.see-base.de/toolbox/role-base_packages.git
+[submodule "files/ssh_authorized_keys"]
+	path = files/ssh_authorized_keys
+	url = https://gitea.see-base.de/toolbox/ssh-public-keys.git

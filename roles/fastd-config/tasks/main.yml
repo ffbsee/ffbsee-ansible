@@ -93,8 +93,8 @@
 
 - name: Copy fastd nodes configuration
   template:
-    src: 'templates/fastd/fastd-nodes.conf'
-    dest: '/etc/fastd/fastd-nodes.conf'
+    src: 'templates/fastd/fastd_nodes.conf'
+    dest: '/etc/fastd/fastd_nodes.conf'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'

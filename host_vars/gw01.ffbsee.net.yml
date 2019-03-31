@@ -49,8 +49,8 @@ hostname: 'gw01.ffbsee.net'
 
 # fastd configuration:
 ## list all backbone gateways
-fastd_vpn_backbone_configs: false
-# - gw02
+fastd_vpn_backbone_configs: 
+ - gw01
 
 # define which service should run:
 run_mesh: 'true'
@@ -87,4 +87,5 @@ mesh_ipv6_address: '{{ ipv6_address }}'
 # optional define fastd secret key:
 ## else a key will generatet automatically
 ## if it is not already avaliable on server
-fastd_secret_key: '' 
+fastd_secret_key: ''
+fastd_peer_limit: ''

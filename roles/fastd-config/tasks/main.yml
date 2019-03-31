@@ -84,8 +84,8 @@
 
 - name: Copy fastd backbone configuration
   template:
-    src: 'templates/fastd/fastd-backbone.conf'
-    dest: '/etc/fastd/fastd-backbone.conf'
+    src: 'templates/fastd/fastd_backbone.conf'
+    dest: '/etc/fastd/fastd_backbone.conf'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'

@@ -52,9 +52,39 @@ hostname: 'gw01.ffbsee.net'
 fastd_vpn_backbone_configs: false
 # - gw02
 
+# define which service should run:
+run_mesh: 'true'
+run_gateway: 'true'
+run_webserver: 'false'
+run_icvpn: 'false'
+run_map: 'false'
+run_stats: 'false'
+da_laueft_ein_dhcp_relay: 'false'
+nodelist: false
+
 # ipv6 radvd
+ipv6_uplink_announcen: true
 radv_AdvDefaultPreference: 'medium' # low - medium - high
+ipv6_radv_suffix: ':1'
+ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
+# batman - used addresses
+ipv4_mesh_address: '10.15.224.1' 
+ipv6_suffix: ':1'
+wan_base_interface: 'enp2s0'
+wan_vlan_id: ''
+wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
+wan_ipv4_ip: '144.76.175.21'
 
+# some more useless addresses
+mesh_ipv6_extra_addr: ''
 
+# add addresses from variables
+ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
+mesh_ipv6_address: '{{ ipv6_address }}'
+
+# optional define fastd secret key:
+## else a key will generatet automatically
+## if it is not already avaliable on server
+fastd_secret_key: '' 

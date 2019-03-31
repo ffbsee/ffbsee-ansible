@@ -1,4 +1,4 @@
-![Freifunk Bodensee](https://freifunk-bodensee.net/lib/tpl/dokuwiki-template/images/logo.svg "FFBSee")
+![Freifunk Bodensee](https://freifunk-bodensee.net/images/see.svg "FFBSee")
 
  Ansible
 =======

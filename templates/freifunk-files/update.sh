@@ -104,7 +104,7 @@ if [ $run_mesh = true ]; then
 	# force BATMAN V routing algo _before_ batctl sets up the interface
 	echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
 
-	batctl if add fastd_mesh
+	batctl if add fastd_backbone
     fi
 
     if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then

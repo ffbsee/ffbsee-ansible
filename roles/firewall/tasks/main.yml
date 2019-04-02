@@ -7,41 +7,156 @@
     update_cache: yes
     cache_valid_time: 86400
 
-- name: Copy iptables (IPv4) Rule
-  template:
-    src: 'templates/firewall/ip4tables.sh'
-    dest: '/opt/freifunk/ip4tables.sh'
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
+- name: Reject RFC 1918 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 192.168.0.0/16
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+  when: block_rfc1918_traffic
 
-- name: Copy ip6tables (IPv6) Rule
-  template:
-    src: 'templates/firewall/ip6tables.sh'
-    dest: '/opt/freifunk/ip6tables.sh'
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
+- name: Reject RFC 1918 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 172.16.0.0/12
+    out_interface: "{{ block_rfc1918_interface }}"
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+  when: block_rfc1918_traffic
 
-- name: Cron for IPv4 Firewall
-  cron:
-    name: 'Cron for IPv4 iptables'
-    job: '/opt/freifunk/ip4tables.sh > /dev/null'
-    special_time: 'reboot'
-    user: 'root'
-    state: 'present'
-    cron_file: '/etc/crontab'
+- name: Reject RFC 1918 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 10.0.0.0/8
+    out_interface: "{{ block_rfc1918_interface }}"
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+  when: block_rfc1918_traffic
+
+- name: Reject APIPA - link-local addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 169.254.0.0/16
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject ISP - carrier-grade NAT addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 100.64.0.0/10
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject multicast addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 224.0.0.0/3
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject IANA IPv4 Special Purpose Address Registry addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 192.0.0.0/24
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject TEST-NET-1 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 192.0.2.0/24
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject 6to4 anycast relays (deprecated) addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 192.88.99.0/24
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject testing of inter-network communications addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 198.18.0.0/15
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject TEST-NET-2 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 198.51.100.0/24
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
+
+- name: Reject TEST-NET-3 addresses
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: 203.0.113.0/24
+    jump: REJECT
+    reject_with: icmp-net-prohibited
+    state: present
+  notify: save iptables
 
 
-- name: Cron for IPv6 Firewall
-  cron:
-    name: 'Cron for ipv6 iptables'
-    job: '/opt/freifunk/ip6tables.sh > /dev/null'
-    special_time: 'reboot'
-    user: 'root'
-    state: 'present'
-    cron_file: '/etc/crontab'
+#
+#
+# NAT
+# /sbin/iptables -t nat -A POSTROUTING -o {{ wan_interface }} -j MASQUERADE
+#
 
-- name: execute firewall rules
-  shell: '/sbin/iptables -F; /sbin/iptables -t nat -F; /sbin/ip6tables -F; /sbin/ip6tables -t nat -F; /opt/freifunk/ip4tables.sh; /opt/freifunk/ip6tables.sh'
+- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  become: true
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ wan_interface }}"
+    jump: MASQUERADE
+    state: present
+  notify: save iptables
+
+#
+# missing:
+#/sbin/iptables -A FORWARD -i {{ wan_interface }} -o {{ ipv4_dhcp_interface }} -m state --state RELATED,ESTABLISHED -j ACCEPT
+#/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ wan_interface }} -j ACCEPT
+#{% if vpn_on_port_443 == 'true' %}#
+# ICVPN Firewall Optionen
+#
+#/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ icvpn_interface }} -j ACCEPT
+# /sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }} -j ACCEPT
+#{% endif %}
 

@@ -88,4 +88,10 @@ mesh_ipv6_address: '{{ ipv6_address }}'
 ## else a key will generatet automatically
 ## if it is not already avaliable on server
 fastd_secret_key: ''
-fastd_peer_limit: ''
+fastd_peer_limit: '' # should we limit the fastd peer limits
+
+# some rules for the iptables/firewall
+# should we only use the wan interface on some rules? (recomendet)
+block_rfc1918_interface: "{{ wan_base_interface }}"
+
+

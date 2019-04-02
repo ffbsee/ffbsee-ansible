@@ -53,7 +53,7 @@
   tags: 
   - routing
   roles:
-#    - firewall
+   - firewall
 #    #- dhcpd
 #    - dhcp-relay
 #    - unbound

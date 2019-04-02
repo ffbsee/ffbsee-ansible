@@ -1,0 +1,7 @@
+---
+
+# should we block rfc1918 traffic by default? (recomendet)
+block_rfc1918_traffic: true
+
+# some rules require a wan interface...
+#block_rfc1918_interface: 'enp2s0'

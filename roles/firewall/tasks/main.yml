@@ -149,10 +149,32 @@
     state: present
   notify: save iptables
 
-#
-# missing:
 #/sbin/iptables -A FORWARD -i {{ wan_interface }} -o {{ ipv4_dhcp_interface }} -m state --state RELATED,ESTABLISHED -j ACCEPT
+- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  become: true
+  iptables:
+    chain: FORWARD
+    in_interface: "{{ wan_interface }}"
+    out_interface: "{{ ipv4_dhcp_interface }}"
+    jump: ACCEPT
+    match: state
+    ctstate: ESTABLISHED,RELATED
+    state: present
+  notify: save iptables
+
 #/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ wan_interface }} -j ACCEPT
+- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  become: true
+  iptables:
+    chain: FORWARD
+    in_interface: "{{ ipv4_dhcp_interface }}"
+    out_interface: "{{ wan_interface }}"
+    jump: ACCEPT
+    state: present
+  notify: save iptables
+
+
+# missing
 #{% if vpn_on_port_443 == 'true' %}#
 # ICVPN Firewall Optionen
 #

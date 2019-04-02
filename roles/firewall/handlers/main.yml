@@ -1,7 +1,12 @@
 ---
-- name: save iptables
+- name: save ip4tables
   command: iptables-save
   become: true
+
+- name: save ip6tables
+  command: ip6tables-save
+  become: true
+
 
 #  - name: save iptables
 #    iptables:  # this is the new stuff

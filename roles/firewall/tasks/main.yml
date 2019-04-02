@@ -15,7 +15,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
   when: block_rfc1918_traffic
 
 - name: Reject RFC 1918 addresses
@@ -27,7 +28,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
   when: block_rfc1918_traffic
 
 - name: Reject RFC 1918 addresses
@@ -39,7 +41,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
   when: block_rfc1918_traffic
 
 - name: Reject APIPA - link-local addresses
@@ -50,7 +53,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject ISP - carrier-grade NAT addresses
   become: true
@@ -60,7 +64,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject multicast addresses
   become: true
@@ -70,7 +75,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject IANA IPv4 Special Purpose Address Registry addresses
   become: true
@@ -80,7 +86,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject TEST-NET-1 addresses
   become: true
@@ -90,7 +97,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject 6to4 anycast relays (deprecated) addresses
   become: true
@@ -100,7 +108,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject testing of inter-network communications addresses
   become: true
@@ -110,7 +119,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject TEST-NET-2 addresses
   become: true
@@ -120,7 +130,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 - name: Reject TEST-NET-3 addresses
   become: true
@@ -130,7 +141,8 @@
     jump: REJECT
     reject_with: icmp-net-prohibited
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 
 #
@@ -147,7 +159,8 @@
     out_interface: "{{ wan_interface }}"
     jump: MASQUERADE
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 #/sbin/iptables -A FORWARD -i {{ wan_interface }} -o {{ ipv4_dhcp_interface }} -m state --state RELATED,ESTABLISHED -j ACCEPT
 - name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
@@ -160,7 +173,8 @@
     match: state
     ctstate: ESTABLISHED,RELATED
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 #/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ wan_interface }} -j ACCEPT
 - name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
@@ -171,14 +185,53 @@
     out_interface: "{{ wan_interface }}"
     jump: ACCEPT
     state: present
-  notify: save iptables
+    ip_version: ipv4
+  notify: save ip4tables
 
 
 # missing
+# ICVPN Firewall Optionen, if required
+#
+#/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ icvpn_interface }} -j ACCEPT
+#/sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }} -j ACCEPT
+
+#
+# IPv6
+#
+# /sbin/ip6tables -A INPUT -i bat0 -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j DROP
+- name: icmpv6-type 134
+  become: true
+  iptables:
+    chain: INPUT
+    in_interface: "{{ ipv4_dhcp_interface }}"
+    out_interface: "{{ wan_interface }}"
+    protocol: ipv6-icmp
+    match: icmp6
+    icmp_type: 134
+    jump: DROP
+    state: present
+    ip_version: ipv6
+  notify: save ip6tables
+
+
+
+#/sbin/ip6tables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+#/sbin/ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
+#/sbin/ip6tables -A FORWARD -i bat0 -o {{ wan_interface }} -j ACCEPT
+
+# Block ULAs to global network
+#/sbin/ip6tables -A FORWARD -d fc00::/7 ! -o {{ wan_interface }} -j ACCEPT
+#/sbin/ip6tables -A FORWARD -d fec0::/10 ! -o {{ wan_interface }} -j ACCEPT
+#/sbin/ip6tables -A FORWARD -j DROP 
+
+#
+# NAT Table
+#
+#/sbin/ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}
 #{% if vpn_on_port_443 == 'true' %}#
+#
 # ICVPN Firewall Optionen
 #
 #/sbin/iptables -A FORWARD -i {{ ipv4_dhcp_interface }} -o {{ icvpn_interface }} -j ACCEPT
-# /sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }} -j ACCEPT
-#{% endif %}
+#/sbin/iptables -A FORWARD -i {{ icvpn_interface }} -o {{ ipv4_dhcp_interface }} -j ACCEPT
 

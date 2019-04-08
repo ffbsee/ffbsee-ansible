@@ -52,6 +52,9 @@
   hosts: gw01.ffbsee.net
   tags: 
   - routing
+  - iptables
+  - ip6tables
+  - firewall
   roles:
    - firewall
 #    #- dhcpd

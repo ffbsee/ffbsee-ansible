@@ -204,7 +204,6 @@
   iptables:
     chain: INPUT
     in_interface: "{{ ipv4_dhcp_interface }}"
-    out_interface: "{{ wan_interface }}"
     protocol: ipv6-icmp
     match: icmp6
     icmp_type: 134
@@ -213,11 +212,33 @@
     ip_version: ipv6
   notify: save ip6tables
 
-
-
 #/sbin/ip6tables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+- name: established_ipv6_traffic
+  become: true
+  iptables:
+    chain: FORWARD
+    match: state
+    ctstate: ESTABLISHED,RELATED
+    state: present
+    ip_version: ipv6
+  notify: save ip6tables
+
 #/sbin/ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
+- name: established_ipv6_traffic_complex
+  become: true
+  command: "ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP"
+
 #/sbin/ip6tables -A FORWARD -i bat0 -o {{ wan_interface }} -j ACCEPT
+- name: forward_ipv6_traffic
+  become: true
+  iptables:
+    chain: FORWARD
+    in_interface: "{{ ipv4_dhcp_interface }}"
+    out_interface: "{{ wan_interface }}"
+    state: present
+    ip_version: ipv6
+  notify: save ip6tables
+
 
 # Block ULAs to global network
 #/sbin/ip6tables -A FORWARD -d fc00::/7 ! -o {{ wan_interface }} -j ACCEPT

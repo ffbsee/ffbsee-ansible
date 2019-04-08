@@ -1,5 +1,11 @@
 ![Freifunk Bodensee](https://freifunk-bodensee.net/lib/tpl/dokuwiki-template/images/logo.svg "FFBSee")
 
+
+# WARNING
+## THIS ANSIBLE PLAYBOOK COLLECTION IS OUTDATET
+### IT WILL BE RE-WRITTEN BY THE CHANGES OF THE gw01 BRANCH
+### DO NOT USE!
+
 Ansible
 =======
 

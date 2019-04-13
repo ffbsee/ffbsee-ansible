@@ -1,6 +1,6 @@
 ---
 
-- name: Install bird 
+- name: Install tinc
   apt:
     pkg: 'tinc'
     state: 'latest'
@@ -19,7 +19,7 @@
 - name: Clone current icvpn-scripts from gitthub
   git:
     repo: 'https://github.com/freifunk/icvpn.git'
-    dest: '/files/tinc/icvpn'
+    dest: '/etc/tinc/icvpn'
     clone: yes
     update: yes
 

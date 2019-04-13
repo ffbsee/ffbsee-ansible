@@ -57,8 +57,7 @@
   - firewall
   roles:
    - firewall
-#    #- dhcpd
-#    - dhcp-relay
+   - "{% if dhcp == 'server' %}dhcpd{% else if dhcp == 'relay' %}dhcp-relay %}"
 #    - unbound
 #    - freifunk-icvpn
 #    - bird

@@ -72,7 +72,8 @@
   register: fastd_public_key_data
 
 - name: Read in fastd public key
-  set_fact: fastd_public_key="{{ fastd_public_key_data['content'] | b64decode | trim }}"
+  set_fact: 
+    - fastd_public_key: "{{ fastd_public_key_data['content'] | b64decode | trim }}"
 
 - name: Put public key back to host
   template:
@@ -89,7 +90,6 @@
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'
-
 
 - name: Copy fastd nodes configuration
   template:

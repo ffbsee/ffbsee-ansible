@@ -43,6 +43,7 @@ users:
   wolf:
     - wolf@rotkaeppchen
 
+dhcp: 'server' # relay or server
 
 # meta information about this gateway:
 hostname: 'gw01.ffbsee.net'

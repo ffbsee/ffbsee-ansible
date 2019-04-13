@@ -76,6 +76,7 @@ wan_base_interface: 'enp2s0'
 wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
 wan_ipv4_ip: '144.76.175.21'
+wan_ipv6_network: '2a01:4f8:200:5308::/64'
 
 # some more useless addresses
 mesh_ipv6_extra_addr: ''

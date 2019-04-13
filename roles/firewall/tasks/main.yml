@@ -281,17 +281,7 @@
 
 - name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
   become: true
-  iptables:
-    table: nat
-    chain: POSTROUTING
-    out_interface: "{{ wan_interface }}"
-    jump: NETMAP
-    to_destination: '{{ wan_ipv6_network }}'
-    tate: present
-    ip_version: ipv6
-  notify: save ip6tables
-
-
+  command: "ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}"
 
 
 #{% if vpn_on_port_443 == 'true' %}#

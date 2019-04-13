@@ -1,0 +1,25 @@
+---
+
+- name: Install bird 
+  apt:
+    pkg: 'tinc'
+    state: 'latest'
+    update_cache: yes
+    cache_valid_time: 86400
+  when: run_icvpn == 'true'
+
+- name: Copy tinc config
+  file:
+    src: 'files/tinc/nets.boot'
+    dest: '/etc/tinc/nets.boot'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: Clone current icvpn-scripts from gitthub
+  git:
+    repo: 'https://github.com/freifunk/icvpn.git'
+    dest: '/files/tinc/icvpn'
+    clone: yes
+    update: yes
+

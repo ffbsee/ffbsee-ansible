@@ -1,6 +1,6 @@
 ![Freifunk Bodensee](https://freifunk-bodensee.net/images/see.svg "FFBSee")
 
- Ansible
+ Freifunk Ansible
 =======
 
 Ansible is a radically simple IT automation engine that automates cloud provisioning, configuration management, application deployment, intra-service orchestration, and many other IT needs. Ansible works by connecting to your nodes and pushing out small programs, called "Ansible modules" to them. These programs are written to be resource models of the desired state of the system. Ansible then executes these modules (over SSH by default), and removes them when finished.

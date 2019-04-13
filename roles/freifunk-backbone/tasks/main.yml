@@ -50,7 +50,7 @@
 - name: Make batman-adv
   make:
     chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
-    params:
+    params: CONFIG_BATMAN_ADV_DEBUGFS=y
       NUM_THREADS: 4
   when: batmanadv.changed
 
@@ -58,7 +58,7 @@
   make:
     chdir: '/tmp/batman-adv/batman-adv-{{ batman_version }}'
     target: install
-    params:
+    params: CONFIG_BATMAN_ADV_DEBUGFS=y
       NUM_THREADS: 4
   when: batmanadv.changed
 

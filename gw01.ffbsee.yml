@@ -72,7 +72,16 @@
   roles:
    - dhcpd
    - dhcp-relay
-#    - unbound
+
+- name: Configure network routing for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  tags: 
+  - dns
+  - unbound
+  - role-unbound
+  - bind
+  roles:
+   - unbound
 #    - freifunk-icvpn
 #    - bird
 #    - tinc

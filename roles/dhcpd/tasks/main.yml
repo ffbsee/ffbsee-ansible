@@ -19,7 +19,7 @@
 
 - name: Copy ISC DHCP config for this specific gateway
   template:
-    src: 'templates/dhcp/dhcpd_{{ hostname }}.conf'
+    src: 'templates/dhcp/dhcpd_{{ hostname }}.conf.j2'
     dest: '/etc/dhcp/dhcpd.conf'
     owner: 'root'
     group: 'root'

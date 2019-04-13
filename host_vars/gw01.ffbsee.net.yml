@@ -1,0 +1,97 @@
+
+# Users and authorisation.
+## Visit https://github.com/ffbsee/role-ssh_authorized_keys.git for details config informations
+
+## admins on the gateway that are allowd to execute sudo
+admins:
+  - l3d
+  - mart
+  - raoul
+  - kpanic
+
+## accounts who should be created on gateway
+accounts:
+  - l3d
+  - mart
+  - raoul
+  - kpanic
+  - wolf
+  - xperimental
+
+## users for remote login with their ssh public key
+users:
+  l3d:
+    - l3d@pinkie.l3d.yt
+    - l3d@backup.l3d.yt
+    - l3d@business.wingcon.com
+    - l3d@derpy.l3d.yt
+    - l3d@mobile.l3d.yt
+  mart:
+    - mart@ffbsee.de
+    - mart@kirika
+    - mart@linux-srfv
+    - mart@waldorfschule-ueberlingen.de
+  kpanic:
+    - kpanic@hirnduenger.de
+  raoul:
+    - raoul@ccczh
+  xperimental:
+    - xperimental@id1
+    - xperimental@id2
+    - xperimental@id3
+    - xperimental@id4
+  wolf:
+    - wolf@rotkaeppchen
+
+
+# meta information about this gateway:
+hostname: 'gw01.ffbsee.net'
+
+# fastd configuration:
+## list all backbone gateways
+fastd_vpn_backbone_configs: 
+ - gw01
+
+# define which service should run:
+run_mesh: 'true'
+run_gateway: 'true'
+run_webserver: 'false'
+run_icvpn: 'false'
+run_map: 'false'
+run_stats: 'false'
+da_laueft_ein_dhcp_relay: 'false'
+nodelist: false
+
+# ipv6 radvd
+ipv6_uplink_announcen: true
+radv_AdvDefaultPreference: 'medium' # low - medium - high
+ipv6_radv_suffix: ':1'
+ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
+ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
+
+# batman - used addresses
+ipv4_mesh_address: '10.15.224.1' 
+ipv6_suffix: ':1'
+wan_base_interface: 'enp2s0'
+wan_vlan_id: ''
+wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
+wan_ipv4_ip: '144.76.175.21'
+
+# some more useless addresses
+mesh_ipv6_extra_addr: ''
+
+# add addresses from variables
+ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
+mesh_ipv6_address: '{{ ipv6_address }}'
+
+# optional define fastd secret key:
+## else a key will generatet automatically
+## if it is not already avaliable on server
+fastd_secret_key: ''
+fastd_peer_limit: '' # should we limit the fastd peer limits
+
+# some rules for the iptables/firewall
+# should we only use the wan interface on some rules? (recomendet)
+block_rfc1918_interface: "{{ wan_base_interface }}"
+
+

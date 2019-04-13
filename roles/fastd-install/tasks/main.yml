@@ -17,6 +17,7 @@
     - libcap-dev
     - libjson-c-dev
     - cmake-curses-gui
+    - doxygen
 
 - name: Create '/root/download/' directory
   file:
@@ -73,7 +74,7 @@
 - name: Download libuecc
   get_url:
     url: '{{ libuecc_url_head }}{{libuecc_url_tail }}'
-    dest: '/root/download/libuecc-7.{libuecc_url_tail }}.tar.xz'
+    dest: '/root/download/libuecc-7.{{ libuecc_url_tail }}.tar.xz'
     checksum: sha256:{{ libuecc_checksum }}
   register: libuecc_install
 
@@ -93,7 +94,7 @@
 
 - name: Unpack libuecc archive
   unarchive:
-    src: '/root/download/libuecc-7.{libuecc_url_tail }}.tar.xz'
+    src: '/root/download/libuecc-7.{{ libuecc_url_tail }}.tar.xz'
     dest: '/tmp/libuecc/'
     remote_src: yes
   when: libuecc_install.changed
@@ -152,7 +153,7 @@
   when: fastd_install.changed
 
 - name: Cmake fastd
-  shell: 'cmake /tmp/fastd/fastd-18'
+  shell: '/usr/bin/cmake /tmp/fastd/fastd-18 -DWITH_CIPHER_AES128_CTR_NACL=OFF' 
   args:
     chdir: '/tmp/fastd/build'
   when: fastd_install.changed
@@ -169,6 +170,6 @@
     chdir: '/tmp/fastd/build'
     target: install
     params:
-      NUM_THREADS: 4
+      NUM_THREADS: 4 
   when: fastd_install.changed
 

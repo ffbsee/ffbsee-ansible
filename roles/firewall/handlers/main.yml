@@ -1,0 +1,20 @@
+---
+- name: save ip4tables
+  command: iptables-save
+  become: true
+
+- name: save ip6tables
+  command: ip6tables-save
+  become: true
+
+
+#  - name: save iptables
+#    iptables:  # this is the new stuff
+#      path: /etc/sysconfig/iptables
+#      state: save
+#      backup: true  # should function similarly to lineinfile, appending datetime stamp to filename
+#    notify: reload iptables
+
+- name: reload iptables
+  iptables: # this is the new stuff
+    state: reload

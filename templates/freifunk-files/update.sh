@@ -91,16 +91,33 @@ if [ $run_mesh = true ]; then
 
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
-        fastd --config /etc/fastd/fastd.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes.conf --daemon
+        fastd --config /etc/fastd/fastd_backbone.conf --daemon
         sleep 1
     fi
 
-    if [ $(batctl if | grep fastd_mesh -c) = 0 ]; then
-        echo "(I) Add fastd interface to batman-adv."
-        ip link set fastd_mesh up
-        ip addr flush dev fastd_mesh
-        batctl if add fastd_mesh
+    if [ $(batctl if | grep fastd_backbone -c) = 0 ]; then
+        echo "(I) Add fastd backbone interface to batman-adv."
+        ip link set fastd_backbone up
+        ip addr flush dev fastd_backbone
+
+	# force BATMAN V routing algo _before_ batctl sets up the interface
+	echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+	batctl if add fastd_backbone
     fi
+
+    if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then
+        echo "(I) Add fastd nodes interface to batman-adv."
+        ip link set fastd_nodes up
+        ip addr flush dev fastd_nodes
+        
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+        
+        batctl if add fastd_nodes
+    fi
+
     if [ "$(cat /sys/class/net/bat0/address 2> /dev/null)" != "$mac_addr" ]; then
         echo "(I) Set MAC address for bat0."
         ip link set bat0 down
@@ -252,17 +269,17 @@ fi # run_webserver
 if [ $run_icvpn = true ]; then
     if ! is_running "tincd"; then
         echo "(I) Start tincd."
-        service tinc@icvpn start
+        systemctl start tinc@icvpn
     fi
-    if ! is_running "bird"; then
-        echo "(I) Start bird."
-        service bird start
-    fi
-    if ! is_running "bird6"; then
-        echo "(I) Start bird6."
-        service bird6 start
-    fi  
 fi # run icvpn
+if ! is_running "bird"; then
+    echo "(I) Start bird."
+    systemctl start bird.service
+fi
+if ! is_running "bird6"; then
+    echo "(I) Start bird6."
+    systemctl start bird6.service
+fi  
 echo "update done"
 
 

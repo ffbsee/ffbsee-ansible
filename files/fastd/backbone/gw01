@@ -1,3 +1,3 @@
-key "b8661d203e35247b7991e3700f9c7c952517a6e37bb1c1cc671c4c723d6df32c";
+key "7fa0b1bc37f77607ad273dbdcfd6a7a6f0c62139c969c68b1b0ce50ebaf86ce5";
 float no;
-remote "backbone.gw01.ffbsee.net" port 1244;
+remote "preview.gw01.ffbsee.net" port 1259;

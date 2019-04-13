@@ -43,7 +43,8 @@ users:
   wolf:
     - wolf@rotkaeppchen
 
-dhcp: 'server' # relay or server
+freifunk_dhcp_server: true
+freifunk_dhcp_relay: false
 
 # meta information about this gateway:
 hostname: 'gw01.ffbsee.net'

@@ -57,7 +57,21 @@
   - firewall
   roles:
    - firewall
-   - "{% if dhcp == 'server' %}dhcpd{% else if dhcp == 'relay' %}dhcp-relay %}"
+
+- name: Configure network routing for gw01.ffbsee.net
+  hosts: gw01.ffbsee.net
+  tags: 
+  - routing
+  - dhcp
+  - dhcpd
+  - isc-dhcp
+  - isc
+  - isc-dhcp-server
+  - isc-dhcp-relay
+  - dhcp-relay
+  roles:
+   - dhcpd
+   - dhcp-relay
 #    - unbound
 #    - freifunk-icvpn
 #    - bird

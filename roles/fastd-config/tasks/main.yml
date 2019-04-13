@@ -42,7 +42,8 @@
   when: fastd_secret_key == ''
 
 - name: Read in fastd secret key
-  set_fact: fastd_secret_key="{{ fastd_secret_key_data['content'] | b64decode | trim }}"
+  set_fact:
+    fastd_secret_key: "{{ fastd_secret_key_data['content'] | b64decode | trim }}"
   when: fastd_secret_key == ''
 
 - name: Put secret key to host
@@ -73,7 +74,7 @@
 
 - name: Read in fastd public key
   set_fact: 
-    - fastd_public_key: "{{ fastd_public_key_data['content'] | b64decode | trim }}"
+    fastd_public_key: "{{ fastd_public_key_data['content'] | b64decode | trim }}"
 
 - name: Put public key back to host
   template:

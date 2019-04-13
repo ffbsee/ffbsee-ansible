@@ -6,7 +6,7 @@
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
-
+  when: freifunk_dhcp_server
 
 - name: Copy ISC DHCP Gateway config (backup)
   template:
@@ -15,6 +15,7 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+  when: freifunk_dhcp_server
 
 - name: Copy ISC DHCP config for this specific gateway
   template:
@@ -23,4 +24,5 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+  when: freifunk_dhcp_server
 

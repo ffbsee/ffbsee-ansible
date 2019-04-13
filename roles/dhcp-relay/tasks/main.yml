@@ -6,6 +6,7 @@
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
+  when: freifunk_dhcp_relay
 
 - name: Set DHCP Relay Servers Option
   debconf:
@@ -14,6 +15,7 @@
     value: '{{ ipv4_dhcp_server }}'
     vtype: string
   notify: dpkg reconfigure isc-dhcp-relay
+  when: freifunk_dhcp_relay
 
 - name: set DHCP-Relay interface Option
   debconf:
@@ -22,6 +24,7 @@
     value: '{{ ipv4_dhcp_interface }}'
     vtype: string
   notify: dpkg reconfigure isc-dhcp-relay
+  when: freifunk_dhcp_relay
 
 - name: Copy ISC DHCP Gateway config (backup)
   template:
@@ -30,5 +33,6 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+  when: freifunk_dhcp_relay
 
 

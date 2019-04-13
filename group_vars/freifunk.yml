@@ -38,4 +38,5 @@ letsencrypt_email: 'kommunikation@ffbsee.de'
 home_sweet_home: false
 ssh_public_key_store: 'ssh_authorized_keys'
 
-
+# make ssh more insecur for legacy rsa keys (mart)
+only_allow_ed25519: false

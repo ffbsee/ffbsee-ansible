@@ -221,6 +221,7 @@
     ctstate: ESTABLISHED,RELATED
     state: present
     ip_version: ipv6
+    jump: ACCEPT
   notify: save ip6tables
 
 #/sbin/ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
@@ -237,18 +238,62 @@
     out_interface: "{{ wan_interface }}"
     state: present
     ip_version: ipv6
+    jump: ACCEPT
+  notify: save ip6tables
+
+# #/sbin/ip6tables -A FORWARD -d fc00::/7 ! -o {{ wan_interface }} -j ACCEPT
+- name: Block fc00::/7 to global_network 
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: fc00::/7
+    out_interface: "! {{ wan_interface }}"
+    state: present
+    ip_version: ipv6
+    jump: ACCEPT
+  notify: save ip6tables
+
+#/sbin/ip6tables -A FORWARD -d fec0::/10 ! -o {{ wan_interface }} -j ACCEPT
+
+- name: Block fec0::/1 to global_network 
+  become: true
+  iptables:
+    chain: FORWARD
+    destination: fec0::/1
+    out_interface: "! {{ wan_interface }}"
+    state: present
+    ip_version: ipv6
+    jump: ACCEPT
   notify: save ip6tables
 
 
-# Block ULAs to global network
-#/sbin/ip6tables -A FORWARD -d fc00::/7 ! -o {{ wan_interface }} -j ACCEPT
-#/sbin/ip6tables -A FORWARD -d fec0::/10 ! -o {{ wan_interface }} -j ACCEPT
 #/sbin/ip6tables -A FORWARD -j DROP 
+- name: Block undefined to global_network 
+  become: true
+  iptables:
+    chain: FORWARD
+    state: present
+    jump: DROP
+    ip_version: ipv6
+  notify: save ip6tables
 
-#
-# NAT Table
-#
 #/sbin/ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}
+
+- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  become: true
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ wan_interface }}"
+    jump: NETMAP
+    to_destination: '{{ wan_ipv6_network }}'
+    tate: present
+    ip_version: ipv6
+  notify: save ip6tables
+
+
+
+
 #{% if vpn_on_port_443 == 'true' %}#
 #
 # ICVPN Firewall Optionen

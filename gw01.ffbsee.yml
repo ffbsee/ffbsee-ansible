@@ -85,9 +85,9 @@
    - unbound_freifunk_tlds
 
 
-#    - freifunk-icvpn
-#    - bird
-#    - tinc
+   - freifunk-icvpn
+   - bird
+   - tinc
 
 - name: Configure web setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

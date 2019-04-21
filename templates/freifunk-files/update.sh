@@ -124,7 +124,7 @@ if [ $run_mesh = true ]; then
         ip link set bat0 address "$mac_addr"
         ip link set bat0 up
         #set IPv4 address on bat0 for DNS; This is gateway specific!
-        ip addr add "$mesh_ipv4_addr/16" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to bat0"
+        ip addr add "$mesh_ipv4_addr/20" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to bat0"
             # Add IPv6 address the same way the routers do.
             # This makes the address consistent with the one used on the routers status page.
             macaddr="$(cat /sys/kernel/debug/batman_adv/bat0/originators | awk -F'[/ ]' '{print $7; exit;}')"

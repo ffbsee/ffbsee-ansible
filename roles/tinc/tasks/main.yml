@@ -8,7 +8,7 @@
     cache_valid_time: 86400
   when: run_icvpn == 'true'
 
-- name: Copy tinc config
+- name: Copy tinc nets.boot
   file:
     src: 'files/tinc/nets.boot'
     dest: '/etc/tinc/nets.boot'
@@ -22,4 +22,23 @@
     dest: '/etc/tinc/icvpn'
     clone: yes
     update: yes
+
+- name: Copy tinc config
+  file:
+    src: 'files/tinc/tinc.conf'
+    dest: '/etc/tinc/icvpn/tinc.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: check if post-merge script exists
+  stat: path=/etc/tinc/icvpn/scripts/post-merge
+  register: postmerge_stat
+
+- name:  copy post-merge script to .git/hooks
+  command: cp /etc/tinc/icvpn/scripts/post-merge /etc/tinc/icvpn/.git/hooks/
+  when: postmerge_stat.stat.exists
+
+- name: execute post-merge hook once
+  command: /etc/tinc/icvpn/.git/hooks/post-merge
 

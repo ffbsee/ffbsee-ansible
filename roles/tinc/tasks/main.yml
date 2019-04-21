@@ -42,3 +42,11 @@
 - name: execute post-merge hook once
   command: /etc/tinc/icvpn/.git/hooks/post-merge
 
+- name: check if tinc private key already exists
+  stat: 
+  path: /etc/tinc/icvpn/rsa_key.priv
+  register: privkey_exists  
+
+- name: create public/private key pair for tinc
+  shell: yes | tincd -n icvpn -K
+  when: privkey_exists.stat.exists == False

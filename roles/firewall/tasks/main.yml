@@ -266,6 +266,31 @@
     jump: ACCEPT
   notify: save ip6tables
 
+- name: no routeradvertisments output from wan interface 
+  become: true
+  iptables:
+    chain: OUTPUT
+    out_interface: "{{ wan_interface }}"
+    protocol: ipv6-icmp
+    match: icmp6
+    icmp_type: 134
+    jump: DROP
+    state: present
+    ip_version: ipv6
+  notify: save ip6tables
+  
+  - name: no routeradvertisments output from wan interface 
+  become: true
+  iptables:
+    chain: FORWARD
+    out_interface: "{{ wan_interface }}"
+    protocol: ipv6-icmp
+    match: icmp6
+    icmp_type: 134
+    jump: DROP
+    state: present
+    ip_version: ipv6
+  notify: save ip6tables
 
 #/sbin/ip6tables -A FORWARD -j DROP 
 - name: Block undefined to global_network 

@@ -6,9 +6,9 @@ admins:
 
 hostname: 'gw04.ffbsee.net'
 
-ipv4_mesh_address: '10.11.160.104'
+ipv4_mesh_address: '10.15.224.4'
 
-ipv6_suffix: ':1:4'
+ipv6_suffix: ':4'
 ipv6_radv_suffix: ':1'
 ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
 mesh_ipv6_extra_addr: ''
@@ -32,18 +32,18 @@ run_webserver: 'false'
 run_icvpn: 'false'
 run_map: 'false'
 run_stats: 'false'
-da_laueft_ein_dhcp_relay: 'true'
+da_laueft_ein_dhcp_relay: 'false'
 
 fastd_vpn_backbone_configs:
   - gw01
   - gw02_on-gw04
   - gw03
-fastd_peer_limit: '20'
+fastd_peer_limit: ''
 
 ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'low'
 
-debian: '8'
+debian: '9'
 freifunk_karte_api: 'false'
 
 nodelist: 'false'

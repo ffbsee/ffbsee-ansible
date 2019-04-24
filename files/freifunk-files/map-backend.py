@@ -5,7 +5,7 @@ Convert data received from alfred (ffbi format) to a format accepted by meshview
 Typical call::
 
     alfred -r 64 > maps.txt
-    ./map-backend.py -m maps.txt  --meshviewer-nodes nodes.json --meshviewer-graph graph.json
+    ./map-backend.py  -m maps.txt --meshviewer-org meshviewer.json
 
 License: CC0 1.0
 Author: Moritz Warning
@@ -44,10 +44,11 @@ class AlfredParser:
             "contact": { "type": "string", "maxLength": 50 },
             "firmware": { "type": "string", "maxLength": 32 },
             "community": { "type": "string", "maxLength": 32 },
+            "autoupdater": { "type": "string", "maxLength": 32 },
 
             'longitude' : { "type": "number" },
             'latitude' : { "type": "number" },
-            'model': { "type": "string", "maxLength": 32 },
+            'model': { "type": "string", "maxLength": 50 },
             'uptime': { "type": "number" },
             'loadavg': { "type": "number" },
             'rootfs_usage' : { "type": "number" },
@@ -69,36 +70,12 @@ class AlfredParser:
                 "properties": {
                     "smac": { "$ref": "#/definitions/MAC" },
                     "dmac": { "$ref": "#/definitions/MAC" },
-                    "qual": { "type": "integer", "minimum": 0, "maximum": 255 },
+                    "qual": { "type": "number" },
                     "type": { "enum": [ "vpn" ] },
                 },
                 "required": ["smac", "dmac"],
                 "additionalProperties": False
             }
-        }
-    }
-
-    ALIASES_NODE_SCHEMA = {
-        "type": "object",
-        "additionalProperties": False,
-        "mac" : MAC_SCHEMA,
-        "properties": {
-            "geo": { "type": "string", "pattern": GEO_RE }, #deprecated in favor of longitude/latitude
-            'latitude' : { "type": "number" },
-            'longitude' : { "type": "number" },
-            'model': { "type": "string", "maxLength": 32 },
-            'uptime': { "type": "number" },
-
-            "name": { "type": "string", "maxLength": 32 },
-            "contact": { "type": "string", "maxLength": 64 },
-            "firmware": { "type": "string", "maxLength": 32 },
-            "community": { "type": "string", "maxLength": 32 },
-            "clientcount": { "type": "integer", "minimum": 0, "maximum": 255 },
-            
-            "gateway": { "type": "boolean" },
-            "vpn": { "type": "boolean" },
-            "type" : { "enum": [ "node", "gateway" ] },
-            "force": { "type": "boolean" }
         }
     }
 
@@ -112,14 +89,14 @@ class AlfredParser:
                     "geo": { "type": "array", "items": [{'type' : 'number'}, {'type' : 'number'}]}, #deprecated in favor of longitude/latitude
                     'latitude' : { "type": "number" },
                     'longitude' : { "type": "number" },
-                    'model': { "type": "string", "maxLength": 32 },
+                    'model': { "type": "string", "maxLength": 50 },
                     'uptime': { "type": "number" },
                     'loadavg': { "type": "number" },
-                    
                     "name": { "type": "string", "maxLength": 32 },
                     "contact": { "type": "string", "maxLength": 32 },
                     "firmware": { "type": "string", "maxLength": 32 },
                     "community": { "type": "string", "maxLength": 32 },
+                    "autoupdater": { "type": "string", "maxLength": 32 },
                     "clientcount": { "type": "integer", "minimum": 0, "maximum": 255 },
                     "gateway": { "type": "boolean" },
                     "vpn": { "type": "boolean" },
@@ -200,7 +177,7 @@ class AlfredParser:
         for node_link in node_links:
             smac = node_link['smac']
             dmac = node_link['dmac']
-            quality = node_link.get('qual', 0.) / 255.
+            quality = node_link.get('qual', 0.)
             nodes[smac] = node
             links[(smac, dmac)] = Link(node, smac, dmac, quality)
 
@@ -245,7 +222,92 @@ class Node:
 
                     self.properties[key] = value
 
-    def meshviewer(self):
+    def has_location(self):
+        return ('longitude' in self.properties) and ('latitude' in self.properties)
+
+    def meshviewer_org(self):
+        properties = self.properties
+        name = properties.get('name', self.mac)
+        community = properties.get('community', '')
+        firmware = properties.get('firmware', '')
+        clientcount = properties.get('clientcount', 0)
+        uptime = properties.get('uptime', '')
+        loadavg = properties.get('loadavg', 0)
+        model = properties.get('model', 'no data - keine Daten')
+        rootfs_usage = properties.get('rootfs_usage', 0)
+        memory_usage = properties.get('memory_usage', 0)
+        addresses = properties.get('addresses', [])
+        autoupdater = properties.get('autoupdater', "")
+        gateway = properties.get('gateway', False)
+        vpn = properties.get('vpn', False)
+
+        def fmt_time(d):
+            return d.strftime("%Y-%m-%d %H:%M:%S")
+
+        if uptime:
+            uptime = fmt_time(datetime.datetime.utcnow() - datetime.timedelta(seconds=int(uptime)))
+        else:
+            uptime = ''
+
+        obj = {
+            'location': {},
+            'firmware': {
+                'base': '-',
+                'release': '-'
+            },
+            'autoupdater': {
+                'enabled': (autoupdater != ""),
+                'branch': autoupdater
+            },
+            'nproc': 1
+        }
+
+        if 'contact' in properties:
+            obj['contact'] = properties['contact']
+
+        if self.has_location():
+            obj['location'] = {
+                'longitude': properties['longitude'],
+                'latitude': properties['latitude']
+            }
+
+        if self.firstseen:
+            obj['firstseen'] = self.firstseen.isoformat()
+
+        if self.lastseen:
+            obj['lastseen'] = self.lastseen.isoformat()
+
+        obj['is_online'] = self.online
+        obj['is_gateway'] = gateway
+        obj['clients'] = clientcount
+        obj['clients_wifi24'] = 0
+        obj['clients_wifi5'] = 0
+        obj['clients_other'] = 0
+        obj['rootfs_usage'] = rootfs_usage
+        obj['loadavg'] = loadavg
+        obj['memory_usage'] = memory_usage
+        obj['uptime'] = uptime
+        obj['gateway_nexthop'] = '-'
+        obj['gateway'] = '-'
+        obj['node_id'] = re.sub('[:]', '', self.mac)
+        obj['mac'] = self.mac
+        obj['addresses'] = addresses
+        obj['site_code'] = community
+        obj['hostname'] = name
+
+        if '-' in firmware:
+            p = firmware.split('-', 1)
+            obj['firmware']['base'] = p[0]
+            obj['firmware']['release'] = p[1]
+        else:
+            obj['firmware']['release'] = firmware
+
+        obj['model'] = model
+        obj['vpn'] = vpn
+
+        return obj
+
+    def meshviewer_old(self):
         properties = self.properties
 
         name = properties.get('name', self.mac)
@@ -261,7 +323,7 @@ class Node:
         rootfs_usage = properties.get('rootfs_usage', None)
         memory_usage = properties.get('memory_usage', None)
         addresses = properties.get('addresses', None)
-        
+
         obj = {
             'statistics' : {},
             'nodeinfo' : {
@@ -272,56 +334,56 @@ class Node:
         }
 
         if uptime:
-            obj["statistics"]['uptime'] = uptime
+            obj['statistics']['uptime'] = uptime
 
-        obj["statistics"]['clients'] = clientcount
-        
+        obj['statistics']['clients'] = clientcount
+
         if loadavg:
-            obj["statistics"]['loadavg'] = loadavg
+            obj['statistics']['loadavg'] = loadavg
 
         if rootfs_usage:
-            obj["statistics"]['rootfs_usage'] = rootfs_usage
+            obj['statistics']['rootfs_usage'] = rootfs_usage
 
         if memory_usage:
-            obj["statistics"]['memory_usage'] = memory_usage
+            obj['statistics']['memory_usage'] = memory_usage
 
         if addresses:
-            obj["nodeinfo"]['network']['addresses'] = addresses
+            obj['nodeinfo']['network']['addresses'] = addresses
 
         obj['nodeinfo']['hostname'] = name
         obj['nodeinfo']['node_id'] = re.sub('[:]', '', self.mac)
 
         if contact:
-            obj["nodeinfo"]["owner"] = { "contact" : contact }
+            obj['nodeinfo']['owner'] = { 'contact' : contact }
 
         if longitude and latitude:
             obj['nodeinfo']['location'] = {
-                "longitude": longitude,
-                "latitude": latitude
+                'longitude': longitude,
+                'latitude': latitude
             }
 
         if firmware:
             obj['nodeinfo']['software'] = {
-                'firmware' : { "release" : firmware }
+                'firmware' : { 'release' : firmware }
             }
 
         obj['nodeinfo']['system'] = {}
         if community:
-            obj['nodeinfo']['system']["site_code"] = community
+            obj['nodeinfo']['system']['site_code'] = community
 
         if properties['gateway']:
-            obj['nodeinfo']['system']["role"] = "gateway"
+            obj['nodeinfo']['system']['role'] = 'gateway'
         else:
-            obj['nodeinfo']['system']["role"] = "node"
+            obj['nodeinfo']['system']['role'] = 'node'
 
         if model:
             obj['nodeinfo']['hardware'] = {
-                "model" : model
+                'model' : model
             }
 
         obj['flags'] = {
-            "online" : self.online,
-            "gateway" : properties['gateway']
+            'online' : self.online,
+            'gateway' : properties['gateway']
         }
 
         if self.firstseen:
@@ -356,9 +418,9 @@ class Node:
         obj = {
             'id': self.mac,
             'flags': {
-                "gateway": gateway,
-                "vpn": vpn,
-                "online": self.online
+                'gateway': gateway,
+                'vpn': vpn,
+                'online': self.online
             }
         }
 
@@ -433,23 +495,45 @@ class Link:
         self.quality = quality
 
         self.reverse = None
+        # indicates if this object was processed for output already
         self.done = False
 
-    def meshviewer(self):
+    def meshviewer_org(self):
         r'''
-        Render this link to a dictionary in a format understood by ffmap.
+        Render this link to a dictionary in a format understood by meshviewer.
         '''
         if not self.reverse:
-            raise ValueError("link must have 'reverse' set to render to ffmap")
+            raise ValueError("link must have 'reverse' set to render for meshviewer_org")
+
+        link_type = "other"
+        if self.source.properties['vpn'] or self.reverse.source.properties['vpn']:
+            link_type = "vpn"
+
+        return {
+            'source': re.sub('[:]', '', self.source.mac),
+            'target': re.sub('[:]', '', self.reverse.source.mac),
+            'source_tq': (self.quality / 100),
+            'target_tq': (self.reverse.quality / 100),
+            'source_addr': self.source.mac,
+            'target_addr': self.reverse.source.mac,
+            'type': link_type
+        }
+
+    def meshviewer_old(self):
+        r'''
+        Render this link to a dictionary in a format understood by meshviewer.
+        '''
+        if not self.reverse:
+            raise ValueError("link must have 'reverse' set to render for meshviewer_old")
 
         if self.source.index is None or self.reverse.source.index is None:
-            raise ValueError("link's source and target must have their 'index' set to render to ffmap")
+            raise ValueError("link's source and target must have their 'index' set to render for meshviewer_old")
 
         return {
             'source': self.source.index,
             'target': self.reverse.source.index,
             "bidirect": True,
-            'tq': float('{:.3f}'.format((1. / self.quality + 1. / self.reverse.quality) / 2.0)),
+            'tq': float('{:.3f}'.format((1. / self.quality + 1. / self.reverse.quality) / (2.0 * 256))),
             'vpn': True if self.source.properties['vpn'] or self.reverse.source.properties['vpn'] else False
         }
 
@@ -475,30 +559,60 @@ class Link:
     def __repr__(self): return r'{0} (of {1}) -> {2} (of {3})'.format(self.smac, self.source.mac, self.dmac, self.reverse.source.mac if self.reverse else '?')
 
 
-def render_meshviewer_nodes(nodes, links):
+def render_meshviewer_org(nodes, links):
     for link in links.values():
         link.done = False
 
     for node in nodes.values():
         node.done = False
 
-    all_nodes = {}
+    all_nodes = []
+    all_links = []
     for node in nodes.values():
         if node.done:
             continue
         else:
             node.done = True
 
-        id = re.sub('[:]', '', node.mac)
-        all_nodes[id] = node.meshviewer()
+        all_nodes.append(node.meshviewer_org())
+
+    # a dictionary (smac,dmac)->link which is used to discover the reverse of each link
+    all_links = []
+    for link in links.values():
+        if not link.done and link.reverse:
+            all_links.append(link.meshviewer_org())
+            link.done = True
+            link.reverse.done = True
 
     return {
         'meta' : { 'timestamp': now_timestamp.isoformat() },
-        'version' : 1,
+        'nodes' : all_nodes,
+        'links' : all_links
+    }
+
+def render_meshviewer_nodes_old(nodes, links):
+    for link in links.values():
+        link.done = False
+
+    for node in nodes.values():
+        node.done = False
+
+    all_nodes = []
+    for node in nodes.values():
+        if node.done:
+            continue
+        else:
+            node.done = True
+
+        all_nodes.append(node.meshviewer_old())
+
+    return {
+        'meta' : { 'timestamp': now_timestamp.isoformat() },
+        'version' : 2,
         'nodes' : all_nodes
     }
 
-def render_meshviewer_graph(nodes, links):
+def render_meshviewer_graph_old(nodes, links):
     for link in links.values():
         link.done = False
 
@@ -525,7 +639,7 @@ def render_meshviewer_graph(nodes, links):
     all_links = []
     for link in links.values():
         if not link.done and link.reverse:
-            all_links.append(link.meshviewer())
+            all_links.append(link.meshviewer_old())
             link.done = True
             link.reverse.done = True
 
@@ -559,7 +673,7 @@ def render_ffmap(nodes, links):
         node.index = index
         index += 1
         all_nodes.append(node.ffmap())
-    
+
     # render a list of links
     all_links = []
     for link in links.values():
@@ -582,9 +696,10 @@ def loadNodes(path):
         nodes = pickle.load(f)
 
     for node in nodes.values():
-        #reset temporaies
+        #reset old properties
         node.online = False
-        node.index = None;
+        node.index = None
+        node.clientcount = 0
 
     return nodes
 
@@ -639,19 +754,26 @@ def removeUnknownCommunities(nodes, communities):
 def main():
     import argparse, sys, json
 
-    parser = argparse.ArgumentParser('Convert data received from alfred to a format accepted by ffmap-d3')
+    parser = argparse.ArgumentParser('Convert data received from alfred to a format accepted by meshviewer or ffmap')
     parser.add_argument('-a', '--aliases', help=r'a dictionary of overwrites to replace (offending) properties of some nodes')
     parser.add_argument('-m', '--maps', required=True, help=r'input file containing data collected by alfred')
-    parser.add_argument('--ffmap-nodes',help=r'output nodes.json file for ffmap')
-    parser.add_argument('--meshviewer-nodes', help=r'output nodes.json file for meshviewer')
-    parser.add_argument('--meshviewer-graph', help=r'output graph.json file for meshviewer')
-    parser.add_argument('--storage', default="nodes_backup.bin",help=r'store old data between calls e.g. to remember node lastseen values')
+    parser.add_argument('--pretty', help=r'pretty json output', action='store_true')
+    parser.add_argument('--ffmap-nodes',help=r'output nodes.json file for ffmap (very old format)')
+    parser.add_argument('--meshviewer-nodes', help=r'output nodes.json file for meshviewer (old format)')
+    parser.add_argument('--meshviewer-graph', help=r'output graph.json file for meshviewer (old format)')
+    parser.add_argument('--meshviewer-org', help=r'output meshviewer.json file for meshviewer (https://meshviewer.org)')
+    parser.add_argument('--storage', default='nodes_backup.bin', help=r'store old data between calls e.g. to remember node lastseen values')
     parser.add_argument('-c', '--communities', nargs='+', help=r'Communities we want to filter for. Show all if none defined.')
     args = parser.parse_args()
 
+    # mac => node
     nodes = {}
+
+    # (smac, dmac) => Link
     links = {}
 
+    # load old nodes that we have stored from the last call of this script,
+    # that way we can show nodes that are offline
     if isFile(args.storage):
         nodes = loadNodes(args.storage)
 
@@ -694,20 +816,31 @@ def main():
         link.reverse = reverse
         link.reverse.reverse = link
 
+    def json_dumps(json_obj):
+        if args.pretty:
+            return json.dumps(json_obj, sort_keys=True, indent=2, separators=(',', ': '))
+        else:
+            return json.dumps(json_obj)
+
+    if args.meshviewer_org:
+        with open(args.meshviewer_org, 'w') as file:
+            nodes_json = render_meshviewer_org(nodes, links)
+            file.write(json_dumps(nodes_json))
+
     if args.meshviewer_nodes:
         with open(args.meshviewer_nodes, 'w') as file:
-            nodes_json = render_meshviewer_nodes(nodes, links)
-            file.write(json.dumps(nodes_json))
+            nodes_json = render_meshviewer_nodes_old(nodes, links)
+            file.write(json_dumps(nodes_json))
 
     if args.meshviewer_graph:
         with open(args.meshviewer_graph, 'w') as file:
-            graph_json = render_meshviewer_graph(nodes, links)
-            file.write(json.dumps(graph_json))
+            graph_json = render_meshviewer_graph_old(nodes, links)
+            file.write(json_dumps(graph_json))
 
     if args.ffmap_nodes:
         with open(args.ffmap_nodes, 'w') as file:
             nodes_json = render_ffmap(nodes, links)
-            file.write(json.dumps(nodes_json))
+            file.write(json_dumps(nodes_json))
 
     if args.storage:
         saveNodes(args.storage, nodes)
@@ -715,5 +848,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

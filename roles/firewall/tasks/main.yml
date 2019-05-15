@@ -279,7 +279,7 @@
     ip_version: ipv6
   notify: save ip6tables
   
-  - name: no routeradvertisments output from wan interface 
+- name: no routeradvertisments output from wan interface 
   become: true
   iptables:
     chain: FORWARD

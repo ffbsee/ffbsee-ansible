@@ -305,6 +305,7 @@
 #/sbin/ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}
 
 - name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  when: wan_ipv6_network != '' and wan_ipv6_network != None 
   become: true
   command: "ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}"
   notify: save ip6tables

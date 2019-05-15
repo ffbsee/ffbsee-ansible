@@ -33,6 +33,7 @@ run_icvpn: 'false'
 run_map: 'false'
 run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'false'
+freifunk_dhcp_server: true
 
 fastd_vpn_backbone_configs:
   - gw01
@@ -45,3 +46,6 @@ debian: '9'
 freifunk_karte_api: 'false'
 
 nodelist: 'false'
+
+block_rfc1918_interface: "{{ wan_base_interface }}"
+

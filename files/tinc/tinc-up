@@ -1,0 +1,5 @@
+#!/bin/sh
+/sbin/ip link set dev $INTERFACE up
+/sbin/ip addr add dev $INTERFACE 10.207.0.12/16 broadcast 10.207.255.255 scope link
+/sbin/ip -6 addr add dev $INTERFACE fec0::a:cf:0:c/96 preferred_lft 0
+

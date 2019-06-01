@@ -31,6 +31,23 @@
     group: 'root'
     mode: '0755'
 
+- name: copy tinc-up
+  file:
+   src: 'files/tinc/tinc-up'
+   dest: '/etc/tinc/icvpn/tinc-up'
+   owner: 'root'
+   group: 'root'
+   mode: '0775'
+
+- name: copy tinc-down 
+  file: 
+   src: 'files/tinc/tinc-down'
+   dest: '/etc/tinc/icvpn/tinc-down'
+   owner: 'root'
+   group: 'root'
+   mode: '0775'
+
+
 - name: check if post-merge script exists
   stat: path=/etc/tinc/icvpn/scripts/post-merge
   register: postmerge_stat
@@ -50,3 +67,14 @@
 - name: create public/private key pair for tinc
   shell: yes | tincd -n icvpn -K
   when: privkey_exists.stat.exists == False
+
+- name: enable service tinc with icvpn 
+  systemd:
+    name: tinc@icvpn
+    enabled: yes
+    masked: no
+
+- name: Make sure tinc with icvpn is running
+  systemd:
+    state: started
+    name: tinc@icvpn

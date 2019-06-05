@@ -1,48 +1,4 @@
-
-# Users and authorisation.
-## Visit https://github.com/ffbsee/role-ssh_authorized_keys.git for details config informations
-
-## admins on the gateway that are allowd to execute sudo
-admins:
-  - l3d
-  - mart
-  - raoul
-  - kpanic
-
-## accounts who should be created on gateway
-accounts:
-  - l3d
-  - mart
-  - raoul
-  - kpanic
-  - wolf
-  - xperimental
-
-## users for remote login with their ssh public key
-users:
-  l3d:
-    - l3d@pinkie.l3d.yt
-    - l3d@backup.l3d.yt
-    - l3d@business.wingcon.com
-    - l3d@derpy.l3d.yt
-    - l3d@mobile.l3d.yt
-  mart:
-    - mart@ffbsee.de
-    - mart@kirika
-    - mart@linux-srfv
-    - mart@waldorfschule-ueberlingen.de
-  kpanic:
-    - kpanic@hirnduenger.de
-  raoul:
-    - raoul@ccczh
-  xperimental:
-    - xperimental@id1
-    - xperimental@id2
-    - xperimental@id3
-    - xperimental@id4
-  wolf:
-    - wolf@rotkaeppchen
-
+---
 freifunk_dhcp_server: true
 freifunk_dhcp_relay: false
 

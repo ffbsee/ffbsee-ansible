@@ -1,10 +1,4 @@
 ---
-
-admins:
-  - raoul
-  - l3d
-  - mart
-
 hostname: 'gw03.ffbsee.net'
 
 ipv4_mesh_address: '10.11.160.103'

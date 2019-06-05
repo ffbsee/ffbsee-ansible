@@ -1,12 +1,5 @@
 ---
 
-admins:
-  - l3d
-  - xperimental
-  - mart
-  - wolf
- 
-
 hostname: 'meta.ffbsee.net'
 
 ipv4_mesh_address: '10.11.160.201'

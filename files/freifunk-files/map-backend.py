@@ -57,6 +57,7 @@ class AlfredParser:
 
             "clientcount": { "type": "integer", "minimum": 0, "maximum": 255 },
             "gateway": { "type": "boolean" },
+            "using_gateway": { "type": "string" },
             "vpn": { "type": "boolean" },
             "links": {
                 "type": "array",
@@ -225,6 +226,43 @@ class Node:
     def has_location(self):
         return ('longitude' in self.properties) and ('latitude' in self.properties)
 
+    def nodelist(self):
+        name = self.properties.get('name', self.mac)
+        contact = self.properties.get('contact', None)
+        longitude = self.properties.get('longitude', None)
+        latitude = self.properties.get('latitude', None)
+        clientcount = self.properties.get('clientcount', 0)
+
+        obj = {
+            'id': re.sub('[:]', '', self.mac),
+            'status': {
+                'online': self.online,
+                'clients': clientcount
+            }
+        }
+
+        if name:
+            obj['name'] = name
+
+        if self.firstseen:
+            obj['firstseen'] = self.firstseen.isoformat()
+
+        if self.properties['gateway']:
+            obj['node_type'] = 'Server'
+        else:
+            obj['node_type'] = 'AccessPoint'
+
+        if self.lastseen:
+            obj['status']['lastcontact'] = self.lastseen.isoformat()
+
+        if latitude and longitude:
+            obj['position'] = {
+                'lat': float(latitude),
+                'long': float(longitude)
+            }
+
+        return obj
+
     def meshviewer_org(self):
         properties = self.properties
         name = properties.get('name', self.mac)
@@ -239,6 +277,7 @@ class Node:
         addresses = properties.get('addresses', [])
         autoupdater = properties.get('autoupdater', "")
         gateway = properties.get('gateway', False)
+        using_gateway = properties.get('using_gateway', "")
         vpn = properties.get('vpn', False)
 
         def fmt_time(d):
@@ -277,6 +316,11 @@ class Node:
         if self.lastseen:
             obj['lastseen'] = self.lastseen.isoformat()
 
+        if 'using_gateway' in properties:
+            obj['gateway'] = using_gateway
+        else:
+             obj['gateway'] = ''
+
         obj['is_online'] = self.online
         obj['is_gateway'] = gateway
         obj['clients'] = clientcount
@@ -288,7 +332,7 @@ class Node:
         obj['memory_usage'] = memory_usage
         obj['uptime'] = uptime
         obj['gateway_nexthop'] = '-'
-        obj['gateway'] = '-'
+        #obj['gateway'] = '-'
         obj['node_id'] = re.sub('[:]', '', self.mac)
         obj['mac'] = self.mac
         obj['addresses'] = addresses
@@ -590,6 +634,23 @@ def render_meshviewer_org(nodes, links):
         'links' : all_links
     }
 
+def render_nodelist(nodes, links):
+    all_nodes = []
+
+    for node in nodes.values():
+        all_nodes.append(node.nodelist())
+
+    return {
+        "version": "1.0.1",
+        "updated_at": now_timestamp.isoformat(),
+        #"community": {
+        #    "name": "Freifunk Gothan",
+        #    "href": "https://.../meta.json"
+        #},
+        'nodes' : all_nodes,
+        'linked' : {}
+    }
+
 def render_meshviewer_nodes_old(nodes, links):
     for link in links.values():
         link.done = False
@@ -762,6 +823,7 @@ def main():
     parser.add_argument('--meshviewer-nodes', help=r'output nodes.json file for meshviewer (old format)')
     parser.add_argument('--meshviewer-graph', help=r'output graph.json file for meshviewer (old format)')
     parser.add_argument('--meshviewer-org', help=r'output meshviewer.json file for meshviewer (https://meshviewer.org)')
+    parser.add_argument('--nodelist', help=r'output json file in nodelist format (for https://freifunk-karte.de).')
     parser.add_argument('--storage', default='nodes_backup.bin', help=r'store old data between calls e.g. to remember node lastseen values')
     parser.add_argument('-c', '--communities', nargs='+', help=r'Communities we want to filter for. Show all if none defined.')
     args = parser.parse_args()
@@ -788,6 +850,8 @@ def main():
                 AlfredParser.parse_line(line.strip(), nodes, links)
             except:
                 import traceback
+                # debug switch below
+                #print(line)
                 traceback.print_exc()
                 continue
 
@@ -840,6 +904,11 @@ def main():
     if args.ffmap_nodes:
         with open(args.ffmap_nodes, 'w') as file:
             nodes_json = render_ffmap(nodes, links)
+            file.write(json_dumps(nodes_json))
+
+    if args.nodelist:
+        with open(args.nodelist, 'w') as file:
+            nodes_json = render_nodelist(nodes, links)
             file.write(json_dumps(nodes_json))
 
     if args.storage:

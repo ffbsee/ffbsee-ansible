@@ -61,7 +61,7 @@
 
 - name: check if tinc private key already exists
   stat: 
-  path: /etc/tinc/icvpn/rsa_key.priv
+    path: /etc/tinc/icvpn/rsa_key.priv
   register: privkey_exists  
 
 - name: create public/private key pair for tinc

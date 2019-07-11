@@ -1,0 +1,167 @@
+2019-07-11 14:04:42,298 p=1677 u=mhellebrand |  ERROR! 'path' is not a valid attribute for a Task
+
+The error appears to be in '/home/mhellebrand/ansible/roles/tinc/tasks/main.yml': line 62, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: check if tinc private key already exists
+  ^ here
+
+This error can be suppressed as a warning using the "invalid_task_attribute_failed" configuration
+2019-07-11 14:06:59,169 p=1839 u=mhellebrand |  PLAY [Update packages and users on all nodes] ******************************************************************************************************************************
+2019-07-11 14:06:59,178 p=1839 u=mhellebrand |  TASK [Gathering Facts] *****************************************************************************************************************************************************
+2019-07-11 14:06:59,178 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:06:59 +0200 (0:00:00.036)       0:00:00.036 ********* 
+2019-07-11 14:07:01,298 p=1839 u=mhellebrand |  ok: [gw04.ffbsee.net]
+2019-07-11 14:07:10,479 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:10,490 p=1839 u=mhellebrand |  PLAY [Update packages and users on all nodes] ******************************************************************************************************************************
+2019-07-11 14:07:10,525 p=1839 u=mhellebrand |  TASK [motd : Copy motd.sh to gateway] **************************************************************************************************************************************
+2019-07-11 14:07:10,525 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:10 +0200 (0:00:11.346)       0:00:11.383 ********* 
+2019-07-11 14:07:11,140 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:11,242 p=1839 u=mhellebrand |  ok: [gw04.ffbsee.net]
+2019-07-11 14:07:11,266 p=1839 u=mhellebrand |  TASK [motd : Set fancy motd] ***********************************************************************************************************************************************
+2019-07-11 14:07:11,266 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:11 +0200 (0:00:00.741)       0:00:12.124 ********* 
+2019-07-11 14:07:11,281 p=1839 u=mhellebrand |  skipping: [gw01.ffbsee.net]
+2019-07-11 14:07:11,289 p=1839 u=mhellebrand |  skipping: [gw04.ffbsee.net]
+2019-07-11 14:07:11,296 p=1839 u=mhellebrand |  PLAY [Configure basic network setup for gw01.ffbsee.net] *******************************************************************************************************************
+2019-07-11 14:07:11,323 p=1839 u=mhellebrand |  TASK [network : Copy network interface configuration] **********************************************************************************************************************
+2019-07-11 14:07:11,324 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:11 +0200 (0:00:00.057)       0:00:12.181 ********* 
+2019-07-11 14:07:11,727 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:11,734 p=1839 u=mhellebrand |  PLAY [Configure freifunk network setup for gw01.ffbsee.net] ****************************************************************************************************************
+2019-07-11 14:07:11,764 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Install dependencies for batman-adv batctl and alfred] *******************************************************************************************
+2019-07-11 14:07:11,764 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:11 +0200 (0:00:00.440)       0:00:12.621 ********* 
+2019-07-11 14:07:12,409 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:12,434 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create '/root/download/' directory] **************************************************************************************************************
+2019-07-11 14:07:12,434 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:12 +0200 (0:00:00.670)       0:00:13.292 ********* 
+2019-07-11 14:07:12,581 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:12,605 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Download 'B.A.T.M.A.N.' Advanced] ****************************************************************************************************************
+2019-07-11 14:07:12,606 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:12 +0200 (0:00:00.171)       0:00:13.463 ********* 
+2019-07-11 14:07:13,131 p=1839 u=mhellebrand |   [WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created with a mode of 0700, this may cause issues when running as another user. To avoid this,
+create the remote_tmp dir with the correct permissions manually
+
+2019-07-11 14:07:13,131 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:13,155 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create '/tmp/batman-adv/' directory] *************************************************************************************************************
+2019-07-11 14:07:13,156 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:13 +0200 (0:00:00.550)       0:00:14.013 ********* 
+2019-07-11 14:07:13,303 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:13,347 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Unpack batman-adv archive] ***********************************************************************************************************************
+2019-07-11 14:07:13,347 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:13 +0200 (0:00:00.191)       0:00:14.205 ********* 
+2019-07-11 14:07:13,909 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:13,920 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make batman-adv] *********************************************************************************************************************************
+2019-07-11 14:07:13,920 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:13 +0200 (0:00:00.573)       0:00:14.778 ********* 
+2019-07-11 14:07:27,187 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:27,201 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make install batman-adv] *************************************************************************************************************************
+2019-07-11 14:07:27,201 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:27 +0200 (0:00:13.280)       0:00:28.059 ********* 
+2019-07-11 14:07:28,745 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:28,769 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Download batctl] *********************************************************************************************************************************
+2019-07-11 14:07:28,769 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:28 +0200 (0:00:01.568)       0:00:29.627 ********* 
+2019-07-11 14:07:29,078 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:29,088 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create '/tmp/batctl/' Directory] *****************************************************************************************************************
+2019-07-11 14:07:29,089 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:29 +0200 (0:00:00.319)       0:00:29.946 ********* 
+2019-07-11 14:07:29,221 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:29,235 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Unpack batctl archive] ***************************************************************************************************************************
+2019-07-11 14:07:29,235 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:29 +0200 (0:00:00.146)       0:00:30.093 ********* 
+2019-07-11 14:07:29,680 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:29,694 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make batctl] *************************************************************************************************************************************
+2019-07-11 14:07:29,694 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:29 +0200 (0:00:00.459)       0:00:30.552 ********* 
+2019-07-11 14:07:31,473 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:31,493 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make install batctl] *****************************************************************************************************************************
+2019-07-11 14:07:31,493 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:31 +0200 (0:00:01.798)       0:00:32.351 ********* 
+2019-07-11 14:07:31,724 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:31,755 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create alfred group] *****************************************************************************************************************************
+2019-07-11 14:07:31,756 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:31 +0200 (0:00:00.262)       0:00:32.613 ********* 
+2019-07-11 14:07:31,973 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:32,001 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create alfred user] ******************************************************************************************************************************
+2019-07-11 14:07:32,001 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:31 +0200 (0:00:00.245)       0:00:32.859 ********* 
+2019-07-11 14:07:32,331 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:32,351 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Download alfred] *********************************************************************************************************************************
+2019-07-11 14:07:32,351 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:32 +0200 (0:00:00.349)       0:00:33.209 ********* 
+2019-07-11 14:07:32,574 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:32,584 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Create '/tmp/alfred/' Directory] *****************************************************************************************************************
+2019-07-11 14:07:32,584 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:32 +0200 (0:00:00.233)       0:00:33.442 ********* 
+2019-07-11 14:07:32,715 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:32,742 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Unpack alfred archive] ***************************************************************************************************************************
+2019-07-11 14:07:32,742 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:32 +0200 (0:00:00.158)       0:00:33.600 ********* 
+2019-07-11 14:07:33,188 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:33,209 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make alfred] *************************************************************************************************************************************
+2019-07-11 14:07:33,209 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:33 +0200 (0:00:00.467)       0:00:34.067 ********* 
+2019-07-11 14:07:33,861 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:33,890 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Make install alfred] *****************************************************************************************************************************
+2019-07-11 14:07:33,890 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:33 +0200 (0:00:00.680)       0:00:34.748 ********* 
+2019-07-11 14:07:34,066 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:34,089 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Set Linux capabilities for alfred] ***************************************************************************************************************
+2019-07-11 14:07:34,089 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:34 +0200 (0:00:00.198)       0:00:34.947 ********* 
+2019-07-11 14:07:34,310 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:34,335 p=1839 u=mhellebrand |  TASK [freifunk-backbone : Copy Router-Advertisement configuration] *********************************************************************************************************
+2019-07-11 14:07:34,336 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:34 +0200 (0:00:00.246)       0:00:35.193 ********* 
+2019-07-11 14:07:34,758 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:34,785 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Create freifunk directory] ******************************************************************************************************************
+2019-07-11 14:07:34,786 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:34 +0200 (0:00:00.450)       0:00:35.644 ********* 
+2019-07-11 14:07:34,911 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:34,929 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Get the MAC address] ************************************************************************************************************************
+2019-07-11 14:07:34,929 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:34 +0200 (0:00:00.143)       0:00:35.787 ********* 
+2019-07-11 14:07:34,951 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:34,962 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Copy freifunk update script] ****************************************************************************************************************
+2019-07-11 14:07:34,962 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:34 +0200 (0:00:00.032)       0:00:35.820 ********* 
+2019-07-11 14:07:35,359 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:35,390 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Add cron job for update script each five minutes] *******************************************************************************************
+2019-07-11 14:07:35,390 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:35 +0200 (0:00:00.428)       0:00:36.248 ********* 
+2019-07-11 14:07:35,627 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:35,637 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Add cron job for update script at reboot] ***************************************************************************************************
+2019-07-11 14:07:35,637 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:35 +0200 (0:00:00.246)       0:00:36.494 ********* 
+2019-07-11 14:07:35,800 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:35,828 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Copy map-backend.py (deprecated, but required)] *********************************************************************************************
+2019-07-11 14:07:35,829 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:35 +0200 (0:00:00.191)       0:00:36.686 ********* 
+2019-07-11 14:07:36,603 p=1839 u=mhellebrand |  changed: [gw01.ffbsee.net]
+2019-07-11 14:07:36,631 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Copy ffmap-d3.jq (deprecated, but required)] ************************************************************************************************
+2019-07-11 14:07:36,631 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:36 +0200 (0:00:00.802)       0:00:37.489 ********* 
+2019-07-11 14:07:37,050 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:37,060 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Copy status_page_create.sh (deprecated, but required)] **************************************************************************************
+2019-07-11 14:07:37,060 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:37 +0200 (0:00:00.428)       0:00:37.917 ********* 
+2019-07-11 14:07:37,452 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:37,469 p=1839 u=mhellebrand |  TASK [freifunk-update-script : Copy counter_update.py (deprecated, but required)] ******************************************************************************************
+2019-07-11 14:07:37,469 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:37 +0200 (0:00:00.409)       0:00:38.327 ********* 
+2019-07-11 14:07:37,859 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:37,874 p=1839 u=mhellebrand |  TASK [freifunk-update-script : get v2_map-backend.py] **********************************************************************************************************************
+2019-07-11 14:07:37,875 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:37 +0200 (0:00:00.405)       0:00:38.732 ********* 
+2019-07-11 14:07:38,024 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:38,050 p=1839 u=mhellebrand |  TASK [fastd-install : Install some dependencies] ***************************************************************************************************************************
+2019-07-11 14:07:38,050 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:38 +0200 (0:00:00.175)       0:00:38.908 ********* 
+2019-07-11 14:07:38,554 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:38,580 p=1839 u=mhellebrand |  TASK [fastd-install : Create '/root/download/' directory] ******************************************************************************************************************
+2019-07-11 14:07:38,581 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:38 +0200 (0:00:00.530)       0:00:39.438 ********* 
+2019-07-11 14:07:38,719 p=1839 u=mhellebrand |  ok: [gw01.ffbsee.net]
+2019-07-11 14:07:38,741 p=1839 u=mhellebrand |  TASK [fastd-install : Download libsodium] **********************************************************************************************************************************
+2019-07-11 14:07:38,741 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:38 +0200 (0:00:00.160)       0:00:39.599 ********* 
+2019-07-11 14:07:39,232 p=1839 u=mhellebrand |  fatal: [gw01.ffbsee.net]: FAILED! => changed=false 
+  dest: /root/download/fastd_libsodium.1.0.18.tar.gz
+  elapsed: 0
+  msg: Request failed
+  response: 'HTTP Error 404: Not Found'
+  status_code: 404
+  url: https://github.com/jedisct1/libsodium/releases/download/1.0.18/libsodium-1.0.18.tar.gz
+2019-07-11 14:07:39,234 p=1839 u=mhellebrand |  PLAY RECAP *****************************************************************************************************************************************************************
+2019-07-11 14:07:39,234 p=1839 u=mhellebrand |  gw01.ffbsee.net            : ok=36   changed=18   unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+2019-07-11 14:07:39,234 p=1839 u=mhellebrand |  gw04.ffbsee.net            : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2019-07-11 14:07:39,234 p=1839 u=mhellebrand |  Thursday 11 July 2019  14:07:39 +0200 (0:00:00.492)       0:00:40.092 ********* 
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  =============================================================================== 
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  freifunk-backbone : Make batman-adv -------------------------------------------------------------------------------------------------------------------------------- 13.28s
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  Gathering Facts ---------------------------------------------------------------------------------------------------------------------------------------------------- 11.35s
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  freifunk-backbone : Make batctl ------------------------------------------------------------------------------------------------------------------------------------- 1.80s
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  freifunk-backbone : Make install batman-adv ------------------------------------------------------------------------------------------------------------------------- 1.57s
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  freifunk-update-script : Copy map-backend.py (deprecated, but required) --------------------------------------------------------------------------------------------- 0.80s
+2019-07-11 14:07:39,235 p=1839 u=mhellebrand |  motd : Copy motd.sh to gateway -------------------------------------------------------------------------------------------------------------------------------------- 0.74s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Make alfred ------------------------------------------------------------------------------------------------------------------------------------- 0.68s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Install dependencies for batman-adv batctl and alfred ------------------------------------------------------------------------------------------- 0.67s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Unpack batman-adv archive ----------------------------------------------------------------------------------------------------------------------- 0.57s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Download 'B.A.T.M.A.N.' Advanced ---------------------------------------------------------------------------------------------------------------- 0.55s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  fastd-install : Install some dependencies --------------------------------------------------------------------------------------------------------------------------- 0.53s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  fastd-install : Download libsodium ---------------------------------------------------------------------------------------------------------------------------------- 0.49s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Unpack alfred archive --------------------------------------------------------------------------------------------------------------------------- 0.47s
+2019-07-11 14:07:39,236 p=1839 u=mhellebrand |  freifunk-backbone : Unpack batctl archive --------------------------------------------------------------------------------------------------------------------------- 0.46s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  freifunk-backbone : Copy Router-Advertisement configuration --------------------------------------------------------------------------------------------------------- 0.45s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  network : Copy network interface configuration ---------------------------------------------------------------------------------------------------------------------- 0.44s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  freifunk-update-script : Copy freifunk update script ---------------------------------------------------------------------------------------------------------------- 0.43s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  freifunk-update-script : Copy ffmap-d3.jq (deprecated, but required) ------------------------------------------------------------------------------------------------ 0.43s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  freifunk-update-script : Copy status_page_create.sh (deprecated, but required) -------------------------------------------------------------------------------------- 0.41s
+2019-07-11 14:07:39,237 p=1839 u=mhellebrand |  freifunk-update-script : Copy counter_update.py (deprecated, but required) ------------------------------------------------------------------------------------------ 0.41s

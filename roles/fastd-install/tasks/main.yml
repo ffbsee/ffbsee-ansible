@@ -27,7 +27,7 @@
 
 - name: Download libsodium
   get_url:
-    url: 'https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz'
+    url: 'https://download.libsodium.org/libsodium/releases/libsodium-{{ fastd_libsodium_version }}.tar.gz'
     dest: '/root/download/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
     checksum: sha256:{{ fastd_libsodium_sha256sum }}
   register: libsodium_install

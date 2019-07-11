@@ -12,16 +12,16 @@ ipv4_dhcp_server: '10.15.224.24 172.104.136.243'
 ipv4_dhcp_interface: 'bat0'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations
-batman_version: '2019.0'
-batman_sha256sum: '3e97d8a771cdbd7b2df42c52b88e071eaa58b5d28eb4e17a4b13b6698debbdc0'
+batman_version: '2019.2'
+batman_sha256sum: '70c3f6a6cf88d2b25681a76768a52ed92d9fe992ba8e358368b6a8088757adc8'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz
-batctl_sha256sum: '997721096ff396644e8d697ea7651e9d38243faf317bcea2661d4139ff58b531'
+batctl_sha256sum: 'fb656208ff7d4cd8b1b422f60c9e6d8747302a347cbf6c199d7afa9b80f80ea3'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz
-alfred_sha256sum: 'c06a674763fe27e85a979d7ca65d2af39df4943ff2a4128cad90dd09d237b46a'
+alfred_sha256sum: 'b656f0e9a97a99c7531b6d49ebfd663451c16cdd275bbf7d48ff8daed3880bf2'
  # https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
 
-fastd_libsodium_version: '1.0.17'
-fastd_libsodium_sha256sum: '0cc3dae33e642cc187b5ceb467e0ad0e1b51dcba577de1190e9ffa17766ac2b1'
+fastd_libsodium_version: '1.0.18'
+fastd_libsodium_sha256sum: 'd59323c6b712a1519a5daf710b68f5e7fde57040845ffec53850911f10a5d4f4'
 # https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz
 libuecc_url_head: 'https://projects.universe-factory.net/attachments/download/'
 libuecc_url_tail: '85'

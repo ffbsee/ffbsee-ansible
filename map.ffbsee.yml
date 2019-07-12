@@ -1,0 +1,70 @@
+---
+
+- name: Update packages and users on all nodes
+  hosts: freifunk
+  tags: 
+  - base
+  - users
+  - home
+  - base-packages
+  - ssh_authorized_keys
+  - home_environment
+  - new-user
+  roles:
+    - base-packages
+    - ssh_authorized_keys
+    - sshd
+    - home_environment
+
+- name: Update packages and users on all nodes
+  hosts: freifunk
+  tags: 
+  - home_environment
+  - motd
+  roles:
+    - home_environment
+    - motd
+
+- name: Configure basic network setup for map.ffbsee.net
+  hosts: map.ffbsee.net
+  tags:
+  - network
+  - interfaces
+  roles:
+    - network
+  
+- name: Configure freifunk network setup for map.ffbsee.net
+  hosts: map.ffbsee.net
+  tags:
+  - backbone
+  - fastd
+  - freifunk-backbone
+  - freifunk-update-script
+  - fastd-install
+  - fastd-config
+  roles:
+    - freifunk-backbone
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
+
+- name: Configure network routing for map.ffbsee.net
+  hosts: map.ffbsee.net
+  tags: 
+  - routing
+  - iptables
+  - ip6tables
+  - firewall
+  roles:
+   - firewall
+   - bird
+
+
+- name: Configure web setup for map.ffbsee.net
+  hosts: map.ffbsee.net
+  tags: web
+  roles:
+   - nginx
+   - gateway-page
+#    - freifunk-karte-json
+#    - FFNodeList

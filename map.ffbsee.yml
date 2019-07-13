@@ -1,7 +1,7 @@
 ---
 
-- name: Update packages and users on all nodes
-  hosts: freifunk
+- name: Update packages and users on map.ffbsee.net
+  hosts: map.ffbsee.net 
   tags: 
   - base
   - users
@@ -17,7 +17,7 @@
     - home_environment
 
 - name: Update packages and users on all nodes
-  hosts: freifunk
+  hosts: map.ffbsee.net
   tags: 
   - home_environment
   - motd

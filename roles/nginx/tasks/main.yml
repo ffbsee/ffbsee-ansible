@@ -4,14 +4,14 @@
 
 - name: Prepare nginx
   apt:
-    name: '{{ item }}'
+    # name: '{{ item }}'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
   vars:
     packages:
     - python-simplejson
-    - apache2
+    - nginx
 
 - name: Install letsencrypt
   apt:

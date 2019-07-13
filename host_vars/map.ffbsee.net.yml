@@ -45,3 +45,5 @@ nodelist: 'true'
 
 block_rfc1918_interface: "{{ wan_base_interface }}"
 
+# we do not host any presentations here
+presentation_webserver: false

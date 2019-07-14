@@ -19,15 +19,6 @@
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
-  when: ansible_distribution == "Debian" and ansible_distribution_major_version == '9' and vpn_on_port_443 == 'false'
-
-- name: 'Install letsencrypt for debian 8'
-  apt:
-    name: 'letsencrypt'
-    state: latest
-    default_release: jessie-backports
-    update_cache: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_major_version == '8' and vpn_on_port_443 == 'false'
 
 - name: create letsencrypt directory
   file: 

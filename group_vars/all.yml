@@ -17,6 +17,7 @@ accounts:
   - kpanic
   - wolf
   - xperimental
+  - alex
 
 ## users for remote login with their ssh public key
 users:
@@ -42,5 +43,6 @@ users:
     - xperimental@id4
   wolf:
     - wolf@rotkaeppchen
-
+  alex:
+    - alex@toolbox
 

@@ -27,6 +27,7 @@ run_webserver: 'true'
 run_icvpn: 'false'
 run_map: 'false'
 run_stats: 'false'
+freifunk_dhcp_relay: 'true'
 da_laueft_ein_dhcp_relay: 'true'
 
 fastd_peer_limit: ''

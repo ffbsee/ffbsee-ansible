@@ -18,13 +18,16 @@
 	url = https://github.com/ffbsee/FFNodeList.git
 [submodule "roles/ssh_authorized_keys"]
 	path = roles/ssh_authorized_keys
-	url = https://github.com/ffbsee/role-ssh_authorized_keys.git
+	url = https://github.com/chaos-bodensee/role-ssh_authorized_keys.git
 [submodule "files/ssh_authorized_keys"]
 	path = files/ssh_authorized_keys
 	url = https://gitea.see-base.de/toolbox/ssh-public-keys.git
 [submodule "roles/sshd"]
 	path = roles/sshd
-	url = https://github.com/DO1JLR/role_sshd.git
+	url = https://github.com/chaos-bodensee/role_sshd.git
 [submodule "roles/home_environment"]
 	path = roles/home_environment
-	url = https://github.com/DO1JLR/role_dotfiles.git
+	url = https://github.com/chaos-bodensee/role_dotfiles.git
+[submodule "roles/base_packages"]
+	path = roles/base_packages
+	url = https://github.com/chaos-bodensee/role-base_packages.git

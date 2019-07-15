@@ -8,7 +8,7 @@ community_shortname: 'ffbsee'
 ### FYI: We use new addresses on B.A.T.M.A.N. V
 ipv6_prefix: 'fdef:1701:b5ee:23:'
 ipv4_netz: '10.15.224.0/20'
-ipv4_dhcp_server: '10.15.224.24 172.104.136.243'
+ipv4_dhcp_server: '10.15.224.1 10.15.224.4'
 ipv4_dhcp_interface: 'bat0'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations

@@ -1,5 +1,4 @@
 ---
-
 - name: Update packages and users on all nodes
   hosts: freifunk
   tags: 
@@ -7,11 +6,17 @@
   - users
   - home
   - base-packages
+  - base_packages
   - ssh_authorized_keys
   - home_environment
   - new-user
+  - base
+  - ssh
+  - sshd
+  - ssh_authorized_keys
+  - auth
   roles:
-    - base-packages
+    - base_packages
     - ssh_authorized_keys
     - sshd
     - home_environment

@@ -1,17 +1,22 @@
 ---
-
-- name: Update packages and users on map.ffbsee.net
-  hosts: map.ffbsee.net 
+- name: Update packages and users on all nodes
+  hosts: freifunk
   tags: 
   - base
   - users
   - home
   - base-packages
+  - base_packages
   - ssh_authorized_keys
   - home_environment
   - new-user
+  - base
+  - ssh
+  - sshd
+  - ssh_authorized_keys
+  - auth
   roles:
-    - base-packages
+    - base_packages
     - ssh_authorized_keys
     - sshd
     - home_environment

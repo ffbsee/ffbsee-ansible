@@ -1,7 +1,0 @@
----
-
-- name: Develop stuf
-  hosts: all
-  roles:
-    - firewall
-

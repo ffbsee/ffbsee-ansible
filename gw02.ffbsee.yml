@@ -1,20 +1,22 @@
 ---
-
-- name: Install common packages for gw02.ffbsee.net
-  hosts: gw02.ffbsee.net
+- name: Update packages and users on all nodes
+  hosts: freifunk
   tags: 
   - base
   - users
   - home
   - base-packages
-  - base-packages
+  - base_packages
   - ssh_authorized_keys
-  - ssh_authorized_keys
-  - home_environment
   - home_environment
   - new-user
+  - base
+  - ssh
+  - sshd
+  - ssh_authorized_keys
+  - auth
   roles:
-    - base-packages
+    - base_packages
     - ssh_authorized_keys
     - sshd
     - home_environment

@@ -98,6 +98,6 @@
   tags: web
   roles:
     - nginx
-    - gateway-page
+#   - gateway-page
 #   - freifunk-karte-json
 #   - FFNodeList

@@ -41,3 +41,5 @@ debian: '10'
 freifunk_karte_api: 'false'
 
 nodelist: 'true'
+
+block_rfc1918_interface: "{{ wan_base_interface }}"

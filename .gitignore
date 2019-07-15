@@ -7,6 +7,9 @@ develop.yml
 *.pyc
 ./develop.yml
 **develop.yml
+ansible.log
+*ansible.log
+/facts/*
 host_vars/gw03.ffbsee.net
 host_vars/gw02.ffbsee.net
 host_vars/gw01.ffbsee.net

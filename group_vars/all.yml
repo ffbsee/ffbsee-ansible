@@ -28,6 +28,7 @@ users:
     - l3d@business.wingcon.com
     - l3d@derpy.l3d.yt
     - l3d@mobile.l3d.yt
+    - l3d@backup-rsa.l3d.yt
   mart:
     - mart@ffbsee.de
     - mart@kirika
@@ -46,4 +47,5 @@ users:
     - wolf@rotkaeppchen
   alex:
     - alex@toolbox
+    - alex@toolbox-rsa
 

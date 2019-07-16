@@ -1,7 +1,7 @@
 ---
 
 - name: Update admin user accounts
-  hosts: gw01.ffbsee.net
+  hosts: all
   tags: ssh
   roles:
     - ssh_authorized_keys

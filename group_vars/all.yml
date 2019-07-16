@@ -47,5 +47,5 @@ users:
     - wolf@rotkaeppchen
   alex:
     - alex@toolbox
-    - alex@toolbox-rsa
+    - alex@rsa-toolbox
 

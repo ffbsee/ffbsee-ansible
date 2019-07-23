@@ -95,11 +95,11 @@
     - unbound_freifunk_tlds
     - bird
 
-- name: Configure web setup for gw02.ffbsee.net
-  hosts: gw02.ffbsee.net
-  tags: web
-  roles:
-    - nginx
+#- name: Configure web setup for gw02.ffbsee.net
+#  hosts: gw02.ffbsee.net
+#  tags: web
+#  roles:
+#    - nginx
 #   - gateway-page
 #   - freifunk-karte-json
 #   - FFNodeList

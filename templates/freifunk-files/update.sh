@@ -237,7 +237,7 @@ if [ $run_gateway = true ]; then
                 fi
         fi
         # Activate the gateway announcements on a node that has a DHCP server running
-        batctl gw_mode server 10mbit/10mbit
+        batctl gw_mode server 100mbit/100mbit
 fi # run_gateway
 if [ $run_map = true ]; then
         #collect all map pieces

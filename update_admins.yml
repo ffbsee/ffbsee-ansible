@@ -2,13 +2,19 @@
 
 - name: Update admin user accounts
   hosts: all
-  tags: ssh
+  tags:
+   - ssh
+   - access
+   - default
   roles:
     - ssh_authorized_keys
+    - sshd
 
 - name: Update Packages
   hosts: all
-  tags: update
+  tags:
+   - update
   roles:
     - base_packages
+    - home_environment
 

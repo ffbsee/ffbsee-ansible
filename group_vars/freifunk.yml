@@ -33,11 +33,6 @@ fastd_checksum: 'dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491
 # tecnical informations for TLS
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
-
-# seme meta informations for the ssh_authorized_keys role
-home_sweet_home: false
-ssh_public_key_store: 'ssh_authorized_keys'
-
 # make ssh more insecur for legacy rsa keys (mart)
 only_allow_ed25519: false
 

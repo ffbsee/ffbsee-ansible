@@ -49,3 +49,9 @@ users:
     - alex@toolbox
     - alex@rsa-toolbox
 
+# seme meta informations for the ssh_authorized_keys role
+home_sweet_home: false
+ssh_public_key_store: 'ssh_authorized_keys'
+
+
+

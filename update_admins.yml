@@ -1,5 +1,4 @@
 ---
-
 - name: Update admin user accounts
   hosts: all
   tags:

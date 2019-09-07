@@ -29,6 +29,7 @@
   roles:
     - home_environment
     - motd
+    - install-bat
 
 - name: Configure basic network setup for gw01.ffbsee.net
   hosts: gw01.ffbsee.net

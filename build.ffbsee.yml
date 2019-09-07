@@ -29,4 +29,5 @@
   roles:
     - home_environment
     - motd
+    - install-bat
 

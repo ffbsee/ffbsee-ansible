@@ -31,3 +31,6 @@
 [submodule "roles/base_packages"]
 	path = roles/base_packages
 	url = https://github.com/chaos-bodensee/role-base_packages.git
+[submodule "roles/install-bat"]
+	path = roles/install-bat
+	url = https://github.com/gantsign/ansible_role_bat.git

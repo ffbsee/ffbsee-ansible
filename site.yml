@@ -1,0 +1,15 @@
+---
+- name: deploy gw01.ffbsee.yml 
+  import_playbook: gw01.ffbsee.yml
+
+# gw02 is offline/crashed
+#- name: deploy gw02.ffbsee.yml 
+#  import_playbook: gw02.ffbsee.yml
+
+- name: deploy gw04.ffbsee.yml 
+  import_playbook: gw04.ffbsee.yml
+
+- name: deploy map.ffbsee.yml 
+  import_playbook: map.ffbsee.yml
+
+

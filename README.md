@@ -31,7 +31,7 @@ With this ansible playbook collection and the change to ``B.A.T.M.A.N. V`` we wi
 
 **DON'T CHANGE ANYTHING LOCAL ON THE GATEWAYS. USE ANSIBLE AND COMMIT AND PUSH YOUR CHANGES!!!**
 
-Usage
+ Usage
 -----
 
 There is an Ansible playbook for each Gateway that runs wit ``B.A.T.M.A.N. V``. To deploy the latest changes or the whole setup on any gateway simply execute on your own machine:
@@ -42,8 +42,15 @@ ansible-playbook $GATEWAY.yml
 
 from the **top-level directory** of this `git` repository.
 
+For managing all gateways simply run the ``site.yml`` playbook!
 
-Freifunk Bodensee Network
+```
+# deploy on all ffbsee-managed ansible nodes
+ansible-plybook site.yml
+```
+
+
+ Freifunk Bodensee Network
 =========================
 
 Right now, there are some dedicated servers, the Freifunk-Gateways:

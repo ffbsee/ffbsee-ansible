@@ -21,7 +21,7 @@ birdc6 configure > /dev/null
 echo "ICVPN bird conf done"
 
 # refresh DNS config for freifunk zones
-sudo -u nobody /opt/freifunk/icvpn-scripts/mkdns -f unbound -s "$DATADIR" -x bodensee > /etc/unbound/unbound.conf.d/freifunk_forward_zones.conf
+sudo -u nobody /opt/freifunk/icvpn-scripts/mkdns -f unbound -s "$DATADIR" -x bodensee -x bodensee2 > /etc/unbound/unbound.conf.d/freifunk_forward_zones.conf
 
 # restart unbound
 systemctl restart unbound > /dev/null

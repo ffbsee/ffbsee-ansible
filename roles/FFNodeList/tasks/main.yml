@@ -8,10 +8,7 @@
     cache_valid_time: 86400
   vars:
     packages:
-    - perl
-    - cpanminus
-    - libjson-pp-perl
-    - libwww-perl
+    - python3
   when: nodelist
 
 - name: Create '/var/www/HOSTNAME/FFNodeList' directory
@@ -23,8 +20,8 @@
 
 - name: FFNodeList Template
   template:
-    src: 'templates/FFNodeList/generateList.pl'
-    dest: '/opt/freifunk/genNodeList.pl'
+    src: 'templates/FFNodeList/generateList.py'
+    dest: '/opt/freifunk/genNodeList.py'
     mode: '0755'
   when: nodelist
 
@@ -37,24 +34,19 @@
     mode: '0755'
   when: nodelist
 
-- name: Install Perl modules
-  cpanm:
+- name: Install python3 modules
+  pip:
     name: '{{ item }}'
   with_items:
-    - 'HTML::Entities'
-    - 'LWP::Simple'
-    - 'utf8'
-    - 'JSON'
+    - 'datetime'
   when: nodelist
 
 
 - name: Add cron job for FFNodeList script
   cron:
     name: 'gen FFNodeList'
-    job: '/opt/freifunk/genNodeList.pl > /dev/null'
+    job: '/opt/freifunk/genNodeList.py > /dev/null'
     minute: '*/5'
     user: 'root'
     state: 'present'
     cron_file: '/etc/crontab'
-
-

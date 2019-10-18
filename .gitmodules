@@ -31,3 +31,6 @@
 [submodule "roles/install-bat"]
 	path = roles/install-bat
 	url = https://github.com/gantsign/ansible_role_bat.git
+[submodule "templates/FFNodeList"]
+	path = templates/FFNodeList
+	url = https://github.com/ffbsee/FFNodeList

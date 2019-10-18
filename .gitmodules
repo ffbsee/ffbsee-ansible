@@ -13,9 +13,6 @@
 [submodule "roles/unbound"]
 	path = roles/unbound
 	url = https://github.com/ffbsee/unbound.git
-[submodule "templates/FFNodeList"]
-	path = templates/FFNodeList
-	url = https://github.com/ffbsee/FFNodeList.git
 [submodule "roles/ssh_authorized_keys"]
 	path = roles/ssh_authorized_keys
 	url = https://github.com/chaos-bodensee/role-ssh_authorized_keys.git

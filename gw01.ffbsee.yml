@@ -17,6 +17,7 @@
   - auth
   roles:
     - base_packages
+    - manage_users
     - ssh_authorized_keys
     - sshd
     - home_environment

@@ -6,6 +6,7 @@
    - access
    - default
   roles:
+    - manage_users
     - ssh_authorized_keys
     - sshd
 

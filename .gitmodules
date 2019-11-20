@@ -34,3 +34,6 @@
 [submodule "roles/install-bat"]
 	path = roles/install-bat
 	url = https://github.com/gantsign/ansible_role_bat.git
+[submodule "roles/manage_users"]
+	path = roles/manage_users
+	url = https://github.com/chaos-bodensee/role-manage_users.git

@@ -1,0 +1,92 @@
+---
+- name: Update packages and users on all nodes
+  hosts: gw03.ffbsee.net
+  tags: 
+  - base
+  - users
+  - home
+  - base-packages
+  - base_packages
+  - ssh_authorized_keys
+  - home_environment
+  - new-user
+  - base
+  - ssh
+  - sshd
+  - ssh_authorized_keys
+  - auth
+  roles:
+    - base_packages
+    - manage_users
+    - ssh_authorized_keys
+    - sshd
+    - home_environment
+
+- name: Update packages and users on all nodes
+  hosts: gw03.ffbsee.net
+  tags:
+  - home_environment
+  - motd
+  roles:
+    - home_environment
+    - motd
+    - install-bat
+    
+- name: Configure basic network setup for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags:
+  - network
+  - interfaces
+  roles:
+    - network
+
+- name: Configure freifunk network setup for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags:
+  - backbone
+  - fastd
+  - freifunk-backbone
+  - freifunk-update-script
+  - fastd-install
+  - fastd-config
+  roles:
+    - freifunk-backbone
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
+
+- name: Configure network routing for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags:
+  - routing
+  - iptables
+  - ip6tables
+  - firewall
+  roles:
+    - firewall  
+
+- name: Confiure network routing for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags:
+  - routing
+  - dhcp
+  - dhcpd
+  - isc-dhcp
+  - isc
+  - isc-dhcp-server
+  - isc-dhcp-relay
+  - dhcp-relay
+  roles:
+    - dhcp-relay
+
+- name: Configure network routing for gw03.ffbsee.net
+  hosts: gw03.ffbsee.net
+  tags:
+  - dns
+  - unbound
+  - role-unbound
+  - bind
+  roles:
+    - unbound
+    - unbound_freifunk_tlds
+    - bird

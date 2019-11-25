@@ -1,12 +1,12 @@
 ---
 hostname: 'gw03.ffbsee.net'
 
-ipv4_mesh_address: '10.11.160.103'
+ipv4_mesh_address: '10.15.224.3'
 
-ipv6_suffix: ':1:3'
-ipv6_radv_suffix: ':1:3'
+ipv6_suffix: '::3'
+ipv6_radv_suffix: '::3'
 ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
-mesh_ipv6_extra_addr: '{{ ipv6_prefix }}:4'
+mesh_ipv6_extra_addr: ''
 mesh_ipv6_address: '{{ ipv6_address }}'
 ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
@@ -27,18 +27,20 @@ run_webserver: 'true'
 run_icvpn: 'false'
 run_map: 'true'
 run_stats: 'false'
-da_laueft_ein_dhcp_relay: 'false'
+da_laueft_ein_dhcp_relay: 'true'
+freifunk_dhcp_relay: 'true'
 
 fastd_peer_limit: ''
 fastd_vpn_backbone_configs:
   - gw01
-  - gw02
   - gw04
 
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'
 
-debian: '9'
+debian: '10'
 freifunk_karte_api: 'true'
 
 nodelist: 'true'
+
+block_rfc1918_interface: 'eth0'

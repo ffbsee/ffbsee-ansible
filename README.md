@@ -13,7 +13,7 @@ This `git` repository contains the Ansible code and data to configure and deploy
 
 ```bash
 # Clone the Git
-git clone https://github.com/ffbsee/ansible.git ffbsee-anisble
+git clone https://github.com/ffbsee/ansible.git ffbsee-ansible
 
 # Clone the Submodules too
 cd ffbsee-ansible

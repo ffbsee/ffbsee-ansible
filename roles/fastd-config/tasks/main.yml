@@ -100,6 +100,22 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
+- name: Copy fastd blacklisting scipt
+  template:
+    src: 'templates/fastd/fastd-blacklist.sh'
+    dest: '/etc/fastd/fastd-blacklist.sh'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd blacklist json file
+  template:
+    src: 'templates/fastd/fastd-blacklist.json'
+    dest: '/etc/fastd/fastd-blacklist.json'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Copy fastd vpn-backbone configurations
   copy:
     src: 'files/fastd/backbone/{{ item }}'

@@ -1,0 +1,9 @@
+{
+  "peers":
+  [
+    {
+      "pubkey": "fb6c8b46538b74148f9bdb01a3ada3609056f8ed2b2de0a2961dcebcff77d0c2",
+      "comment": "Hat im Januar2020 per DHCP IPs 192.168.178.0/24 in Netz gespuckt"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mesh_ifname='bat0' #fastd mesh
+mesh_ifname='br-ffbsee' # mesh bridge
 wan_ifname='tun0' #vpn uplink
 avg_time=5 #seconds
 name=`hostname`

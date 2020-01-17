@@ -198,7 +198,7 @@
 #
 # IPv6
 #
-# /sbin/ip6tables -A INPUT -i bat0 -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j DROP
+# /sbin/ip6tables -A INPUT -i br-ffbsee0 -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j DROP
 - name: icmpv6-type 134
   become: true
   iptables:
@@ -229,7 +229,7 @@
   become: true
   command: "ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP"
 
-#/sbin/ip6tables -A FORWARD -i bat0 -o {{ wan_interface }} -j ACCEPT
+#/sbin/ip6tables -A FORWARD -i br-freifunk -o {{ wan_interface }} -j ACCEPT
 - name: forward_ipv6_traffic
   become: true
   iptables:

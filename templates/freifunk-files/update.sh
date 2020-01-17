@@ -92,19 +92,20 @@ if [ $run_mesh = true ]; then
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
 	fastd --config /etc/fastd/fastd_nodes.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes2.conf --daemon
         fastd --config /etc/fastd/fastd_backbone.conf --daemon
         sleep 1
     fi
 
     if [ $(batctl if | grep fastd_backbone -c) = 0 ]; then
-        echo "(I) Add fastd backbone interface to batman-adv."
+        echo "(I) Add fastd backbone interface to bat1."
         ip link set fastd_backbone up
         ip addr flush dev fastd_backbone
 
 	# force BATMAN V routing algo _before_ batctl sets up the interface
 	echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
 
-	batctl if add fastd_backbone
+	batctl if add fastd_backbone -m bat0
     fi
 
     if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then
@@ -115,34 +116,48 @@ if [ $run_mesh = true ]; then
         # force BATMAN V routing algo _before_ batctl sets up the interface
         echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
         
-        batctl if add fastd_nodes
+        batctl if add fastd_nodes -m bat1
     fi
 
-    if [ "$(cat /sys/class/net/bat0/address 2> /dev/null)" != "$mac_addr" ]; then
-        echo "(I) Set MAC address for bat0."
-        ip link set bat0 down
-        ip link set bat0 address "$mac_addr"
-        ip link set bat0 up
-        #set IPv4 address on bat0 for DNS; This is gateway specific!
-        ip addr add "$mesh_ipv4_addr/20" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to bat0"
+    if [ $(batctl if | grep fastd_nodes2 -c) = 0 ]; then
+        echo "(I) Add fastd nodes 2 interface to bat0"
+	ip link set fastd_nodes2 up
+        ip addr flush dev fastd_nodes2
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes2 -m bat2
+    fi
+
+    if [ "$(cat /sys/class/net/br-ffbsee/address 2> /dev/null)" != "$mac_addr" ]; then
+        echo "(I) Set MAC address for br-ffbsee."
+        ip link set br-ffbsee down
+        ip link set br-ffbsee address "$mac_addr"
+        ip link set br-ffbsee up
+	brctl addif br-ffbsee bat0
+	brctl addif br-ffbsee bat1
+	brctl addif br-ffbsee bat2
+        #set IPv4 address on br-ffbsee for DNS; This is gateway specific!
+        ip addr add "$mesh_ipv4_addr/20" dev br-ffbsee 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to br-ffbsee"
             # Add IPv6 address the same way the routers do.
             # This makes the address consistent with the one used on the routers status page.
             macaddr="$(cat /sys/kernel/debug/batman_adv/bat0/originators | awk -F'[/ ]' '{print $7; exit;}')"
             euiaddr="$(ula_addr $ff_prefix $macaddr)"
             echo "(I) Set EUI64-Address: $euiaddr"
-            ip a a "$euiaddr/64" dev bat0
+            ip a a "$euiaddr/64" dev br-ffbsee
         
-        # we do not accept a default gateway through bat0
-        echo 0 > /proc/sys/net/ipv6/conf/bat0/accept_ra
+        # we do not accept a default gateway through br-ffbsee
+        echo 0 > /proc/sys/net/ipv6/conf/br-ffbsee/accept_ra
         #set neighbor table times to ten times the default
-        echo 600 > /proc/sys/net/ipv6/neigh/bat0/gc_stale_time
-        echo 300000 > /proc/sys/net/ipv6/neigh/bat0/base_reachable_time_ms
+        echo 600 > /proc/sys/net/ipv6/neigh/br-ffbsee/gc_stale_time
+        echo 300000 > /proc/sys/net/ipv6/neigh/br-ffbsee/base_reachable_time_ms
         echo "(I) Configure batman-adv."
-        echo 10000 >  /sys/class/net/bat0/mesh/orig_interval
-        echo 1 >  /sys/class/net/bat0/mesh/distributed_arp_table
-        echo 1 >  /sys/class/net/bat0/mesh/multicast_mode
-        echo 1 >  /sys/class/net/bat0/mesh/bridge_loop_avoidance
-        echo 1 >  /sys/class/net/bat0/mesh/aggregated_ogms
+        echo 10000 >  /sys/class/net/br-ffbsee/mesh/orig_interval
+        echo 1 >  /sys/class/net/br-ffbsee/mesh/distributed_arp_table
+        echo 1 >  /sys/class/net/br-ffbsee/mesh/multicast_mode
+        echo 1 >  /sys/class/net/br-ffbsee/mesh/bridge_loop_avoidance
+        echo 1 >  /sys/class/net/br-ffbsee/mesh/aggregated_ogms
         #set size of neighbor table
         gc_thresh=1024 #default is 256
         sysctl -w net.ipv4.neigh.default.gc_thresh1=$(($gc_thresh * 1))
@@ -152,11 +167,11 @@ if [ $run_mesh = true ]; then
         sysctl -w net.ipv6.neigh.default.gc_thresh2=$(($gc_thresh * 2))
         sysctl -w net.ipv6.neigh.default.gc_thresh3=$(($gc_thresh * 4))
     fi
-    if ip -6 addr add "$mesh_ipv6_addr/64" dev bat0 2> /dev/null; then
-        echo "(I) Set IP-Address of bat0 to $mesh_ipv6_addr"
+    if ip -6 addr add "$mesh_ipv6_addr/64" dev br-ffbsee 2> /dev/null; then
+        echo "(I) Set IP-Address of br-ffbsee to $mesh_ipv6_addr"
     fi
-    if ip -6 addr add "$mesh_ipv6_extra_addr/64" dev bat0 2> /dev/null; then
-        echo "(I) Set Extra IPv6-Address of bat0 to $mesh_ipv6_extra_addr"
+    if ip -6 addr add "$mesh_ipv6_extra_addr/64" dev br-ffbsee 2> /dev/null; then
+        echo "(I) Set Extra IPv6-Address of br-ffbsee to $mesh_ipv6_extra_addr"
     fi
     if ! is_running "alfred"; then
         # remove remains
@@ -171,7 +186,7 @@ if [ $run_mesh = true ]; then
         # set umask of socket from 0117 to 0111 so that data can be pushed to alfred.sock below
                 start-stop-daemon --start --quiet --pidfile /var/run/alfred/alfred.pid \
                     --umask 0111 --make-pidfile --chuid root:alfred \
-                    --background --exec `which alfred` --oknodo -- -i bat0 -u /var/run/alfred/alfred.sock
+                    --background --exec `which alfred` --oknodo -- -i br-ffbsee -u /var/run/alfred/alfred.sock
         # wait for alfred to start up...
                 sleep 1
         if ! is_running "alfred"; then echo "(E) alfred is not running!"

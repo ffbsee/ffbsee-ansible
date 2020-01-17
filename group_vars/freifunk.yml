@@ -9,7 +9,7 @@ community_shortname: 'ffbsee'
 ipv6_prefix: 'fdef:1701:b5ee:23:'
 ipv4_netz: '10.15.224.0/20'
 ipv4_dhcp_server: '10.15.224.1 10.15.224.4'
-ipv4_dhcp_interface: 'bat0'
+ipv4_dhcp_interface: 'br-ffbsee'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations
 batman_version: '2019.2'

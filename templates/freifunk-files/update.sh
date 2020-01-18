@@ -130,6 +130,10 @@ if [ $run_mesh = true ]; then
         batctl -m bat2 if add fastd_nodes2
     fi
 
+    ip link set bat0 up
+    ip link set bat1 up
+    ip link set bat2 up
+
     if [ "$(cat /sys/class/net/br-ffbsee/address 2> /dev/null)" != "$mac_addr" ]; then
         echo "(I) Set MAC address for br-ffbsee."
         ip link set br-ffbsee down

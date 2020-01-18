@@ -92,10 +92,18 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Copy fastd nodes configuration
+- name: Copy fastd nodes1 configuration
   template:
-    src: 'templates/fastd/fastd_nodes.conf'
-    dest: '/etc/fastd/fastd_nodes.conf'
+    src: 'templates/fastd/fastd_nodes1.conf'
+    dest: '/etc/fastd/fastd_nodes1.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes2 configuration
+  template:
+    src: 'templates/fastd/fastd_nodes2.conf'
+    dest: '/etc/fastd/fastd_nodes2.conf'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'

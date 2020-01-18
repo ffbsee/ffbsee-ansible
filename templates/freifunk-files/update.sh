@@ -91,7 +91,7 @@ if [ $run_mesh = true ]; then
 
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
-	fastd --config /etc/fastd/fastd_nodes.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes1.conf --daemon
 	fastd --config /etc/fastd/fastd_nodes2.conf --daemon
         fastd --config /etc/fastd/fastd_backbone.conf --daemon
         sleep 1
@@ -105,18 +105,18 @@ if [ $run_mesh = true ]; then
 	# force BATMAN V routing algo _before_ batctl sets up the interface
 	echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
 
-	batctl if add fastd_backbone -m bat0
+	batctl -m bat0 if add fastd_backbone
     fi
 
-    if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then
-        echo "(I) Add fastd nodes interface to batman-adv."
-        ip link set fastd_nodes up
-        ip addr flush dev fastd_nodes
+    if [ $(batctl if | grep fastd_nodes1 -c) = 0 ]; then
+        echo "(I) Add fastd nodes1 interface to batman-adv."
+        ip link set fastd_nodes1 up
+        ip addr flush dev fastd_nodes1
         
         # force BATMAN V routing algo _before_ batctl sets up the interface
         echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
         
-        batctl if add fastd_nodes -m bat1
+        batctl -m bat1 if add fastd_nodes1
     fi
 
     if [ $(batctl if | grep fastd_nodes2 -c) = 0 ]; then
@@ -127,7 +127,7 @@ if [ $run_mesh = true ]; then
         # force BATMAN V routing algo _before_ batctl sets up the interface
         echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
 
-        batctl if add fastd_nodes2 -m bat2
+        batctl -m bat2 if add fastd_nodes2
     fi
 
     if [ "$(cat /sys/class/net/br-ffbsee/address 2> /dev/null)" != "$mac_addr" ]; then

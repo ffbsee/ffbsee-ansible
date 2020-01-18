@@ -98,7 +98,7 @@ if [ $run_mesh = true ]; then
     fi
 
     if [ $(batctl if | grep fastd_backbone -c) = 0 ]; then
-        echo "(I) Add fastd backbone interface to bat1."
+        echo "(I) Add fastd_backbone interface to bat0."
         ip link set fastd_backbone up
         ip addr flush dev fastd_backbone
 
@@ -108,8 +108,8 @@ if [ $run_mesh = true ]; then
 	batctl -m bat0 if add fastd_backbone
     fi
 
-    if [ $(batctl if | grep fastd_nodes1 -c) = 0 ]; then
-        echo "(I) Add fastd nodes1 interface to batman-adv."
+    if [ $(batctl -m bat1 if | grep fastd_nodes1 -c) = 0 ]; then
+        echo "(I) Add fastd_nodes1 interface to bat1"
         ip link set fastd_nodes1 up
         ip addr flush dev fastd_nodes1
         
@@ -119,8 +119,8 @@ if [ $run_mesh = true ]; then
         batctl -m bat1 if add fastd_nodes1
     fi
 
-    if [ $(batctl if | grep fastd_nodes2 -c) = 0 ]; then
-        echo "(I) Add fastd nodes 2 interface to bat0"
+    if [ $(batctl -m bat2 if | grep fastd_nodes2 -c) = 0 ]; then
+        echo "(I) Add fastd_nodes2 interface to bat2"
 	ip link set fastd_nodes2 up
         ip addr flush dev fastd_nodes2
 

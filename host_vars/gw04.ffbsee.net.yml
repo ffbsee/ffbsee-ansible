@@ -32,7 +32,7 @@ freifunk_dhcp_server: true
 
 fastd_vpn_backbone_configs:
   - gw01
-  - gw02_on-gw04
+  - gw03
   
 fastd_peer_limit: ''
 

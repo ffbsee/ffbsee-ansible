@@ -230,6 +230,20 @@ if [ $run_mesh = true ]; then
             IFS=" "
             printLink $entry
         done
+	IFS="
+"
+        for entry in $(cat /sys/kernel/debug/batman_adv/bat1/originators |  tr '\t/[]()' ' ' |  awk '{ if($1==$4) print($1, $3, $5) }'); do
+            [ $nd -eq 0 ] && nd=1 || echo -n ", "
+            IFS=" "
+            printLink $entry
+        done
+        IFS="
+"
+        for entry in $(cat /sys/kernel/debug/batman_adv/bat2/originators |  tr '\t/[]()' ' ' |  awk '{ if($1==$4) print($1, $3, $5) }'); do
+            [ $nd -eq 0 ] && nd=1 || echo -n ", "
+            IFS=" "
+            printLink $entry
+        done
         echo -n '], '
         echo -n "\"clientcount\" : 0"
         echo -n '}'

@@ -142,6 +142,7 @@ if [ $run_mesh = true ]; then
 	brctl addif br-ffbsee bat0
 	brctl addif br-ffbsee bat1
 	brctl addif br-ffbsee bat2
+	brctl stp br-ffbsee on
         #set IPv4 address on br-ffbsee for DNS; This is gateway specific!
         ip addr add "$mesh_ipv4_addr/20" dev br-ffbsee 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to br-ffbsee"
             # Add IPv6 address the same way the routers do.

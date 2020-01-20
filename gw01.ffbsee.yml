@@ -1,6 +1,6 @@
 ---
 - name: Update packages and users on all nodes
-  hosts: freifunk
+  hosts: gw01.ffbsee.net
   tags: 
   - base
   - users
@@ -23,7 +23,7 @@
     - home_environment
 
 - name: Update packages and users on all nodes
-  hosts: freifunk
+  hosts: gw01.ffbsee.net
   tags: 
   - home_environment
   - motd

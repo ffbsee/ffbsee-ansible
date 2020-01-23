@@ -1,6 +1,6 @@
 ---
 - name: Update packages and users on all nodes
-  hosts: freifunk
+  hosts: map.ffbsee.net 
   tags: 
   - base
   - users

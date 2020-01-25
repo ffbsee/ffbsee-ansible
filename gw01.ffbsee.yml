@@ -77,7 +77,7 @@
   - isc-dhcp-relay
   - dhcp-relay
   roles:
-   - dhcpd
+   #- dhcpd
    - dhcp-relay
 
 - name: Configure network routing for gw01.ffbsee.net

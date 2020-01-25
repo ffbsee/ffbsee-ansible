@@ -66,6 +66,19 @@
    - firewall
    - bird
 
+- name: Configure network routing for map.ffbsee.net
+  hosts: map.ffbsee.net
+  tags:
+  - routing
+  - dhcp
+  - dhcpd
+  - isc-dhcp
+  - isc
+  - isc-dhcp-server
+  - isc-dhcp-relay
+  - dhcp-relay
+  roles:
+  - dhcpd
 
 - name: Configure web setup for map.ffbsee.net
   hosts: map.ffbsee.net

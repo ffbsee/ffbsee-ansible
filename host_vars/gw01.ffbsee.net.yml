@@ -1,6 +1,6 @@
 ---
-freifunk_dhcp_server: true
-freifunk_dhcp_relay: false
+freifunk_dhcp_server: false 
+freifunk_dhcp_relay: true
 
 # meta information about this gateway:
 hostname: 'gw01.ffbsee.net'
@@ -14,10 +14,10 @@ fastd_vpn_backbone_configs:
 run_mesh: 'true'
 run_gateway: 'true'
 run_webserver: 'false'
-run_icvpn: 'false'
+run_icvpn: 'true'
 run_map: 'false'
 run_stats: 'false'
-da_laueft_ein_dhcp_relay: 'false'
+da_laueft_ein_dhcp_relay: 'true'
 nodelist: false
 
 # ipv6 radvd

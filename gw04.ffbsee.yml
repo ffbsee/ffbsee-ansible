@@ -32,13 +32,13 @@
     - motd
     - install-bat
 
-- name: Configure basic network setup for gw04.ffbsee.net
-  hosts: gw04.ffbsee.net
-  tags:
-  - network
-  - interfaces
-  roles:
-    - network
+#- name: Configure basic network setup for gw04.ffbsee.net
+#  hosts: gw04.ffbsee.net
+#  tags:
+#  - network
+#  - interfaces
+#  roles:
+#    - network
   
 - name: Configure freifunk network setup for gw04.ffbsee.net
   hosts: gw04.ffbsee.net
@@ -77,8 +77,8 @@
   - isc-dhcp-relay
   - dhcp-relay
   roles:
-   - dhcpd
-  #- dhcp-relay
+  #- dhcpd
+  - dhcp-relay
 
 - name: Configure network routing for gw04.ffbsee.net
   hosts: gw04.ffbsee.net

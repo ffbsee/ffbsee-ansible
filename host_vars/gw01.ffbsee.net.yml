@@ -8,7 +8,8 @@ hostname: 'gw01.ffbsee.net'
 # fastd configuration:
 ## list all backbone gateways
 fastd_vpn_backbone_configs: 
- - gw01
+ - gw04
+ - gw03
 
 # define which service should run:
 run_mesh: 'true'

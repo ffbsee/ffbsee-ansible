@@ -2,8 +2,8 @@
 
 - name: Install tinc
   apt:
-    pkg: 'tinc'
-    state: 'latest'
+    name: tinc
+    state: latest
     update_cache: yes
     cache_valid_time: 86400
   when: run_icvpn == 'true'

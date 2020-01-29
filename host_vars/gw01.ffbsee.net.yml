@@ -10,6 +10,8 @@ hostname: 'gw01.ffbsee.net'
 fastd_vpn_backbone_configs: 
  - gw04
  - gw03
+ - map
+ - mate
 
 # define which service should run:
 run_mesh: 'true'

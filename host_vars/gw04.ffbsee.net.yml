@@ -36,6 +36,8 @@ freifunk_dhcp_relay: 'true'
 fastd_vpn_backbone_configs:
   - gw01
   - gw03
+  - map
+  - mate
   
 fastd_peer_limit: ''
 

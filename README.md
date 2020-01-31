@@ -18,6 +18,9 @@ git clone https://github.com/ffbsee/ansible.git ffbsee-ansible
 # Clone the Submodules too
 cd ffbsee-ansible
 git submodule update --init --recursive
+
+# always keep the submodules up to date:
+git config --global submodule.recurse true
 ```
 
  General Information:

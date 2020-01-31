@@ -2,7 +2,7 @@
 
 - name: Install isc-dhcp-relay
   apt:
-    pkg: 'isc-dhcp-relay'
+    name: 'isc-dhcp-relay'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400

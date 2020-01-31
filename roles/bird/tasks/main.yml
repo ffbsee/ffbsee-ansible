@@ -2,8 +2,8 @@
 
 - name: Install bird 
   apt:
-    pkg: 'bird'
-    state: 'latest'
+    name: 'bird'
+    state: present
     update_cache: yes
     cache_valid_time: 86400
 

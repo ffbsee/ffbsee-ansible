@@ -2,8 +2,8 @@
 
 - name: Install lighttpd webserver
   apt:
-    pkg: 'lighttpd'
-    state: 'latest'
+    name: 'lighttpd'
+    state: present
     update_cache: yes
     cache_valid_time: 86400
 

@@ -4,18 +4,17 @@
 
 - name: Prepare Apache2
   apt:
-    pkg: '{{ item }}'
-    state: 'latest'
+    name:
+      - python-simplejson
+      - apache2
+    state: present
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
-    - python-simplejson
-    - apache2
 
 - name: Install letsencrypt
   apt:
-    pkg: 'letsencrypt'
-    state: 'latest'
+    name: 'letsencrypt'
+    state: present
     update_cache: yes
     cache_valid_time: 86400
   when: ansible_distribution == "Debian" and ansible_distribution_major_version == '9'

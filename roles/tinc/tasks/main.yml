@@ -2,7 +2,7 @@
 
 - name: Install tinc
   apt:
-    pkg: 'tinc'
+    name: 'tinc'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400

@@ -2,8 +2,8 @@
 
 - name: iptables installieren
   apt:
-    pkg: 'iptables'
-    state: 'latest'
+    name: 'iptables'
+    state: present 
     update_cache: yes
     cache_valid_time: 86400
 

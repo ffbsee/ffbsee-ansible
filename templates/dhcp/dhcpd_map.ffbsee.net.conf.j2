@@ -1,11 +1,10 @@
 ddns-update-style none;
 
-#for future use
 #failover peer "dhcp-failover" {
 #  primary;
-#  address 10.15.224.6;
+#  address 10.15.224.1;
 #  port 647;
-#  peer address 10.15.224.5;
+#  peer address 10.15.224.4;
 #  peer port 647;
 #  mclt 3600;
 #  split 128;
@@ -18,20 +17,22 @@ ddns-update-style none;
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
 authoritative;
-
+default-lease-time 600;
+max-lease-time 3600;
+option domain-name "ffbsee.net";
 if (packet(24, 4) != 00:00:00:00) {
     set last_giaddr = packet(24, 4);
 }
 
 # Ubiquity
-option space ubnt;
-option ubnt.unifi-address code 1 = ip-address;
+# option space ubnt;
+#option ubnt.unifi-address code 1 = ip-address;
 
-class "ubnt" {
-    match if substring (option vendor-class-identifier, 0, 4) = "ubnt";
-    option vendor-class-identifier "ubnt";
-    vendor-option-space ubnt;
-}
+#class "ubnt" {
+#    match if substring (option vendor-class-identifier, 0, 4) = "ubnt";
+#    option vendor-class-identifier "ubnt";
+#    vendor-option-space ubnt;
+#}
 
 subnet 10.15.224.0 netmask 255.255.240.0 {
   pool {
@@ -40,18 +41,13 @@ subnet 10.15.224.0 netmask 255.255.240.0 {
        }
 
   option domain-name-servers 10.15.224.1;
-  option domain-name "ffbsee.net";
   option routers 10.15.224.1;
-  option broadcast-address 10.15.239.255;
-  option subnet-mask 255.255.240.0;
-  interface bat0;
-  default-lease-time 7200;
-  max-lease-time 14400;
-  option ubnt.unifi-address 10.15.224.201;
+  #option ubnt.unifi-address 10.15.224.201;
 
 if (packet(24, 4) != 00:00:00:00) {
         option routers = packet(24, 4);
         option domain-name-servers = packet(24, 4);
+        option dhcp-server-identifier = packet(24, 4);
     }
 
 }

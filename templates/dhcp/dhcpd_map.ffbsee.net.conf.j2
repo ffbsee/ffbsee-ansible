@@ -17,8 +17,8 @@ ddns-update-style none;
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
 authoritative;
-default-lease-time 7200;
-max-lease-time 14400;
+default-lease-time 600;
+max-lease-time 3600;
 option domain-name "ffbsee.net";
 if (packet(24, 4) != 00:00:00:00) {
     set last_giaddr = packet(24, 4);

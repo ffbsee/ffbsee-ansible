@@ -10,13 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: prepare ansible linting
-      run: |
-        sudo mkdir -p /github/home/ansible/
-        sudo chmod 777 /github/home/ansible
-        touch /github/home/ansible/ansible.log
-        sudo chmod 777 /github/home/ansible/ansible.log
-
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@master
       with:

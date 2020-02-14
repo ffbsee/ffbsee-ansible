@@ -10,27 +10,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@master
-      with:
-        targets: update_admins.yml
-
-    - name: Lint Ansible Playbook
+    - name: Lint Playbook gw01.ffbsee.yml
       uses: ansible/ansible-lint-action@master
       with:
         targets: gw01.ffbsee.yml
 
-    - name: Lint Ansible Playbook
+    - name: Lint Playbook gw02.ffbsee.yml
       uses: ansible/ansible-lint-action@master
       with:
         targets: gw02.ffbsee.yml
 
-    - name: Lint Ansible Playbook
+    - name: Lint Playbook gw03.ffbsee.yml
       uses: ansible/ansible-lint-action@master
       with:
         targets: gw03.ffbsee.yml
 
-    - name: Lint Ansible Playbook
+    - name: Lint Playbook gw04.ffbsee.yml
       uses: ansible/ansible-lint-action@master
       with:
         targets: gw04.ffbsee.yml

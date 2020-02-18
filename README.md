@@ -109,5 +109,3 @@ Only run the roles with the "update" tag and not the full playbook:
 ```bash
 ansible-playbook update_admins.yml --tags "update"
 ```
-
-

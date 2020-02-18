@@ -1,3 +1,4 @@
+![Ansible check debian:stable](https://github.com/ffbsee/ffbsee-ansible/workflows/Ansible%20check%20debian:stable/badge.svg)
 ![Freifunk Bodensee](https://freifunk-bodensee.net/images/see.svg "FFBSee")
 
  Freifunk Ansible

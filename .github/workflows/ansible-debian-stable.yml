@@ -18,3 +18,4 @@ jobs:
         targets: "update_admins.yml"
         hosts: 'gw01.ffbsee.net'
         group: 'freifunk'
+        hosts: 'localhost'

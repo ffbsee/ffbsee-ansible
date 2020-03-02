@@ -88,9 +88,6 @@ if [ $run_mesh = true ]; then
     echo 1 > /proc/sys/net/ipv4/conf/all/forwarding
     echo 1 > /proc/sys/net/ipv4/ip_forward
 
-    #increase max conntrack table size to at least double the default size
-    sysctl -w net.netfilter.nf_conntrack_max=524288
-
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
 	fastd --config /etc/fastd/fastd_nodes.conf --daemon

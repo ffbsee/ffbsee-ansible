@@ -1,0 +1,27 @@
+---
+
+- name: Add jitsi key to apt
+  apt_key:
+    url: https://download.jitsi.org/jitsi-key.gpg.key 
+    state: present
+
+- name: add jitsi-meet repo apt
+  become: true
+  apt_repository:
+    repo: deb https://download.jitsi.org stable/
+    state: present
+
+- name: Install jitsi-meet 
+  apt:
+    name: 'jitsi-meet'
+    state: present
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Set jitsi-meet hostname 
+  debconf:
+    name: 'jitsi-meet'
+    question: 'jitsi-meet/jitsi-videobridge'
+    value: '{{ hostname }}'
+    vtype: string
+  notify: dpkg reconfigure jitsi-meet

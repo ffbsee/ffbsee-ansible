@@ -1,0 +1,81 @@
+---
+- name: check if ansible is not to old
+  hosts: localhost
+  tags:
+   - default
+  roles:
+    - ansible_version
+  gather_facts: no
+
+- name: Update packages and users on all nodes
+  hosts: meet.ffbsee.net 
+  tags: 
+  - base
+  - users
+  - home
+  - base-packages
+  - base_packages
+  - ssh_authorized_keys
+  - home_environment
+  - new-user
+  - base
+  - ssh
+  - sshd
+  - ssh_authorized_keys
+  - auth
+  roles:
+    - base_packages
+    - manage_users
+    - ssh_authorized_keys
+    - sshd
+    - home_environment
+
+- name: Update packages and users on all nodes
+  hosts: meet.ffbsee.net
+  tags: 
+  - home_environment
+  - motd
+  roles:
+    - home_environment
+    - motd
+    - install-bat
+
+- name: Configure basic network setup for meet.ffbsee.net
+  hosts: meet.ffbsee.net
+  tags:
+  - network
+  - interfaces
+  roles:
+    - network
+  
+- name: Configure freifunk network setup for meet.ffbsee.net
+  hosts: meet.ffbsee.net
+  tags:
+  - backbone
+  - fastd
+  - freifunk-backbone
+  - freifunk-update-script
+  - fastd-install
+  - fastd-config
+  roles:
+    - freifunk-backbone
+    - freifunk-update-script
+    - fastd-install
+    - fastd-config
+
+- name: Configure network routing for meet.ffbsee.net
+  hosts: meet.ffbsee.net
+  tags: 
+  - routing
+  - iptables
+  - ip6tables
+  - firewall
+  roles:
+   - firewall
+
+- name: Configure web setup for meet.ffbsee.net
+  hosts: meet.ffbsee.net
+  tags: web
+  roles:
+   - nginx
+   - jitsi-meet

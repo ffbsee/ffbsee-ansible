@@ -1,0 +1,51 @@
+---
+hostname: 'meet.ffbsee.net'
+
+ipv4_mesh_address: '10.15.224.7'
+
+ipv6_suffix: ':7'
+ipv6_radv_suffix: ':1'
+ipv6_address: '{{ ipv6_prefix }}{{ ipv6_suffix }}'
+mesh_ipv6_extra_addr: ''
+mesh_ipv6_address: '{{ ipv6_address }}'
+ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
+ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
+
+wan_ipv6_network: '2a01:4f8:1c0c:55d3::/64'
+wan_ipv6_ip: '2a01:4f8:1c0c:55d3::1'
+wan_base_interface: 'eth0'
+wan_vlan_id: ''
+wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
+wan_ipv4_ip: '195.201.25.33'
+
+fastd_secret_key: ''
+vpn_on_port_443: 'false'
+
+run_mesh: 'true'
+run_gateway: 'false'
+run_webserver: 'true'
+run_icvpn: 'false'
+run_map: 'false'
+run_stats: 'false'
+da_laueft_ein_dhcp_relay: 'false'
+freifunk_dhcp_server: 'false'
+
+fastd_vpn_backbone_configs:
+  - gw01
+  - gw04
+  - gw03
+
+fastd_peer_limit: ''
+
+ipv6_uplink_announcen: 'false'
+radv_AdvDefaultPreference: 'low'
+
+debian: '10'
+freifunk_karte_api: 'true'
+
+nodelist: 'false'
+
+block_rfc1918_interface: "{{ wan_base_interface }}"
+
+# we do not host any presentations here
+presentation_webserver: false

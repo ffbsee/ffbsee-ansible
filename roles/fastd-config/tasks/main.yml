@@ -94,8 +94,64 @@
 
 - name: Copy fastd nodes configuration
   template:
-    src: 'templates/fastd/fastd_nodes.conf'
-    dest: '/etc/fastd/fastd_nodes.conf'
+    src: 'templates/fastd/fastd_nodes01.conf'
+    dest: '/etc/fastd/fastd_nodes01.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes02.conf'
+    dest: '/etc/fastd/fastd_nodes02.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes03.conf'
+    dest: '/etc/fastd/fastd_nodes03.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes04.conf'
+    dest: '/etc/fastd/fastd_nodes04.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes05.conf'
+    dest: '/etc/fastd/fastd_nodes05.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes06.conf'
+    dest: '/etc/fastd/fastd_nodes06.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes07.conf'
+    dest: '/etc/fastd/fastd_nodes07.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes08.conf'
+    dest: '/etc/fastd/fastd_nodes08.conf'
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'

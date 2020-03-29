@@ -90,8 +90,15 @@ if [ $run_mesh = true ]; then
 
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
-	fastd --config /etc/fastd/fastd_nodes.conf --daemon
         fastd --config /etc/fastd/fastd_backbone.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes01.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes02.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes03.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes04.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes05.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes06.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes07.conf --daemon
+	fastd --config /etc/fastd/fastd_nodes08.conf --daemon
         sleep 1
     fi
 
@@ -106,15 +113,92 @@ if [ $run_mesh = true ]; then
 	batctl if add fastd_backbone
     fi
 
-    if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then
-        echo "(I) Add fastd nodes interface to batman-adv."
-        ip link set fastd_nodes up
-        ip addr flush dev fastd_nodes
+    if [ $(batctl if | grep fastd_nodes01 -c) = 0 ]; then
+        echo "(I) Add fastd nodes01 interface to batman-adv."
+        ip link set fastd_nodes01 up
+        ip addr flush dev fastd_nodes01
         
         # force BATMAN V routing algo _before_ batctl sets up the interface
         echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
         
-        batctl if add fastd_nodes
+        batctl if add fastd_nodes01
+    fi
+
+    if [ $(batctl if | grep fastd_nodes02 -c) = 0 ]; then
+        echo "(I) Add fastd nodes02 interface to batman-adv."
+        ip link set fastd_nodes02 up
+        ip addr flush dev fastd_nodes02
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes02
+    fi
+
+    if [ $(batctl if | grep fastd_nodes03 -c) = 0 ]; then
+        echo "(I) Add fastd nodes03 interface to batman-adv."
+        ip link set fastd_nodes03 up
+        ip addr flush dev fastd_nodes03
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes03
+    fi
+
+    if [ $(batctl if | grep fastd_nodes04 -c) = 0 ]; then
+        echo "(I) Add fastd nodes04 interface to batman-adv."
+        ip link set fastd_nodes04 up
+        ip addr flush dev fastd_nodes04
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes04
+    fi
+
+    if [ $(batctl if | grep fastd_nodes05 -c) = 0 ]; then
+        echo "(I) Add fastd nodes05 interface to batman-adv."
+        ip link set fastd_nodes05 up
+        ip addr flush dev fastd_nodes05
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes05
+    fi
+
+    if [ $(batctl if | grep fastd_nodes06 -c) = 0 ]; then
+        echo "(I) Add fastd nodes06 interface to batman-adv."
+        ip link set fastd_nodes06 up
+        ip addr flush dev fastd_nodes06
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes06
+    fi
+
+    if [ $(batctl if | grep fastd_nodes07 -c) = 0 ]; then
+        echo "(I) Add fastd nodes07 interface to batman-adv."
+        ip link set fastd_nodes07 up
+        ip addr flush dev fastd_nodes07
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes07
+    fi
+
+    if [ $(batctl if | grep fastd_nodes08 -c) = 0 ]; then
+        echo "(I) Add fastd nodes08 interface to batman-adv."
+        ip link set fastd_nodes08 up
+        ip addr flush dev fastd_nodes08
+
+        # force BATMAN V routing algo _before_ batctl sets up the interface
+        echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
+
+        batctl if add fastd_nodes08
     fi
 
     if [ "$(cat /sys/class/net/bat0/address 2> /dev/null)" != "$mac_addr" ]; then

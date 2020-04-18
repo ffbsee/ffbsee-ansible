@@ -41,6 +41,7 @@ ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'
 
 debian: '10'
+number_of_cores: '8'
 freifunk_karte_api: 'true'
 
 nodelist: 'true'

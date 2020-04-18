@@ -57,3 +57,4 @@ fastd_peer_limit: '' # should we limit the fastd peer limits
 block_rfc1918_interface: "{{ wan_base_interface }}"
 
 debian: '10'
+number_of_cores: '8'

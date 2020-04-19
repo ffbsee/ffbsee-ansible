@@ -92,13 +92,15 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Copy fastd nodes configuration
-  template:
-    src: 'templates/fastd/fastd_nodes.conf'
-    dest: '/etc/fastd/fastd_nodes.conf'
+- name: Copy all fastd_nodes* conf files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/fastd/"
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'
+  with_fileglob:
+    - "templates/fastd/fastd_nodes*"
 
 - name: Copy fastd blacklisting scipt
   template:

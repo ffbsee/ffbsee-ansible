@@ -90,9 +90,13 @@ if [ $run_mesh = true ]; then
 
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
-	fastd --config /etc/fastd/fastd_nodes.conf --daemon
-        fastd --config /etc/fastd/fastd_backbone.conf --daemon
-        sleep 1
+	fastd --config /etc/fastd/fastd_backbone.conf --daemon
+	FASTDNODESFILES=/etc/fastd/fastd_nodes*
+	for f in $FASTDNODESFILES
+	do
+	   fastd --config $f --daemon
+	done
+	sleep 1
     fi
 
     if [ $(batctl if | grep fastd_backbone -c) = 0 ]; then
@@ -105,17 +109,20 @@ if [ $run_mesh = true ]; then
 
 	batctl if add fastd_backbone
     fi
-
-    if [ $(batctl if | grep fastd_nodes -c) = 0 ]; then
-        echo "(I) Add fastd nodes interface to batman-adv."
-        ip link set fastd_nodes up
-        ip addr flush dev fastd_nodes
+    
+    for i in $(seq 1 {{ number_of_cores }});
+     do
+    	if [ $(batctl if | grep fastd_nodes0$i -c) = 0 ]; then
+           echo "(I) Add fastd nodes0$i interface to batman-adv."
+           ip link set fastd_nodes0$i up
+           ip addr flush dev fastd_nodes0$i
         
         # force BATMAN V routing algo _before_ batctl sets up the interface
         echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
         
-        batctl if add fastd_nodes
-    fi
+        batctl if add fastd_nodes0$i
+        fi
+     done
 
     if [ "$(cat /sys/class/net/bat0/address 2> /dev/null)" != "$mac_addr" ]; then
         echo "(I) Set MAC address for bat0."

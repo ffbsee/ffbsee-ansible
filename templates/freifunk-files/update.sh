@@ -110,7 +110,7 @@ if [ $run_mesh = true ]; then
 	batctl if add fastd_backbone
     fi
     
-    for i in $(seq 1 {{ number_of_cores }});
+    for i in $(seq 0 {{ number_of_cores|int -1 }});
      do
     	if [ $(batctl if | grep fastd_nodes0$i -c) = 0 ]; then
            echo "(I) Add fastd nodes0$i interface to batman-adv."

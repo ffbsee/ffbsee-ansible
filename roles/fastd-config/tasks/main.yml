@@ -102,7 +102,7 @@
   vars:
     fastd_port: "{{ '%02d' | format((item|int) + fastd_start_port) }}"
     interface_index: "{{ '%02d' | format(item|int) }}"
-  loop: "{{ range(1, number_of_cores+1)|list }}"
+  loop: "{{ range(0, number_of_cores|int)|list }}"
 
 - name: Copy fastd blacklisting scipt
   template:

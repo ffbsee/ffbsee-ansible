@@ -25,14 +25,14 @@ if (packet(24, 4) != 00:00:00:00) {
 }
 
 # Ubiquity
-# option space ubnt;
-#option ubnt.unifi-address code 1 = ip-address;
+option space ubnt;
+option ubnt.unifi-address code 1 = ip-address;
 
-#class "ubnt" {
-#    match if substring (option vendor-class-identifier, 0, 4) = "ubnt";
-#    option vendor-class-identifier "ubnt";
-#    vendor-option-space ubnt;
-#}
+class "ubnt" {
+    match if substring (option vendor-class-identifier, 0, 4) = "ubnt";
+    option vendor-class-identifier "ubnt";
+    vendor-option-space ubnt;
+}
 
 subnet 10.15.224.0 netmask 255.255.240.0 {
   pool {
@@ -42,7 +42,7 @@ subnet 10.15.224.0 netmask 255.255.240.0 {
 
   option domain-name-servers 10.15.224.1;
   option routers 10.15.224.1;
-  #option ubnt.unifi-address 10.15.224.201;
+  option ubnt.unifi-address 10.15.224.5;
 
 if (packet(24, 4) != 00:00:00:00) {
         option routers = packet(24, 4);

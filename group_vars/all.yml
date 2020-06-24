@@ -88,6 +88,8 @@ prometheus_targets:
     - gw03.ffbsee.net:9100
     - gw04.ffbsee.net:9100
     - map.ffbsee.net:9100
+    - map.ffbsee.net:9295
+    #9295 is freifunk exporter
 
 #grafana vars
 grafana_security:

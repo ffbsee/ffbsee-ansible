@@ -112,9 +112,46 @@
   roles:
     - prometheus
 
-- name: install grafnaa
+- name: install grafana
   hosts: map.ffbsee.net
   tags:
     - grafana
   roles:
     - grafana
+
+- name: install golang
+  hosts: map.ffbsee.net
+  roles:
+     - role: golang
+
+- name: install xperimental/freifunk-exporter
+  hosts: map.ffbsee.net
+  tasks:
+    - name: clone repository
+      git:
+        repo: 'https://github.com/xperimental/freifunk-exporter.git'
+        dest: "{{ freifunk_exporter_path }}"
+    - name: Build the default target
+      make:
+        chdir: "{{ freifunk_exporter_path }}"
+    - name: install freifunk-exporter service
+      copy:
+        content: |
+          [Unit]
+          Description=freifunk-exporter
+
+          [Service]
+          Type=simple
+          ExecStart=freifunk-exporter --cache-interval 30s --source-url https://meta.ffbsee.net/data/meshviewer.json
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /lib/systemd/system/freifunk-exporter.service
+    - name: enable and start freifunk-exporter
+      systemd:
+        state: started
+        enabled: yes
+        name: freifunk-exporter
+  vars:
+    freifunk_exporter_path: /opt/freifunk-exporter
+    #defaults to port: 9295

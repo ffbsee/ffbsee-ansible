@@ -48,6 +48,9 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 # we do not host any presentations here
 presentation_webserver: false
 
+packages_extra:
+  - git
+  - git-lfs
 
 #telegraf monitoring of prometheus
 telegraf_agent_output:

@@ -49,3 +49,6 @@
 [submodule "roles/prometheus"]
 	path = roles/prometheus
 	url = https://github.com/cloudalchemy/ansible-prometheus.git
+[submodule "roles/golang"]
+	path = roles/golang
+	url = https://github.com/gantsign/ansible-role-golang.git

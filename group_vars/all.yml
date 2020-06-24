@@ -78,17 +78,21 @@ telegraf_plugins_default:
   config:
     - endpoint = "unix:///var/run/docker.sock"
     - timeout = "5s"
+- plugin: prometheus_client
+  config:
+    - listen = ":9273"
 
 # prometheus stuff
 prometheus_targets:
   node:
   - targets:
-    - gw01.ffbsee.net:9100
-    - gw02.ffbsee.net:9100
-    - gw03.ffbsee.net:9100
-    - gw04.ffbsee.net:9100
-    - map.ffbsee.net:9100
+    - gw01.ffbsee.net:9273
+    - gw02.ffbsee.net:9273
+    - gw03.ffbsee.net:9273
+    - gw04.ffbsee.net:9273
+    - map.ffbsee.net:9273
     - map.ffbsee.net:9295
+    #9273 is telegraf
     #9295 is freifunk exporter
 
 #grafana vars

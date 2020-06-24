@@ -118,6 +118,16 @@
     - grafana
   roles:
     - grafana
+  tasks:
+    - name: install dashboards
+      copy:
+        src: "files/grafana_dashboards/{{ item }}"
+        dest: "{{ grafana_dashboard_dir }}/{{ item }}"
+        mode: '0644'
+        remote_src: yes
+  loop:
+    - freifunk_overview.json
+    - freifunk_router_detail.json
 
 - name: install golang
   hosts: map.ffbsee.net

@@ -95,3 +95,14 @@ prometheus_targets:
 grafana_security:
   admin_user: admin
 #  admin_password: enter_your_secure_password
+grafana_dashboard_dir: /opt/grafana/dashboards
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: direct
+    url: 'http://map.ffbsee.net:9090'
+grafana_dashboards_dir: "{{ grafana_dashboard_dir }}"
+grafana_users:
+  allow_sign_up: true
+  auto_assign_org_role: Viewer
+  default_theme: dark

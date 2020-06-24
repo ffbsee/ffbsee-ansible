@@ -96,3 +96,25 @@
    - gateway-page
 #    - freifunk-karte-json
 #    - FFNodeList
+
+- name: install telegraf
+  hosts: map.ffbsee.net
+  become: yes
+  tags:
+    - telegraf
+  roles:
+    - telegraf
+
+- name: install prometheus
+  hosts: map.ffbsee.net
+  tags:
+    - prometheus
+  roles:
+    - prometheus
+
+- name: install grafnaa
+  hosts: map.ffbsee.net
+  tags:
+    - grafana
+  roles:
+    - grafana

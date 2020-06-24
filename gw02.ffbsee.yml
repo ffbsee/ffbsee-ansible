@@ -113,3 +113,13 @@
 #   - gateway-page
 #   - freifunk-karte-json
 #   - FFNodeList
+
+
+- name: install telegraf
+  hosts: gw02.ffbsee.net
+  become: yes
+  tags:
+    - telegraf
+  roles:
+    - telegraf
+

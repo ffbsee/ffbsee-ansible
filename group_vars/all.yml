@@ -53,5 +53,43 @@ users:
 home_sweet_home: false
 ssh_public_key_store: 'ssh_authorized_keys'
 
+#telegraf config for all machines
+telegraf_agent_package_method: online
+telegraf_agent_package: /tmp/telegraf.deb
+telegraf_plugins_default:
+- plugin: cpu
+  config:
+    - percpu = true
+- plugin: disk
+  tags:
+    - diskmetrics = true
+  tagpass:
+    - fstype = [ "ext4", "xfs" ]
+  tagdrop:
+    - path = [ "/etc", "/etc/telegraf", "/etc/hostname", "/etc/hosts", "/etc/resolv.conf" ]
+- plugin: io
+- plugin: mem
+- plugin: system
+- plugin: swap
+- plugin: net
+- plugin: netstat
+- plugin: processes
+- plugin: docker
+  config:
+    - endpoint = "unix:///var/run/docker.sock"
+    - timeout = "5s"
 
+# prometheus stuff
+prometheus_targets:
+  node:
+  - targets:
+    - gw01.ffbsee.net:9100
+    - gw02.ffbsee.net:9100
+    - gw03.ffbsee.net:9100
+    - gw04.ffbsee.net:9100
+    - map.ffbsee.net:9100
 
+#grafana vars
+grafana_security:
+  admin_user: admin
+#  admin_password: enter_your_secure_password

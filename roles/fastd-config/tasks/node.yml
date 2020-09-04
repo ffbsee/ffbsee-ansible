@@ -1,0 +1,13 @@
+
+---
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes.conf'
+    dest: "/etc/fastd/fastd_nodes{{interface_index}}.conf"
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+  vars:
+    fastd_port: "{{ '%02d' | format((item|int) + fastd_start_port) }}"
+    interface_index: "{{ '%02d' | format(item|int) }}"
+  loop: "{{ range(0, number_of_cores|int)|list }}"

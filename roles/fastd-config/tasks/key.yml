@@ -1,0 +1,55 @@
+---
+- name: Generate fastd secret key
+  shell: 'fastd --generate-key --machine-readable > /etc/fastd/secret.txt;'
+  args:
+    creates: '/etc/fastd/secret.txt'
+  when: fastd_secret_key == ''
+
+- name: Retrieve fastd secret key
+  slurp:
+    src: '/etc/fastd/secret.txt'
+  register: fastd_secret_key_data
+  when: fastd_secret_key == ''
+
+- name: Read in fastd secret key
+  set_fact:
+    fastd_secret_key: "{{ fastd_secret_key_data['content'] | b64decode | trim }}"
+  when: fastd_secret_key == ''
+
+- name: Put secret key to host
+  template:
+    src: 'templates/secret_key.txt'
+    dest: '/etc/fastd/secret_key.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'
+
+- name: Put secret key to host as secret.txt
+  template:
+    src: 'templates/secret.txt'
+    dest: '/etc/fastd/secret.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'
+
+- name: Create fastd public key
+  shell: 'fastd --config /etc/fastd/secret_key.txt --show-key --machine-readable > /etc/fastd/public.txt;'
+  args:
+    creates: '/etc/fastd/public.txt'
+
+- name: Retrieve fastd public key
+  slurp:
+    src: '/etc/fastd/public.txt'
+  register: fastd_public_key_data
+
+- name: Read in fastd public key
+  set_fact: 
+    fastd_public_key: "{{ fastd_public_key_data['content'] | b64decode | trim }}"
+
+- name: Put public key back to host
+  template:
+    src: 'templates/public_key.txt'
+    dest: '/etc/fastd/public_key.txt'
+    owner: 'nobody'
+    group: 'root'
+    mode: 'u=rw,g=r,o=r'

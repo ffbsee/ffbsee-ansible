@@ -1,4 +1,8 @@
 ---
+- import_tasks: key.yml
+  vars:
+    key_postfix: "bb"
+
 - name: Create 'fastd/backbone' directory
   file:
     path: '/etc/fastd/backbone'

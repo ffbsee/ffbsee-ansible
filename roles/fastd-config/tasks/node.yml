@@ -1,5 +1,9 @@
 
 ---
+- import_tasks: key.yml
+  vars:
+    key_postfix: "{{ interface_index }}"
+
 - name: Copy fastd nodes configuration
   template:
     src: 'templates/fastd/fastd_nodes.conf'
@@ -7,7 +11,3 @@
     owner: nobody
     group: root
     mode: 'u=rwx,g=rx,o=rx'
-  vars:
-    fastd_port: "{{ '%02d' | format((item|int) + fastd_start_port) }}"
-    interface_index: "{{ '%02d' | format(item|int) }}"
-  loop: "{{ range(0, number_of_cores|int)|list }}"

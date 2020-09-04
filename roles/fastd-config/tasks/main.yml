@@ -33,6 +33,9 @@
     group: root
     mode: 'u=rwx,g=rx,o=rx'
 
-- import_tasks: key.yml
 - import_tasks: backbone.yml
-- import_tasks: node.yml
+- include_tasks: node.yml
+  vars:
+    fastd_port: "{{ '%02d' | format((item|int) + fastd_start_port) }}"
+    interface_index: "{{ '%02d' | format(item|int) }}"
+  loop: "{{ range(0, number_of_cores|int)|list }}"

@@ -12,12 +12,12 @@ ipv4_dhcp_server: '10.15.224.6'
 ipv4_dhcp_interface: 'bat0'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations
-batman_version: '2019.2'
-batman_sha256sum: '70c3f6a6cf88d2b25681a76768a52ed92d9fe992ba8e358368b6a8088757adc8'
+batman_version: '2020.1'
+batman_sha256sum: '23abf5576d4594c36a5b6a775f8d2bbd0025f004a8980f68358484f4a0730fbb'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz
-batctl_sha256sum: 'fb656208ff7d4cd8b1b422f60c9e6d8747302a347cbf6c199d7afa9b80f80ea3'
+batctl_sha256sum: 'a3e21cbac5f7103925872d80d806d8677f034f8ae8bb6bf6296af81ab028c23b'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz
-alfred_sha256sum: 'b656f0e9a97a99c7531b6d49ebfd663451c16cdd275bbf7d48ff8daed3880bf2'
+alfred_sha256sum: 'e0721fb40b46c265433cbe6dfcba854e19dad1b69b62475dd01db7af503ea715'
  # https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
 
 fastd_libsodium_version: '1.0.18'

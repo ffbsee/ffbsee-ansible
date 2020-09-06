@@ -1,0 +1,28 @@
+---
+- import_tasks: key.yml
+  vars:
+    key_postfix: "bb"
+
+- name: Create 'fastd/backbone' directory
+  file:
+    path: '/etc/fastd/backbone'
+    state: directory
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd backbone configuration
+  template:
+    src: 'templates/fastd/fastd_backbone.conf'
+    dest: '/etc/fastd/fastd_backbone.conf'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Copy fastd vpn-backbone configurations
+  copy:
+    src: 'files/fastd/backbone/{{ item }}'
+    dest: '/etc/fastd/backbone/{{ item }}'
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'
+  with_items:
+    '{{ fastd_vpn_backbone_configs }}'

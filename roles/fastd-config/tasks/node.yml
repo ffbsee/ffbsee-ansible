@@ -1,0 +1,13 @@
+
+---
+- import_tasks: key.yml
+  vars:
+    key_postfix: "{{ interface_index }}"
+
+- name: Copy fastd nodes configuration
+  template:
+    src: 'templates/fastd/fastd_nodes.conf'
+    dest: "/etc/fastd/fastd_nodes{{interface_index}}.conf"
+    owner: nobody
+    group: root
+    mode: 'u=rwx,g=rx,o=rx'

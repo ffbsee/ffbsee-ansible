@@ -1,2323 +1,281 @@
 {
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": "-- Grafana --",
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "type": "dashboard"
-        }
-      ]
-    },
-    "editable": true,
-    "gnetId": null,
-    "graphTooltip": 0,
-    "id": 2,
-    "iteration": 1593025121543,
-    "links": [],
-    "panels": [
+  "annotations": {
+    "list": [
       {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "fill": 0,
-        "fillGradient": 0,
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 0
-        },
-        "hiddenSeries": false,
-        "id": 2,
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": false,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "nullPointMode": "null",
-        "options": {
-          "dataLinks": []
-        },
-        "percentage": false,
-        "pointradius": 2,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "sum(freifunk_router_client_count_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
-            "interval": "",
-            "legendFormat": "clients",
-            "refId": "A"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Clients",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "fill": 1,
-        "fillGradient": 0,
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        },
-        "hiddenSeries": false,
-        "id": 4,
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": false,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "nullPointMode": "null",
-        "options": {
-          "dataLinks": []
-        },
-        "percentage": false,
-        "pointradius": 2,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "avg(freifunk_router_load_avg_5m * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
-            "interval": "",
-            "legendFormat": "load",
-            "refId": "A"
-          },
-          {
-            "expr": "avg(freifunk_router_memory_usage_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
-            "interval": "",
-            "legendFormat": "memory",
-            "refId": "B"
-          },
-          {
-            "expr": "avg(freifunk_router_rootfs_usage_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
-            "interval": "",
-            "legendFormat": "rootfs",
-            "refId": "C"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Hardware Usage",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "percentunit",
-            "label": null,
-            "logBase": 1,
-            "max": "1.1",
-            "min": "0",
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
       }
-    ],
-    "schemaVersion": 25,
-    "style": "dark",
-    "tags": [],
-    "templating": {
-      "list": [
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1600039654490,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
         {
-          "allValue": null,
-          "current": {
-            "selected": true,
-            "text": "Bertsch",
-            "value": "Bertsch"
-          },
-          "datasource": "Prometheus",
-          "definition": "label_values(freifunk_router_meta, name)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Router",
-          "multi": false,
-          "name": "router",
-          "options": [
-            {
-              "selected": false,
-              "text": "1a:a6:f7:8b:9c:e6",
-              "value": "1a:a6:f7:8b:9c:e6"
-            },
-            {
-              "selected": false,
-              "text": "1a:d6:c7:51:bb:1c",
-              "value": "1a:d6:c7:51:bb:1c"
-            },
-            {
-              "selected": false,
-              "text": "1st @ Daisendorf",
-              "value": "1st @ Daisendorf"
-            },
-            {
-              "selected": false,
-              "text": "2.FeWo-Fink.de-ET",
-              "value": "2.FeWo-Fink.de-ET"
-            },
-            {
-              "selected": false,
-              "text": "32:b5:c2:cb:2d:a2",
-              "value": "32:b5:c2:cb:2d:a2"
-            },
-            {
-              "selected": false,
-              "text": "52:c7:bf:20:bb:9c",
-              "value": "52:c7:bf:20:bb:9c"
-            },
-            {
-              "selected": false,
-              "text": "52:c7:bf:3a:54:41",
-              "value": "52:c7:bf:3a:54:41"
-            },
-            {
-              "selected": false,
-              "text": "52:c7:bf:3a:5f:a2",
-              "value": "52:c7:bf:3a:5f:a2"
-            },
-            {
-              "selected": false,
-              "text": "62:e3:27:e7:38:30",
-              "value": "62:e3:27:e7:38:30"
-            },
-            {
-              "selected": false,
-              "text": "62:e3:27:e7:47:1c",
-              "value": "62:e3:27:e7:47:1c"
-            },
-            {
-              "selected": false,
-              "text": "7e:8b:ca:63:63:b4",
-              "value": "7e:8b:ca:63:63:b4"
-            },
-            {
-              "selected": false,
-              "text": "86:16:f9:66:3f:0a",
-              "value": "86:16:f9:66:3f:0a"
-            },
-            {
-              "selected": false,
-              "text": "86:16:f9:9b:ac:d0",
-              "value": "86:16:f9:9b:ac:d0"
-            },
-            {
-              "selected": false,
-              "text": "86:16:f9:e8:a5:98",
-              "value": "86:16:f9:e8:a5:98"
-            },
-            {
-              "selected": false,
-              "text": "9a:da:c4:15:05:01",
-              "value": "9a:da:c4:15:05:01"
-            },
-            {
-              "selected": false,
-              "text": "9a:de:d0:a8:b1:4a",
-              "value": "9a:de:d0:a8:b1:4a"
-            },
-            {
-              "selected": false,
-              "text": "9a:de:d0:c2:14:76",
-              "value": "9a:de:d0:c2:14:76"
-            },
-            {
-              "selected": false,
-              "text": "AAG",
-              "value": "AAG"
-            },
-            {
-              "selected": false,
-              "text": "AZV Kressbronn-Langenargen",
-              "value": "AZV Kressbronn-Langenargen"
-            },
-            {
-              "selected": false,
-              "text": "Adler BTT",
-              "value": "Adler BTT"
-            },
-            {
-              "selected": false,
-              "text": "Adler Billafingen",
-              "value": "Adler Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "Adler Gast 2 BTT",
-              "value": "Adler Gast 2 BTT"
-            },
-            {
-              "selected": false,
-              "text": "Affenberg BTT",
-              "value": "Affenberg BTT"
-            },
-            {
-              "selected": false,
-              "text": "Allensbach 1st",
-              "value": "Allensbach 1st"
-            },
-            {
-              "selected": false,
-              "text": "Amicus.food.bar",
-              "value": "Amicus.food.bar"
-            },
-            {
-              "selected": false,
-              "text": "Anchor",
-              "value": "Anchor"
-            },
-            {
-              "selected": false,
-              "text": "Angerplatz3",
-              "value": "Angerplatz3"
-            },
-            {
-              "selected": false,
-              "text": "Apfelhof Bodensee - Brennerei",
-              "value": "Apfelhof Bodensee - Brennerei"
-            },
-            {
-              "selected": false,
-              "text": "Applejack",
-              "value": "Applejack"
-            },
-            {
-              "selected": false,
-              "text": "Austr. 2",
-              "value": "Austr. 2"
-            },
-            {
-              "selected": false,
-              "text": "BMG MIS",
-              "value": "BMG MIS"
-            },
-            {
-              "selected": false,
-              "text": "Bauer-Retterschen",
-              "value": "Bauer-Retterschen"
-            },
-            {
-              "selected": false,
-              "text": "Bertsch",
-              "value": "Bertsch"
-            },
-            {
-              "selected": false,
-              "text": "Bertsch UG BTT",
-              "value": "Bertsch UG BTT"
-            },
-            {
-              "selected": false,
-              "text": "Birkenweiler BTT",
-              "value": "Birkenweiler BTT"
-            },
-            {
-              "selected": false,
-              "text": "BodanWerftHafen01",
-              "value": "BodanWerftHafen01"
-            },
-            {
-              "selected": false,
-              "text": "BodanWerftHafen02",
-              "value": "BodanWerftHafen02"
-            },
-            {
-              "selected": false,
-              "text": "Bodensee Küchen",
-              "value": "Bodensee Küchen"
-            },
-            {
-              "selected": false,
-              "text": "Bodenseestr. Herdwangen",
-              "value": "Bodenseestr. Herdwangen"
-            },
-            {
-              "selected": false,
-              "text": "Boutique Miss Mona",
-              "value": "Boutique Miss Mona"
-            },
-            {
-              "selected": false,
-              "text": "Bädle.freifunk-tettnang.de",
-              "value": "Bädle.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "Bücherei Kressbronn",
-              "value": "Bücherei Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "Bücherei Kressbronn - EG",
-              "value": "Bücherei Kressbronn - EG"
-            },
-            {
-              "selected": false,
-              "text": "Bürgerservice Langenargen",
-              "value": "Bürgerservice Langenargen"
-            },
-            {
-              "selected": false,
-              "text": "Cafe Gästehaus Stock",
-              "value": "Cafe Gästehaus Stock"
-            },
-            {
-              "selected": false,
-              "text": "Cafe Seegarten Kressbronn",
-              "value": "Cafe Seegarten Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "Canon",
-              "value": "Canon"
-            },
-            {
-              "selected": false,
-              "text": "Carsten Stock",
-              "value": "Carsten Stock"
-            },
-            {
-              "selected": false,
-              "text": "CasaMaria01B",
-              "value": "CasaMaria01B"
-            },
-            {
-              "selected": false,
-              "text": "CasaMaria01D",
-              "value": "CasaMaria01D"
-            },
-            {
-              "selected": false,
-              "text": "CasaMaria02A",
-              "value": "CasaMaria02A"
-            },
-            {
-              "selected": false,
-              "text": "CasaMaria02C",
-              "value": "CasaMaria02C"
-            },
-            {
-              "selected": false,
-              "text": "CasaMaria03B",
-              "value": "CasaMaria03B"
-            },
-            {
-              "selected": false,
-              "text": "CasaMariaA0A",
-              "value": "CasaMariaA0A"
-            },
-            {
-              "selected": false,
-              "text": "CasaMariaA0B",
-              "value": "CasaMariaA0B"
-            },
-            {
-              "selected": false,
-              "text": "CasaMariaA2A",
-              "value": "CasaMariaA2A"
-            },
-            {
-              "selected": false,
-              "text": "CasaMariaA2B",
-              "value": "CasaMariaA2B"
-            },
-            {
-              "selected": false,
-              "text": "Columbia",
-              "value": "Columbia"
-            },
-            {
-              "selected": false,
-              "text": "Cube Kressbronn",
-              "value": "Cube Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "CulturvereinCaserne.Atrium",
-              "value": "CulturvereinCaserne.Atrium"
-            },
-            {
-              "selected": false,
-              "text": "DCS - BTT",
-              "value": "DCS - BTT"
-            },
-            {
-              "selected": false,
-              "text": "Degelstein.CHSDL.de",
-              "value": "Degelstein.CHSDL.de"
-            },
-            {
-              "selected": false,
-              "text": "Degelstein.chsdl.de",
-              "value": "Degelstein.chsdl.de"
-            },
-            {
-              "selected": false,
-              "text": "Deuteronomium.Dreifaltigkeit",
-              "value": "Deuteronomium.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Dorfladen Herdwangen",
-              "value": "Dorfladen Herdwangen"
-            },
-            {
-              "selected": false,
-              "text": "Dr.-Zimmermann-Str.",
-              "value": "Dr.-Zimmermann-Str."
-            },
-            {
-              "selected": false,
-              "text": "DreiHerzenFunk",
-              "value": "DreiHerzenFunk"
-            },
-            {
-              "selected": false,
-              "text": "EST",
-              "value": "EST"
-            },
-            {
-              "selected": false,
-              "text": "Engl-Mode.freifunk-bodensee.de",
-              "value": "Engl-Mode.freifunk-bodensee.de"
-            },
-            {
-              "selected": false,
-              "text": "Exodus.Dreifaltigkeit",
-              "value": "Exodus.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "FF-Haldenweg",
-              "value": "FF-Haldenweg"
-            },
-            {
-              "selected": false,
-              "text": "FFW Billafingen",
-              "value": "FFW Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "FN-Löwental-03",
-              "value": "FN-Löwental-03"
-            },
-            {
-              "selected": false,
-              "text": "FeWo-Hilebrand.SeeSystem.de",
-              "value": "FeWo-Hilebrand.SeeSystem.de"
-            },
-            {
-              "selected": false,
-              "text": "Feriendomizil Toskana",
-              "value": "Feriendomizil Toskana"
-            },
-            {
-              "selected": false,
-              "text": "Ferienhaus Ganal",
-              "value": "Ferienhaus Ganal"
-            },
-            {
-              "selected": false,
-              "text": "Ferienhof Lang 1",
-              "value": "Ferienhof Lang 1"
-            },
-            {
-              "selected": false,
-              "text": "Ferienhof Lang 2",
-              "value": "Ferienhof Lang 2"
-            },
-            {
-              "selected": false,
-              "text": "Ferienhof Lanz",
-              "value": "Ferienhof Lanz"
-            },
-            {
-              "selected": false,
-              "text": "Ferienw.Kohlmann",
-              "value": "Ferienw.Kohlmann"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Bero",
-              "value": "Ferienwohnung Bero"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Beutel",
-              "value": "Ferienwohnung Beutel"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Brühlstr18",
-              "value": "Ferienwohnung Brühlstr18"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Helga Vogel",
-              "value": "Ferienwohnung Helga Vogel"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Kees",
-              "value": "Ferienwohnung Kees"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Keller",
-              "value": "Ferienwohnung Keller"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Küchle",
-              "value": "Ferienwohnung Küchle"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Lilo",
-              "value": "Ferienwohnung Lilo"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Pfau",
-              "value": "Ferienwohnung Pfau"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Willmann",
-              "value": "Ferienwohnung Willmann"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Wirth",
-              "value": "Ferienwohnung Wirth"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohnung Wolfkeil",
-              "value": "Ferienwohnung Wolfkeil"
-            },
-            {
-              "selected": false,
-              "text": "Ferienwohung Goetz",
-              "value": "Ferienwohung Goetz"
-            },
-            {
-              "selected": false,
-              "text": "FesthalleKnoll",
-              "value": "FesthalleKnoll"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Dauth",
-              "value": "Fewo Dauth"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Desor",
-              "value": "Fewo Desor"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Glatthar",
-              "value": "Fewo Glatthar"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Lang",
-              "value": "Fewo Lang"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Vetter Wettis",
-              "value": "Fewo Vetter Wettis"
-            },
-            {
-              "selected": false,
-              "text": "Fewo Witzigmann1",
-              "value": "Fewo Witzigmann1"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-CC-02",
-              "value": "Fewo-CC-02"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-CC-03",
-              "value": "Fewo-CC-03"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-CC-04",
-              "value": "Fewo-CC-04"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Franke",
-              "value": "Fewo-Franke"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Fuchsschwanz",
-              "value": "Fewo-Fuchsschwanz"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Heimpel",
-              "value": "Fewo-Heimpel"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Himmelsbach",
-              "value": "Fewo-Himmelsbach"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Schnell-1",
-              "value": "Fewo-Schnell-1"
-            },
-            {
-              "selected": false,
-              "text": "Fewo-Schnell-2",
-              "value": "Fewo-Schnell-2"
-            },
-            {
-              "selected": false,
-              "text": "Fiegle",
-              "value": "Fiegle"
-            },
-            {
-              "selected": false,
-              "text": "Fiegle 2",
-              "value": "Fiegle 2"
-            },
-            {
-              "selected": false,
-              "text": "Freddy",
-              "value": "Freddy"
-            },
-            {
-              "selected": false,
-              "text": "Frei-Hillebrand",
-              "value": "Frei-Hillebrand"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Automat",
-              "value": "Freifunk Automat"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Café UNGEFILTERT",
-              "value": "Freifunk Café UNGEFILTERT"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Helin Pizza & Kebap",
-              "value": "Freifunk Helin Pizza & Kebap"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Kressbronn temp",
-              "value": "Freifunk Kressbronn temp"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Kressbronn temp 2",
-              "value": "Freifunk Kressbronn temp 2"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk MövenApo",
-              "value": "Freifunk MövenApo"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Pfänder",
-              "value": "Freifunk Pfänder"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Symphonie der Haare",
-              "value": "Freifunk Symphonie der Haare"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk Zum Zinnkrug",
-              "value": "Freifunk Zum Zinnkrug"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk im Hinterdorf",
-              "value": "Freifunk im Hinterdorf"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk-Bergerhof",
-              "value": "Freifunk-Bergerhof"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk-Kippenhausen",
-              "value": "Freifunk-Kippenhausen"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk@THW Friedrichshafen",
-              "value": "Freifunk@THW Friedrichshafen"
-            },
-            {
-              "selected": false,
-              "text": "Freifunk_wp",
-              "value": "Freifunk_wp"
-            },
-            {
-              "selected": false,
-              "text": "Freiwillige Feuerwehr Markdorf",
-              "value": "Freiwillige Feuerwehr Markdorf"
-            },
-            {
-              "selected": false,
-              "text": "Frirdich",
-              "value": "Frirdich"
-            },
-            {
-              "selected": false,
-              "text": "FriseursalonMoser",
-              "value": "FriseursalonMoser"
-            },
-            {
-              "selected": false,
-              "text": "Fröhlich on tour",
-              "value": "Fröhlich on tour"
-            },
-            {
-              "selected": false,
-              "text": "Gasthaus Montfort Kippenhausen",
-              "value": "Gasthaus Montfort Kippenhausen"
-            },
-            {
-              "selected": false,
-              "text": "Gasthaus zum Rebstock",
-              "value": "Gasthaus zum Rebstock"
-            },
-            {
-              "selected": false,
-              "text": "GasthausRebstock01",
-              "value": "GasthausRebstock01"
-            },
-            {
-              "selected": false,
-              "text": "Gasthof zum Forst",
-              "value": "Gasthof zum Forst"
-            },
-            {
-              "selected": false,
-              "text": "Gasthof zum Forst - Brennerei",
-              "value": "Gasthof zum Forst - Brennerei"
-            },
-            {
-              "selected": false,
-              "text": "Gelis Schirmbar",
-              "value": "Gelis Schirmbar"
-            },
-            {
-              "selected": false,
-              "text": "Gemeinde 2 Hoßkirch",
-              "value": "Gemeinde 2 Hoßkirch"
-            },
-            {
-              "selected": false,
-              "text": "GemeindeVerwaltungEbersbach",
-              "value": "GemeindeVerwaltungEbersbach"
-            },
-            {
-              "selected": false,
-              "text": "Genesis.Dreifaltigkeit",
-              "value": "Genesis.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Genoveva",
-              "value": "Genoveva"
-            },
-            {
-              "selected": false,
-              "text": "Gerbe Billafingen",
-              "value": "Gerbe Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "Gigi.Dreifaltigkeit",
-              "value": "Gigi.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Haarstudio Sabine",
-              "value": "Haarstudio Sabine"
-            },
-            {
-              "selected": false,
-              "text": "Haarverwalter",
-              "value": "Haarverwalter"
-            },
-            {
-              "selected": false,
-              "text": "Haas Retterschen",
-              "value": "Haas Retterschen"
-            },
-            {
-              "selected": false,
-              "text": "Haus Kölle",
-              "value": "Haus Kölle"
-            },
-            {
-              "selected": false,
-              "text": "Haus Stoffel",
-              "value": "Haus Stoffel"
-            },
-            {
-              "selected": false,
-              "text": "Hedwig",
-              "value": "Hedwig"
-            },
-            {
-              "selected": false,
-              "text": "Hegauhaus",
-              "value": "Hegauhaus"
-            },
-            {
-              "selected": false,
-              "text": "HeiterHof",
-              "value": "HeiterHof"
-            },
-            {
-              "selected": false,
-              "text": "Heunetz",
-              "value": "Heunetz"
-            },
-            {
-              "selected": false,
-              "text": "Hof Hofen Freifunk",
-              "value": "Hof Hofen Freifunk"
-            },
-            {
-              "selected": false,
-              "text": "Igelbau",
-              "value": "Igelbau"
-            },
-            {
-              "selected": false,
-              "text": "Jugendhaus Immendingen",
-              "value": "Jugendhaus Immendingen"
-            },
-            {
-              "selected": false,
-              "text": "KAP2",
-              "value": "KAP2"
-            },
-            {
-              "selected": false,
-              "text": "KMT-Center-Weingarten",
-              "value": "KMT-Center-Weingarten"
-            },
-            {
-              "selected": false,
-              "text": "KNMainaustr.194",
-              "value": "KNMainaustr.194"
-            },
-            {
-              "selected": false,
-              "text": "Kamm&Schere BTT 07554990087",
-              "value": "Kamm&Schere BTT 07554990087"
-            },
-            {
-              "selected": false,
-              "text": "Kap1",
-              "value": "Kap1"
-            },
-            {
-              "selected": false,
-              "text": "Katzenzunft-Kippenhausen.de",
-              "value": "Katzenzunft-Kippenhausen.de"
-            },
-            {
-              "selected": false,
-              "text": "Kippenhausen Dorfplatz",
-              "value": "Kippenhausen Dorfplatz"
-            },
-            {
-              "selected": false,
-              "text": "Kirchstr.Ost Billafingen",
-              "value": "Kirchstr.Ost Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "Kirchstr.West Billafingen",
-              "value": "Kirchstr.West Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "Kita Neukirch",
-              "value": "Kita Neukirch"
-            },
-            {
-              "selected": false,
-              "text": "Knoll BTT",
-              "value": "Knoll BTT"
-            },
-            {
-              "selected": false,
-              "text": "KnollPatrickHalle",
-              "value": "KnollPatrickHalle"
-            },
-            {
-              "selected": false,
-              "text": "KnollPatrickHalle2",
-              "value": "KnollPatrickHalle2"
-            },
-            {
-              "selected": false,
-              "text": "KulturvereinCaserne.KinoStudio17",
-              "value": "KulturvereinCaserne.KinoStudio17"
-            },
-            {
-              "selected": false,
-              "text": "LUGO_Node",
-              "value": "LUGO_Node"
-            },
-            {
-              "selected": false,
-              "text": "Lauchertstüble BTT",
-              "value": "Lauchertstüble BTT"
-            },
-            {
-              "selected": false,
-              "text": "Levitikus.Dreifaltigkeit",
-              "value": "Levitikus.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Lindenweg.Waldburg.1",
-              "value": "Lindenweg.Waldburg.1"
-            },
-            {
-              "selected": false,
-              "text": "Luci-Fi",
-              "value": "Luci-Fi"
-            },
-            {
-              "selected": false,
-              "text": "Löwen Altheim BTT",
-              "value": "Löwen Altheim BTT"
-            },
-            {
-              "selected": false,
-              "text": "MAD",
-              "value": "MAD"
-            },
-            {
-              "selected": false,
-              "text": "MSBer@tung GmbH",
-              "value": "MSBer@tung GmbH"
-            },
-            {
-              "selected": false,
-              "text": "MV-Kressbronn-HDM1",
-              "value": "MV-Kressbronn-HDM1"
-            },
-            {
-              "selected": false,
-              "text": "MZH Kressbronn 1",
-              "value": "MZH Kressbronn 1"
-            },
-            {
-              "selected": false,
-              "text": "MZH-Vorplatz-2.4",
-              "value": "MZH-Vorplatz-2.4"
-            },
-            {
-              "selected": false,
-              "text": "MZH-Vorplatz-5",
-              "value": "MZH-Vorplatz-5"
-            },
-            {
-              "selected": false,
-              "text": "Martin",
-              "value": "Martin"
-            },
-            {
-              "selected": false,
-              "text": "Meichle BTT",
-              "value": "Meichle BTT"
-            },
-            {
-              "selected": false,
-              "text": "MoWaNet_FeWo_Ida",
-              "value": "MoWaNet_FeWo_Ida"
-            },
-            {
-              "selected": false,
-              "text": "MoWaNet_Schachen_Nord",
-              "value": "MoWaNet_Schachen_Nord"
-            },
-            {
-              "selected": false,
-              "text": "MoWaNet_Schachen_Ost",
-              "value": "MoWaNet_Schachen_Ost"
-            },
-            {
-              "selected": false,
-              "text": "MoWaNet_Taubenberg",
-              "value": "MoWaNet_Taubenberg"
-            },
-            {
-              "selected": false,
-              "text": "Momo.Dreifaltigkeit",
-              "value": "Momo.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Moses.Dreifaltigkeit",
-              "value": "Moses.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "Muehlbachstrasse",
-              "value": "Muehlbachstrasse"
-            },
-            {
-              "selected": false,
-              "text": "Mäder BTT",
-              "value": "Mäder BTT"
-            },
-            {
-              "selected": false,
-              "text": "Mühlenweg Billafingen",
-              "value": "Mühlenweg Billafingen"
-            },
-            {
-              "selected": false,
-              "text": "Münzhof Langenargen",
-              "value": "Münzhof Langenargen"
-            },
-            {
-              "selected": false,
-              "text": "NFH01.ffbsee.net",
-              "value": "NFH01.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "Nest1",
-              "value": "Nest1"
-            },
-            {
-              "selected": false,
-              "text": "Nest2",
-              "value": "Nest2"
-            },
-            {
-              "selected": false,
-              "text": "Neufracherstr. Salem",
-              "value": "Neufracherstr. Salem"
-            },
-            {
-              "selected": false,
-              "text": "Numeri.Dreifaltigkeit",
-              "value": "Numeri.Dreifaltigkeit"
-            },
-            {
-              "selected": false,
-              "text": "O-teuringen",
-              "value": "O-teuringen"
-            },
-            {
-              "selected": false,
-              "text": "OTKW10",
-              "value": "OTKW10"
-            },
-            {
-              "selected": false,
-              "text": "OTKW8",
-              "value": "OTKW8"
-            },
-            {
-              "selected": false,
-              "text": "Oberzell Albersfelderstr",
-              "value": "Oberzell Albersfelderstr"
-            },
-            {
-              "selected": false,
-              "text": "Obst- und Ferien- Hof Eberle",
-              "value": "Obst- und Ferien- Hof Eberle"
-            },
-            {
-              "selected": false,
-              "text": "Obst- und Ferienhof Eberle",
-              "value": "Obst- und Ferienhof Eberle"
-            },
-            {
-              "selected": false,
-              "text": "Obsthof-Wengle",
-              "value": "Obsthof-Wengle"
-            },
-            {
-              "selected": false,
-              "text": "Obsthof-Wengle-2",
-              "value": "Obsthof-Wengle-2"
-            },
-            {
-              "selected": false,
-              "text": "Ortsausgang Markdorf",
-              "value": "Ortsausgang Markdorf"
-            },
-            {
-              "selected": false,
-              "text": "PRINOTH-Arena",
-              "value": "PRINOTH-Arena"
-            },
-            {
-              "selected": false,
-              "text": "Post Betenbrunn BTT",
-              "value": "Post Betenbrunn BTT"
-            },
-            {
-              "selected": false,
-              "text": "Post Betenbrunn II BTT",
-              "value": "Post Betenbrunn II BTT"
-            },
-            {
-              "selected": false,
-              "text": "Post-Wdorf",
-              "value": "Post-Wdorf"
-            },
-            {
-              "selected": false,
-              "text": "PyhsioTeam.Markdorf",
-              "value": "PyhsioTeam.Markdorf"
-            },
-            {
-              "selected": false,
-              "text": "RUFUS",
-              "value": "RUFUS"
-            },
-            {
-              "selected": false,
-              "text": "RV128_2",
-              "value": "RV128_2"
-            },
-            {
-              "selected": false,
-              "text": "Raspi4-Firmwaretest",
-              "value": "Raspi4-Firmwaretest"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus Eriskirch",
-              "value": "Rathaus Eriskirch"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus Kressbronn",
-              "value": "Rathaus Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus Kressbronn II",
-              "value": "Rathaus Kressbronn II"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus Langenargen",
-              "value": "Rathaus Langenargen"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus-Vorplatz-KRB2.4",
-              "value": "Rathaus-Vorplatz-KRB2.4"
-            },
-            {
-              "selected": false,
-              "text": "Rathaus-Vorplatz-KRB5",
-              "value": "Rathaus-Vorplatz-KRB5"
-            },
-            {
-              "selected": false,
-              "text": "Rathhausplatz Bermatingen",
-              "value": "Rathhausplatz Bermatingen"
-            },
-            {
-              "selected": false,
-              "text": "Reblandhof Besenwirtschaft",
-              "value": "Reblandhof Besenwirtschaft"
-            },
-            {
-              "selected": false,
-              "text": "Reckholder.Freifunk-Mecka.de",
-              "value": "Reckholder.Freifunk-Mecka.de"
-            },
-            {
-              "selected": false,
-              "text": "Reiterstüble",
-              "value": "Reiterstüble"
-            },
-            {
-              "selected": false,
-              "text": "Reiterstüble2",
-              "value": "Reiterstüble2"
-            },
-            {
-              "selected": false,
-              "text": "Reparartur-Cafe",
-              "value": "Reparartur-Cafe"
-            },
-            {
-              "selected": false,
-              "text": "SMCF",
-              "value": "SMCF"
-            },
-            {
-              "selected": false,
-              "text": "Salem1",
-              "value": "Salem1"
-            },
-            {
-              "selected": false,
-              "text": "Salem2",
-              "value": "Salem2"
-            },
-            {
-              "selected": false,
-              "text": "Salem3",
-              "value": "Salem3"
-            },
-            {
-              "selected": false,
-              "text": "Salem4",
-              "value": "Salem4"
-            },
-            {
-              "selected": false,
-              "text": "Salem99",
-              "value": "Salem99"
-            },
-            {
-              "selected": false,
-              "text": "Schali-Freifunk1",
-              "value": "Schali-Freifunk1"
-            },
-            {
-              "selected": false,
-              "text": "Scherer BTT",
-              "value": "Scherer BTT"
-            },
-            {
-              "selected": false,
-              "text": "Scherer BTT II",
-              "value": "Scherer BTT II"
-            },
-            {
-              "selected": false,
-              "text": "Schnetzenbach",
-              "value": "Schnetzenbach"
-            },
-            {
-              "selected": false,
-              "text": "Seefunk",
-              "value": "Seefunk"
-            },
-            {
-              "selected": false,
-              "text": "Seehof 1",
-              "value": "Seehof 1"
-            },
-            {
-              "selected": false,
-              "text": "Seehof 2",
-              "value": "Seehof 2"
-            },
-            {
-              "selected": false,
-              "text": "Seestr. Ost",
-              "value": "Seestr. Ost"
-            },
-            {
-              "selected": false,
-              "text": "Seestr. Ost1",
-              "value": "Seestr. Ost1"
-            },
-            {
-              "selected": false,
-              "text": "Sitzungssaal Rathaus Kressbronn",
-              "value": "Sitzungssaal Rathaus Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "Spiderboy",
-              "value": "Spiderboy"
-            },
-            {
-              "selected": false,
-              "text": "Spitalkeller Friedrichshafen",
-              "value": "Spitalkeller Friedrichshafen"
-            },
-            {
-              "selected": false,
-              "text": "Sportplatz Schönach",
-              "value": "Sportplatz Schönach"
-            },
-            {
-              "selected": false,
-              "text": "Steinhauser2",
-              "value": "Steinhauser2"
-            },
-            {
-              "selected": false,
-              "text": "Strandbad Eriskirch",
-              "value": "Strandbad Eriskirch"
-            },
-            {
-              "selected": false,
-              "text": "Strandbad Kressbronn",
-              "value": "Strandbad Kressbronn"
-            },
-            {
-              "selected": false,
-              "text": "SuebenBase01",
-              "value": "SuebenBase01"
-            },
-            {
-              "selected": false,
-              "text": "THW OV Wangen 01",
-              "value": "THW OV Wangen 01"
-            },
-            {
-              "selected": false,
-              "text": "THW OV Wangen 02",
-              "value": "THW OV Wangen 02"
-            },
-            {
-              "selected": false,
-              "text": "THW OV Wangen 03",
-              "value": "THW OV Wangen 03"
-            },
-            {
-              "selected": false,
-              "text": "THW OV Wangen 04",
-              "value": "THW OV Wangen 04"
-            },
-            {
-              "selected": false,
-              "text": "TSV-Fischbach",
-              "value": "TSV-Fischbach"
-            },
-            {
-              "selected": false,
-              "text": "TennisClub",
-              "value": "TennisClub"
-            },
-            {
-              "selected": false,
-              "text": "TeoFreifunkKnoten1",
-              "value": "TeoFreifunkKnoten1"
-            },
-            {
-              "selected": true,
-              "text": "Theater Lindau",
-              "value": "Theater Lindau"
-            },
-            {
-              "selected": false,
-              "text": "Tonks_Riether",
-              "value": "Tonks_Riether"
-            },
-            {
-              "selected": false,
-              "text": "Toolbox Bodensee",
-              "value": "Toolbox Bodensee"
-            },
-            {
-              "selected": false,
-              "text": "Tourist-Information Langenargen",
-              "value": "Tourist-Information Langenargen"
-            },
-            {
-              "selected": false,
-              "text": "Tourist-Information-Kressbronn2",
-              "value": "Tourist-Information-Kressbronn2"
-            },
-            {
-              "selected": false,
-              "text": "Unterfrickhof",
-              "value": "Unterfrickhof"
-            },
-            {
-              "selected": false,
-              "text": "Veneto Eiscafe Ueberlingen",
-              "value": "Veneto Eiscafe Ueberlingen"
-            },
-            {
-              "selected": false,
-              "text": "Villieber 2 BTT",
-              "value": "Villieber 2 BTT"
-            },
-            {
-              "selected": false,
-              "text": "Villieber BTT",
-              "value": "Villieber BTT"
-            },
-            {
-              "selected": false,
-              "text": "Vintage1989",
-              "value": "Vintage1989"
-            },
-            {
-              "selected": false,
-              "text": "WSK-Lindau-OST.chsdl.de",
-              "value": "WSK-Lindau-OST.chsdl.de"
-            },
-            {
-              "selected": false,
-              "text": "WSK-Lindau-WEST.chsdl.de",
-              "value": "WSK-Lindau-WEST.chsdl.de"
-            },
-            {
-              "selected": false,
-              "text": "WalterDornbirn",
-              "value": "WalterDornbirn"
-            },
-            {
-              "selected": false,
-              "text": "Wangen Milchpilz",
-              "value": "Wangen Milchpilz"
-            },
-            {
-              "selected": false,
-              "text": "Widdum",
-              "value": "Widdum"
-            },
-            {
-              "selected": false,
-              "text": "Wielatt BTT",
-              "value": "Wielatt BTT"
-            },
-            {
-              "selected": false,
-              "text": "Wohnung",
-              "value": "Wohnung"
-            },
-            {
-              "selected": false,
-              "text": "Zehntscheuerstr-KRB",
-              "value": "Zehntscheuerstr-KRB"
-            },
-            {
-              "selected": false,
-              "text": "ZimmereiBraun",
-              "value": "ZimmereiBraun"
-            },
-            {
-              "selected": false,
-              "text": "Zollerstuben Hotel & Restaurant",
-              "value": "Zollerstuben Hotel & Restaurant"
-            },
-            {
-              "selected": false,
-              "text": "Zum Hackl Schorsch",
-              "value": "Zum Hackl Schorsch"
-            },
-            {
-              "selected": false,
-              "text": "Zur Frohen Aussicht",
-              "value": "Zur Frohen Aussicht"
-            },
-            {
-              "selected": false,
-              "text": "aicher.freifunk-tettnang.de",
-              "value": "aicher.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "ailingen3",
-              "value": "ailingen3"
-            },
-            {
-              "selected": false,
-              "text": "ap11.freifunk-aulendorf",
-              "value": "ap11.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "azzurro.freifunk-tettnang.de",
-              "value": "azzurro.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "b2:be:76:38:d1:83",
-              "value": "b2:be:76:38:d1:83"
-            },
-            {
-              "selected": false,
-              "text": "b2:be:76:59:d7:9a",
-              "value": "b2:be:76:59:d7:9a"
-            },
-            {
-              "selected": false,
-              "text": "bama-tt38.freifunk-tettnang.de",
-              "value": "bama-tt38.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "bohlweg.messkirch",
-              "value": "bohlweg.messkirch"
-            },
-            {
-              "selected": false,
-              "text": "bright side",
-              "value": "bright side"
-            },
-            {
-              "selected": false,
-              "text": "bucher.freifunk-aulendorf",
-              "value": "bucher.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "bärlin.freifunk-tettnang.de",
-              "value": "bärlin.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "c7ap10.freifunk-aulendorf",
-              "value": "c7ap10.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "c7ap17.freifunk-aulendorf",
-              "value": "c7ap17.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "cafe-leser.freifunk-aulendorf",
-              "value": "cafe-leser.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "cafe-reck.freifunk-aulendorf",
-              "value": "cafe-reck.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "casadidona.freifunk-tettnang.de",
-              "value": "casadidona.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "cgh.freifunk-tettnang.de",
-              "value": "cgh.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "city.freifunk-tettnang.de",
-              "value": "city.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "conditori.freifunk-tettnang.de",
-              "value": "conditori.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "creazione.freifunk-tettnang.de",
-              "value": "creazione.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "da:0d:17:2c:e3:cf",
-              "value": "da:0d:17:2c:e3:cf"
-            },
-            {
-              "selected": false,
-              "text": "devnull.freifunk-tettnang.de",
-              "value": "devnull.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "doc.freifunk-tettnang.de",
-              "value": "doc.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "drkttap1.freifunk-tettnang.de",
-              "value": "drkttap1.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "dtal-docs.de",
-              "value": "dtal-docs.de"
-            },
-            {
-              "selected": false,
-              "text": "e2:28:6d:93:80:94",
-              "value": "e2:28:6d:93:80:94"
-            },
-            {
-              "selected": false,
-              "text": "ee:08:6b:34:f2:8e",
-              "value": "ee:08:6b:34:f2:8e"
-            },
-            {
-              "selected": false,
-              "text": "ee:08:6b:61:5f:12",
-              "value": "ee:08:6b:61:5f:12"
-            },
-            {
-              "selected": false,
-              "text": "ee:08:6b:ab:3e:20",
-              "value": "ee:08:6b:ab:3e:20"
-            },
-            {
-              "selected": false,
-              "text": "eiscafe.freifunk-aulendorf",
-              "value": "eiscafe.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "empen.freifunk-tettnang.de",
-              "value": "empen.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "ermlandhof.chsdl.de",
-              "value": "ermlandhof.chsdl.de"
-            },
-            {
-              "selected": false,
-              "text": "eugen8v3",
-              "value": "eugen8v3"
-            },
-            {
-              "selected": false,
-              "text": "ferienwohnung-mahegi.de",
-              "value": "ferienwohnung-mahegi.de"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee-qsx-1043-1",
-              "value": "ffbsee-qsx-1043-1"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee-sirnach-01",
-              "value": "ffbsee-sirnach-01"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee_Biegenburg",
-              "value": "ffbsee_Biegenburg"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee_Dietikon_01",
-              "value": "ffbsee_Dietikon_01"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee_Dietikon_02",
-              "value": "ffbsee_Dietikon_02"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee_Dietikon_03",
-              "value": "ffbsee_Dietikon_03"
-            },
-            {
-              "selected": false,
-              "text": "ffbsee_lockenschopf",
-              "value": "ffbsee_lockenschopf"
-            },
-            {
-              "selected": false,
-              "text": "filo-balkon",
-              "value": "filo-balkon"
-            },
-            {
-              "selected": false,
-              "text": "filo-fewo",
-              "value": "filo-fewo"
-            },
-            {
-              "selected": false,
-              "text": "filo-og.ffbsee.de",
-              "value": "filo-og.ffbsee.de"
-            },
-            {
-              "selected": false,
-              "text": "filo-werkstatt.ffbsee.de",
-              "value": "filo-werkstatt.ffbsee.de"
-            },
-            {
-              "selected": false,
-              "text": "fink.freifunk-tettnang.de",
-              "value": "fink.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "fink2.freifunk-tettnang.de",
-              "value": "fink2.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "forster.freifunk-tettnang.de",
-              "value": "forster.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "freespirit+bewusst+tv",
-              "value": "freespirit+bewusst+tv"
-            },
-            {
-              "selected": false,
-              "text": "freifunk.zu-nerdig.de",
-              "value": "freifunk.zu-nerdig.de"
-            },
-            {
-              "selected": false,
-              "text": "freifunk3.rorgenwies.net",
-              "value": "freifunk3.rorgenwies.net"
-            },
-            {
-              "selected": false,
-              "text": "freifunk4.rorgenwies.net",
-              "value": "freifunk4.rorgenwies.net"
-            },
-            {
-              "selected": false,
-              "text": "futro.freifunk-ebersbach",
-              "value": "futro.freifunk-ebersbach"
-            },
-            {
-              "selected": false,
-              "text": "gottsacker freifunk",
-              "value": "gottsacker freifunk"
-            },
-            {
-              "selected": false,
-              "text": "gottsackerp2.freifunk-badsaulgau",
-              "value": "gottsackerp2.freifunk-badsaulgau"
-            },
-            {
-              "selected": false,
-              "text": "gutbrodgmbh.freifunk-tettnang.de",
-              "value": "gutbrodgmbh.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "gw01.ffbsee.net",
-              "value": "gw01.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "gw03.ffbsee.net",
-              "value": "gw03.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "gw04.ffbsee.net",
-              "value": "gw04.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "hacKNology Untersee",
-              "value": "hacKNology Untersee"
-            },
-            {
-              "selected": false,
-              "text": "hacKNology e.V.",
-              "value": "hacKNology e.V."
-            },
-            {
-              "selected": false,
-              "text": "heine.freifunk-tettnang.de",
-              "value": "heine.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "hoefwiesen.messkirch",
-              "value": "hoefwiesen.messkirch"
-            },
-            {
-              "selected": false,
-              "text": "hosskirch-gemeindeverwaltung",
-              "value": "hosskirch-gemeindeverwaltung"
-            },
-            {
-              "selected": false,
-              "text": "huchler1848.freifunk-tettnang.de",
-              "value": "huchler1848.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "huchlermen.freifunk-tettnang.de",
-              "value": "huchlermen.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "irmler.freifunk-tettnang.de",
-              "value": "irmler.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "jugendhaus2.freifunk-aulendorf",
-              "value": "jugendhaus2.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "juha.freifunk-aulendorf",
-              "value": "juha.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "kaktus.freifunk-aulendorf.de",
-              "value": "kaktus.freifunk-aulendorf.de"
-            },
-            {
-              "selected": false,
-              "text": "krone.freifunk-aulendorf",
-              "value": "krone.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "kännle.freifunk-tettnang.de",
-              "value": "kännle.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "leitishofen.messkirch",
-              "value": "leitishofen.messkirch"
-            },
-            {
-              "selected": false,
-              "text": "locher.freifunk-tettnang.de",
-              "value": "locher.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "map.ffbsee.net",
-              "value": "map.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "mate.ffbsee.net",
-              "value": "mate.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "meet.ffbsee.net",
-              "value": "meet.ffbsee.net"
-            },
-            {
-              "selected": false,
-              "text": "mittagsspitze.freifunk-tt.de",
-              "value": "mittagsspitze.freifunk-tt.de"
-            },
-            {
-              "selected": false,
-              "text": "männerstil.freifunk-tettnang.de",
-              "value": "männerstil.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "orient.freifunk-aulendorf",
-              "value": "orient.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "osteria.freifunk-tettnang.de",
-              "value": "osteria.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "pd1",
-              "value": "pd1"
-            },
-            {
-              "selected": false,
-              "text": "pd2",
-              "value": "pd2"
-            },
-            {
-              "selected": false,
-              "text": "pecoraro2.freifunk-tettnang.de",
-              "value": "pecoraro2.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "pfrungen_ILS202",
-              "value": "pfrungen_ILS202"
-            },
-            {
-              "selected": false,
-              "text": "pfrungen_ils201",
-              "value": "pfrungen_ils201"
-            },
-            {
-              "selected": false,
-              "text": "pfrungen_ils203",
-              "value": "pfrungen_ils203"
-            },
-            {
-              "selected": false,
-              "text": "phschoen.de",
-              "value": "phschoen.de"
-            },
-            {
-              "selected": false,
-              "text": "picolina.freifunk-tettnang.de",
-              "value": "picolina.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "r1.freifunk.weltladen-fn.de",
-              "value": "r1.freifunk.weltladen-fn.de"
-            },
-            {
-              "selected": false,
-              "text": "r2qh1.freifunk-tettnang.de",
-              "value": "r2qh1.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "raible.freifunk-aulendorf",
-              "value": "raible.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "rathaus1.freifunk-tettnang.de",
-              "value": "rathaus1.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "rathaus2.freifunk-tettnang.de",
-              "value": "rathaus2.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "rebchrap01",
-              "value": "rebchrap01"
-            },
-            {
-              "selected": false,
-              "text": "rebeglap01",
-              "value": "rebeglap01"
-            },
-            {
-              "selected": false,
-              "text": "reblandhof.de",
-              "value": "reblandhof.de"
-            },
-            {
-              "selected": false,
-              "text": "rebrzrap01",
-              "value": "rebrzrap01"
-            },
-            {
-              "selected": false,
-              "text": "riederer-bau.de (Ihr Maler)",
-              "value": "riederer-bau.de (Ihr Maler)"
-            },
-            {
-              "selected": false,
-              "text": "sale&pepe.freifunk-tettnang.de",
-              "value": "sale&pepe.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "saupps-ferienwohnung.de",
-              "value": "saupps-ferienwohnung.de"
-            },
-            {
-              "selected": false,
-              "text": "scb.freifunk-tettnang.de",
-              "value": "scb.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "schneider.freifunk-aulendorf",
-              "value": "schneider.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "see-base",
-              "value": "see-base"
-            },
-            {
-              "selected": false,
-              "text": "seedoener.de",
-              "value": "seedoener.de"
-            },
-            {
-              "selected": false,
-              "text": "sendu libere",
-              "value": "sendu libere"
-            },
-            {
-              "selected": false,
-              "text": "seppireck.freifunk-tettnang.de",
-              "value": "seppireck.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "sportmohn.freifunk-tettnang.de",
-              "value": "sportmohn.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "stadtarchiv.freifunk-tettnang.de",
-              "value": "stadtarchiv.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "staudacher.freifunk-tettnang.de",
-              "value": "staudacher.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "steegersee.freifunk-aulendorf",
-              "value": "steegersee.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "stritt.feifunk-tettnang.de",
-              "value": "stritt.feifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "sys-fn.de",
-              "value": "sys-fn.de"
-            },
-            {
-              "selected": false,
-              "text": "terrafit.freifunk-aulendorf",
-              "value": "terrafit.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "tib-in.freifunk-tettnang.de",
-              "value": "tib-in.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "tib.freifunk-tettnang.de",
-              "value": "tib.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "traube2.freifunk-tettnang.de",
-              "value": "traube2.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "tsv1.freifunk-tettnang.de",
-              "value": "tsv1.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "tsv3.freifunk-tettnang.de",
-              "value": "tsv3.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "unter Gehrenberg BTT",
-              "value": "unter Gehrenberg BTT"
-            },
-            {
-              "selected": false,
-              "text": "vaudecafe.freifunk-tettnang.de",
-              "value": "vaudecafe.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "voelk.freifunk-tettnang.de",
-              "value": "voelk.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "vonderheide.freifunk-tettnang.de",
-              "value": "vonderheide.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "wahidi.freifunk-tettnang.de",
-              "value": "wahidi.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "wirbel.freifunk-aulendorf",
-              "value": "wirbel.freifunk-aulendorf"
-            },
-            {
-              "selected": false,
-              "text": "wollensak2.freifunk-tettnang.de",
-              "value": "wollensak2.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "xythobuz-Neigh",
-              "value": "xythobuz-Neigh"
-            },
-            {
-              "selected": false,
-              "text": "zartl.freifunk-tettnang.de",
-              "value": "zartl.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "zeh.freifunk-tettnang.de",
-              "value": "zeh.freifunk-tettnang.de"
-            },
-            {
-              "selected": false,
-              "text": "zeh1.freifunk-tettnang.de",
-              "value": "zeh1.freifunk-tettnang.de"
-            }
-          ],
-          "query": "label_values(freifunk_router_meta, name)",
-          "refresh": 0,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 1,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
+          "expr": "sum(freifunk_router_client_count_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
+          "interval": "",
+          "legendFormat": "clients",
+          "refId": "A"
         }
-      ]
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Clients",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:207",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:208",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
-    "time": {
-      "from": "now-6h",
-      "to": "now"
-    },
-    "timepicker": {
-      "refresh_intervals": [
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ]
-    },
-    "timezone": "",
-    "title": "Freifunk Bodensee - Router Detail",
-    "uid": "RRGesimMz",
-    "version": 3
-  }
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "avg(freifunk_router_load_avg_5m * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
+          "interval": "",
+          "legendFormat": "load",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(freifunk_router_memory_usage_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
+          "interval": "",
+          "legendFormat": "memory",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(freifunk_router_rootfs_usage_total * on(id) group_left() freifunk_router_meta{name=\"$router\"})",
+          "interval": "",
+          "legendFormat": "rootfs",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Hardware Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:85",
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": "1.1",
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:86",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "Bertsch",
+          "value": "Bertsch"
+        },
+        "datasource": "prometheus",
+        "definition": "label_values(freifunk_router_meta, name)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Router",
+        "multi": false,
+        "name": "router",
+        "options": [],
+        "query": "label_values(freifunk_router_meta, name)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Freifunk Bodensee - Router Detail",
+  "uid": "RRGesimMz",
+  "version": 3
+}

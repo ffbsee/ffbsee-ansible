@@ -96,3 +96,103 @@
    - gateway-page
 #    - freifunk-karte-json
 #    - FFNodeList
+
+- name: install telegraf
+  hosts: map.ffbsee.net
+  become: yes
+  tags:
+    - telegraf
+  roles:
+    - telegraf
+
+- name: install prometheus
+  hosts: map.ffbsee.net
+  tags:
+    - prometheus
+  roles:
+    - prometheus
+
+- name: install grafana
+  hosts: map.ffbsee.net
+  tags:
+    - grafana
+  roles:
+    - role: grafana
+      vars:
+        grafana_security:
+          admin_user: admin
+          admin_password: "{{ grafana_admin_password }}"
+  tasks:
+    - name: create dashboard dir
+      file:
+        path: /opt/grafana/dashboards
+        state: directory
+        mode: '0755'
+    - name: provision dashboards config
+      copy:
+        dest: /etc/grafana/provisioning/dashboards/default.yaml
+        content: |
+          apiVersion: 1
+          providers:
+            - name: 'default'
+              disableDeletion: true
+              editable: false
+              updateIntervalSeconds: 300
+              allowUiUpdates: false
+              options:
+                path: {{ grafana_dashboard_dir }}
+    - name: install dashboards
+      copy:
+        src: "files/grafana_dashboards/{{ item }}"
+        dest: "{{ grafana_dashboard_dir }}/{{ item }}"
+        mode: '0644'
+  loop:
+    - freifunk_overview.json
+    - freifunk_router_detail.json
+
+- name: install golang
+  hosts: map.ffbsee.net
+  tags:
+    - golang
+    - go
+  roles:
+     - role: golang
+
+- name: install xperimental/freifunk-exporter
+  hosts: map.ffbsee.net
+  environment:
+    # make sure we find go
+    PATH: /opt/go/1.14.4/bin:{{ ansible_env.PATH }}
+  tags:
+    - freifunk-exporter
+    - exporter
+    - prometheus-exporter
+  tasks:
+    - name: clone repository
+      git:
+        repo: 'https://github.com/xperimental/freifunk-exporter.git'
+        dest: "{{ freifunk_exporter_path }}"
+    - name: Build the default target
+      make:
+        chdir: "{{ freifunk_exporter_path }}"
+    - name: install freifunk-exporter service
+      copy:
+        content: |
+          [Unit]
+          Description=freifunk-exporter
+
+          [Service]
+          Type=simple
+          ExecStart={{ freifunk_exporter_path }}/freifunk-exporter --cache-interval 30s --source-url https://meta.ffbsee.net/data/meshviewer.json
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /lib/systemd/system/freifunk-exporter.service
+    - name: enable and start freifunk-exporter
+      systemd:
+        state: started
+        enabled: yes
+        name: freifunk-exporter
+  vars:
+    freifunk_exporter_path: /opt/freifunk-exporter
+    #defaults to port: 9295

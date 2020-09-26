@@ -40,3 +40,15 @@
 [submodule "roles/ansible_version"]
 	path = roles/ansible_version
 	url = https://github.com/chaos-bodensee/role-ansible_version.git
+[submodule "roles/telegraf"]
+	path = roles/telegraf
+	url = https://github.com/dj-wasabi/ansible-telegraf.git
+[submodule "roles/grafana"]
+	path = roles/grafana
+	url = https://github.com/cloudalchemy/ansible-grafana.git
+[submodule "roles/prometheus"]
+	path = roles/prometheus
+	url = https://github.com/cloudalchemy/ansible-prometheus.git
+[submodule "roles/golang"]
+	path = roles/golang
+	url = https://github.com/gantsign/ansible-role-golang.git

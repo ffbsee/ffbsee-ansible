@@ -47,3 +47,7 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 
 # we do not host any presentations here
 presentation_webserver: false
+
+packages_extra:
+  - git
+  - git-lfs

@@ -98,3 +98,12 @@
     - unbound
     - unbound_freifunk_tlds
     - bird
+
+- name: install telegraf
+  hosts: gw03.ffbsee.net
+  become: yes
+  tags:
+    - telegraf
+  roles:
+    - telegraf
+

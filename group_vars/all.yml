@@ -53,5 +53,64 @@ users:
 home_sweet_home: false
 ssh_public_key_store: 'ssh_authorized_keys'
 
+#telegraf config for all machines
+telegraf_agent_package_method: online
+telegraf_agent_package: /tmp/telegraf.deb
+telegraf_plugins_default:
+- plugin: cpu
+  config:
+    - percpu = true
+- plugin: disk
+  tags:
+    - diskmetrics = true
+  tagpass:
+    - fstype = [ "ext4", "xfs" ]
+  tagdrop:
+    - path = [ "/etc", "/etc/telegraf", "/etc/hostname", "/etc/hosts", "/etc/resolv.conf" ]
+- plugin: io
+- plugin: mem
+- plugin: system
+- plugin: swap
+- plugin: net
+- plugin: netstat
+- plugin: processes
+- plugin: docker
+  config:
+    - endpoint = "unix:///var/run/docker.sock"
+    - timeout = "5s"
+telegraf_agent_output:
+- type: prometheus_client
+  config:
+    - listen = ":9273"
+    #TODO access control or public?
+
+# prometheus stuff
+#TODO access control or public?
+prometheus_targets:
+  node:
+  - targets:
+    - gw01.ffbsee.net:9273
+    - gw02.ffbsee.net:9273
+    - gw03.ffbsee.net:9273
+    - gw04.ffbsee.net:9273
+    - map.ffbsee.net:9273
+    - map.ffbsee.net:9295
+    #9273 is telegraf
+    #9295 is freifunk exporter
 
 
+#should go through proxy - I think
+grafana_address: 127.0.0.1
+grafana_provisioning_synced: true
+grafana_dashboard_dir: /opt/grafana/dashboards
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: proxy
+    #localhost could be map here
+    url: 'http://localhost:9090'
+grafana_dashboards_dir: "{{ grafana_dashboard_dir }}"
+grafana_users:
+  allow_sign_up: true
+  auto_assign_org_role: Viewer
+  default_theme: dark

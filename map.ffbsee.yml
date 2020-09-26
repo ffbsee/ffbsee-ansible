@@ -117,25 +117,56 @@
   tags:
     - grafana
   roles:
-    - grafana
+    - role: grafana
+      vars:
+        grafana_security:
+          admin_user: admin
+          admin_password: "{{ grafana_admin_password }}"
   tasks:
+    - name: create dashboard dir
+      file:
+        path: /opt/grafana/dashboards
+        state: directory
+        mode: '0755'
+    - name: provision dashboards config
+      copy:
+        dest: /etc/grafana/provisioning/dashboards/default.yaml
+        content: |
+          apiVersion: 1
+          providers:
+            - name: 'default'
+              disableDeletion: true
+              editable: false
+              updateIntervalSeconds: 300
+              allowUiUpdates: false
+              options:
+                path: {{ grafana_dashboard_dir }}
     - name: install dashboards
       copy:
         src: "files/grafana_dashboards/{{ item }}"
         dest: "{{ grafana_dashboard_dir }}/{{ item }}"
         mode: '0644'
-        remote_src: yes
   loop:
     - freifunk_overview.json
     - freifunk_router_detail.json
 
 - name: install golang
   hosts: map.ffbsee.net
+  tags:
+    - golang
+    - go
   roles:
      - role: golang
 
 - name: install xperimental/freifunk-exporter
   hosts: map.ffbsee.net
+  environment:
+    # make sure we find go
+    PATH: /opt/go/1.14.4/bin:{{ ansible_env.PATH }}
+  tags:
+    - freifunk-exporter
+    - exporter
+    - prometheus-exporter
   tasks:
     - name: clone repository
       git:
@@ -152,7 +183,7 @@
 
           [Service]
           Type=simple
-          ExecStart=freifunk-exporter --cache-interval 30s --source-url https://meta.ffbsee.net/data/meshviewer.json
+          ExecStart={{ freifunk_exporter_path }}/freifunk-exporter --cache-interval 30s --source-url https://meta.ffbsee.net/data/meshviewer.json
 
           [Install]
           WantedBy=multi-user.target

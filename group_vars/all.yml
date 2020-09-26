@@ -78,11 +78,14 @@ telegraf_plugins_default:
   config:
     - endpoint = "unix:///var/run/docker.sock"
     - timeout = "5s"
-- plugin: prometheus_client
+telegraf_agent_output:
+- type: prometheus_client
   config:
     - listen = ":9273"
+    #TODO access control or public?
 
 # prometheus stuff
+#TODO access control or public?
 prometheus_targets:
   node:
   - targets:
@@ -95,16 +98,17 @@ prometheus_targets:
     #9273 is telegraf
     #9295 is freifunk exporter
 
-#grafana vars
-grafana_security:
-  admin_user: admin
-#  admin_password: enter_your_secure_password
+
+#should go through proxy - I think
+grafana_address: 127.0.0.1
+grafana_provisioning_synced: true
 grafana_dashboard_dir: /opt/grafana/dashboards
 grafana_datasources:
   - name: prometheus
     type: prometheus
-    access: direct
-    url: 'http://map.ffbsee.net:9090'
+    access: proxy
+    #localhost could be map here
+    url: 'http://localhost:9090'
 grafana_dashboards_dir: "{{ grafana_dashboard_dir }}"
 grafana_users:
   allow_sign_up: true

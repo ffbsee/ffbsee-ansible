@@ -11,8 +11,8 @@ mesh_ipv6_address: '{{ ipv6_address }}'
 ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
-wan_ipv6_network: ''
-wan_ipv6_ip: ''
+wan_ipv6_network: '2a02:590:9:ffb5::/64'
+wan_ipv6_ip: '2a02:590:9:ffb5::1'
 wan_base_interface: 'eth1'
 wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
@@ -41,8 +41,8 @@ fastd_vpn_backbone_configs:
   
 fastd_peer_limit: ''
 
-ipv6_uplink_announcen: 'false'
-radv_AdvDefaultPreference: 'low'
+ipv6_uplink_announcen: 'true'
+radv_AdvDefaultPreference: 'medium'
 
 debian: '10'
 number_of_cores: '8'

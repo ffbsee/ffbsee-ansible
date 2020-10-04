@@ -4,9 +4,11 @@ Convert data received from alfred (ffbi format) and serve them as prometheus pyt
 
 Typical call::
 
-    alfred -r 69 > robin.txt
+    alfred -r 69 -u /var/run/alfred/alfred.sock > robin.txt
     ./robin_prometheus.py  -m robin.txt
 
+Dependencies:
+    prometheus_client -> pip3 install prometheus_client
 License: CC BY 4.0
 Author: Jonas Hess
 Strongly Inspired by map-backend of Moritz Warning and Julian Rueth
@@ -41,12 +43,12 @@ class CustomCollector:
         collectors only function called collect. and it collects data
         """
 
-        downstream = GaugeMetricFamily('node_downspeed', 'last tested download bandwidth in bits/s', labels=['nodeid'])
+        downstream = GaugeMetricFamily('node_bw_down_bps', 'last tested download bandwidth in bits/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
             downstream.add_metric([node['id']], node['downstream_bits'])
         yield downstream
 
-        upstream = GaugeMetricFamily('node_upspeed', 'last tested upload bandwidth in bits/s', labels=['nodeid'])
+        upstream = GaugeMetricFamily('node_bw_up_bps', 'last tested upload bandwidth in bits/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
             upstream.add_metric([node['id']], node['upstream_bits'])
         yield upstream

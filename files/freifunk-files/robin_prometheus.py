@@ -300,10 +300,13 @@ def main():
     """
     import argparse
 
-    parser = argparse.ArgumentParser('Convert data received from alfred to a format accepted by meshviewer or ffmap')
-    parser.add_argument('-m', '--maps', required=True, help=r'input file containing data collected by alfred')
+    parser = argparse.ArgumentParser(
+        description='Convert data received from alfred and provide them as prometheus-service')
+    parser.add_argument('-m', '--maps', default='robin.txt', help=r'input file containing data collected by alfred')
     parser.add_argument('--storage', default='nodes_backup.bin',
                         help=r'store old data between calls e.g. to remember node lastseen values')
+    parser.add_argument('-p', '--port', default=8000, help=r'the port this service should listen to')
+
     args = parser.parse_args()
 
     # mac => node
@@ -316,30 +319,40 @@ def main():
 
     remove_old_nodes(nodes, datetime.timedelta(days=7))
 
-    with open(args.maps, 'r') as maps:
-        for line in maps.readlines():
-            try:
-                AlfredParser.parse_line(line.strip(), nodes)
-            except:
-                import traceback
-                # debug switch below
-                print(line)
-                traceback.print_exc()
-                continue
+    try:
+        with open(args.maps, 'r') as maps:
+            for line in maps.readlines():
+                try:
+                    AlfredParser.parse_line(line.strip(), nodes)
+                except:
+                    import traceback
+                    # debug switch below
+                    print(line)
+                    traceback.print_exc()
+                    continue
+        nodes_json = render_nodelist(nodes)
 
-    nodes_json = render_nodelist(nodes)
+    except IOError:
+        exit('File ' + args.maps + ' not accessible')
 
     if args.storage:
         save_nodes(args.storage, nodes)
+
     global GLOBAL_NODES
     GLOBAL_NODES = nodes_json
+
+    global PORT_NUMBER
+    try:
+        PORT_NUMBER = int(args.port)
+    except ValueError:
+        exit('Error: ' + args.port + ' is not a valid port-number')
 
 
 if __name__ == '__main__':
     main()
     REGISTRY.register(CustomCollector())
     # Start up the server to expose the metrics.
-    start_http_server(8000)
+    start_http_server(PORT_NUMBER)
     # Generate some requests.
     while True:
         time.sleep(10)

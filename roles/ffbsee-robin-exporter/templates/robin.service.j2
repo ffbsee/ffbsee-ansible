@@ -1,0 +1,14 @@
+[Unit]
+Description=Robin exporter
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/freifunk/robin/robin_prometheus.py -m {{ robin_tmp_file }}
+
+WorkingDirectory=/tmp
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

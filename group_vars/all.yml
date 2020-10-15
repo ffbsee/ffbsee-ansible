@@ -49,6 +49,9 @@ users:
     - alex@toolbox
     - alex@rsa-toolbox
 
+packages_extra:
+  - python3-pip
+
 # seme meta informations for the ssh_authorized_keys role
 home_sweet_home: false
 ssh_public_key_store: 'ssh_authorized_keys'
@@ -95,6 +98,7 @@ prometheus_targets:
     - gw04.ffbsee.net:9273
     - map.ffbsee.net:9273
     - map.ffbsee.net:9295
+    - map.ffbsee.net:8000
     #9273 is telegraf
     #9295 is freifunk exporter
 

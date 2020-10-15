@@ -51,3 +51,4 @@ presentation_webserver: false
 packages_extra:
   - git
   - git-lfs
+  - python3-pip

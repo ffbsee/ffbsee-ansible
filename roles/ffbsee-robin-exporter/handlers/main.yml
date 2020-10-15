@@ -1,0 +1,6 @@
+---
+- name: restart robin
+  become: yes
+  systemd:
+    name: robin
+    state: restarted

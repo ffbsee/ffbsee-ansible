@@ -1,0 +1,45 @@
+---
+- name: install python3-pip
+  become: yes
+  package:
+    name: python3-pip
+
+- name: install pip prometheus_client
+  become: yes
+  pip:
+    name:
+      - prometheus_client
+    executable: pip3
+
+- name: copy robin script
+  become: yes
+  copy:
+    src: files/robin_prometheus.py
+    dest: /opt/freifunk/robin/robin_prometheus.py
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart robin
+
+- name: create robin as a systemctl service
+  become: yes
+  template:
+    src: robin.service.j2
+    dest: /etc/systemd/system/robin.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart robin
+
+- name: start and enable robin service
+  become: yes
+  systemd:
+    name: robin
+    enabled: yes
+  notify: restart robin
+
+- name: configure alfred job to get data for robin
+  cron:
+    name: "read robin data"
+    minute: "*/5"
+    job: "alfred -r 69 -u /var/run/alfred/alfred.sock > {{ robin_tmp_file }}"

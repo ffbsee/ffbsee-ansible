@@ -43,30 +43,30 @@ class CustomCollector:
         collectors only function called collect. and it collects data
         """
 
-        downstream = GaugeMetricFamily('node_bw_down_bps', 'last tested download bandwidth in bits/s', labels=['nodeid'])
+        downstream = GaugeMetricFamily('node_bw_wan_bps', 'last tested wan downstream mb/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            downstream.add_metric([node['id']], node['downstream_bits'])
+            downstream.add_metric([node['id']], node['downstream_mbps_wan'])
         yield downstream
 
-        upstream = GaugeMetricFamily('node_bw_up_bps', 'last tested upload bandwidth in bits/s', labels=['nodeid'])
+        upstream = GaugeMetricFamily('node_bw_ff_bps', 'last tested ff downstream in mb/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            upstream.add_metric([node['id']], node['upstream_bits'])
+            upstream.add_metric([node['id']], node['downstream_mbps_ff'])
         yield upstream
 
-        ping = GaugeMetricFamily('node_ping', 'last tested ping in ms', labels=['nodeid'])
+        ping = GaugeMetricFamily('node_gw_ping_ms', 'last tested gateway ping in ms', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            ping.add_metric([node['id']], node['ping_ms'])
+            ping.add_metric([node['id']], node['gw_ping_ms'])
         yield ping
 
         # 'test_host': self.properties['test_host'],
         # 'tested_when': self.properties['tested_when'],
 
-        rx_counter = CounterMetricFamily('node_rx', 'received bytes', labels=['nodeid'])
+        rx_counter = CounterMetricFamily('node_rx_bytes', 'received bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
             rx_counter.add_metric([node['id']], int(node['rx_bytes']))
         yield rx_counter
 
-        tx_counter = CounterMetricFamily('node_tx', 'transmitted bytes', labels=['nodeid'])
+        tx_counter = CounterMetricFamily('node_tx_bytes', 'transmitted bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
             tx_counter.add_metric([node['id']], int(node['tx_bytes']))
         yield tx_counter
@@ -83,10 +83,9 @@ class AlfredParser:
         "type": "object",
         "additionalProperties": True,
         "properties": {
-            'downstream_bits': {"type": "number"},
-            'upstream_bits': {"type": "number"},
-            'ping_ms': {"type": "number"},
-            'test_host': {"type": "string", "maxLength": 50},
+            'downstream_mbps_wan': {"type": "number"},
+            'downstream_mbps_ff': {"type": "number"},
+            'gw_ping_ms': {"type": "number"},
             'tested_when': {"type": "string", "maxLength": 50},
             'rx_bytes': {"type": "number"},
             'tx_bytes': {"type": "number"},
@@ -141,9 +140,9 @@ class AlfredParser:
         jsonschema.validate(properties, AlfredParser.ALFRED_NODE_SCHEMA)
 
         # set some defaults for unspecified fields
-        properties.setdefault('downstream_bits', 0)
-        properties.setdefault('upstream_bits', 0)
-        properties.setdefault('ping_ms', 0)
+        properties.setdefault('downstream_mbits_wan', 0)
+        properties.setdefault('downstream_mbits_ff', 0)
+        properties.setdefault('gw_ping_ms', 0)
         properties.setdefault('rx_bytes', 0)
         properties.setdefault('tx_bytes', 0)
 
@@ -211,10 +210,9 @@ class Node:
                 'online': self.online,
             },
 
-            'downstream_bits': self.properties['downstream_bits'],
-            'upstream_bits': self.properties['upstream_bits'],
-            'ping_ms': self.properties['ping_ms'],
-            'test_host': self.properties['test_host'],
+            'downstream_mbits_wan': self.properties['downstream_mbits_wan'],
+            'downstream_mbits_ff': self.properties['downstream_mbits_ff'],
+            'gw_ping_ms': self.properties['gw_ping_ms'],
             'tested_when': self.properties['tested_when'],
             'rx_bytes': self.properties['rx_bytes'],
             'tx_bytes': self.properties['tx_bytes'],

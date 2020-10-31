@@ -8,7 +8,7 @@
   gather_facts: no
 
 - name: Update packages and users on all nodes
-  hosts: map.ffbsee.net 
+  hosts: freifunk
   tags: 
   - base
   - users
@@ -31,7 +31,7 @@
     - home_environment
 
 - name: Update packages and users on all nodes
-  hosts: map.ffbsee.net
+  hosts: freifunk
   tags: 
   - home_environment
   - motd
@@ -40,16 +40,22 @@
     - motd
     - install-bat
 
-- name: Configure basic network setup for map.ffbsee.net
-  hosts: map.ffbsee.net
+# Note: this is NOT done for gw04 atm
+- name: Configure basic network setup for gw
+  hosts:
+    - gw01.ffbsee.net
+    - gw02.ffbsee.net
+    - gw03.ffbsee.net
+#    - gw04.ffbsee.net
+    - map.ffbsee.net
   tags:
   - network
   - interfaces
   roles:
     - network
   
-- name: Configure freifunk network setup for map.ffbsee.net
-  hosts: map.ffbsee.net
+- name: Configure freifunk network setup for gw
+  hosts: freifunk
   tags:
   - backbone
   - fastd
@@ -63,8 +69,8 @@
     - fastd-install
     - fastd-config
 
-- name: Configure network routing for map.ffbsee.net
-  hosts: map.ffbsee.net
+- name: Configure network routing for gw
+  hosts: freifunk
   tags: 
   - routing
   - iptables
@@ -72,11 +78,21 @@
   - firewall
   roles:
    - firewall
-   - bird
 
-- name: Configure network routing for map.ffbsee.net
-  hosts: map.ffbsee.net
-  tags:
+# Note: this is only done for gw02
+- name: Configure ovh dns script for gw02.ffbsee.net
+  hosts: gw02.ffbsee.net
+  tags: ovh
+  roles:
+    - ovh-dns-update
+
+- name: Configure network routing for gw
+  hosts:
+    - gw01.ffbsee.net
+    - gw02.ffbsee.net
+    - gw03.ffbsee.net
+    - gw04.ffbsee.net
+  tags: 
   - routing
   - dhcp
   - dhcpd
@@ -86,19 +102,55 @@
   - isc-dhcp-relay
   - dhcp-relay
   roles:
-  - dhcpd
+   #- dhcpd
+   - dhcp-relay
 
-- name: Configure web setup for map.ffbsee.net
+- name: Configure network routing for map
+  hosts:
+    - map.ffbsee.net
+  tags: 
+  - routing
+  - dhcp
+  - dhcpd
+  - isc-dhcp
+  - isc
+  - isc-dhcp-server
+  - isc-dhcp-relay
+  - dhcp-relay
+  roles:
+   - dhcpd
+
+# Note: this is only done on gws
+- name: Configure network routing for gw
+  hosts:
+    - gw01.ffbsee.net
+    - gw02.ffbsee.net
+    - gw03.ffbsee.net
+    - gw04.ffbsee.net
+  tags: 
+  - dns
+  - unbound
+  - role-unbound
+  - bind
+  roles:
+   - unbound
+   - unbound_freifunk_tlds
+   - bird
+   - freifunk-icvpn
+   - tinc
+
+# Note: this is only done on the map server
+- name: Configure web setup for gw
   hosts: map.ffbsee.net
   tags: web
   roles:
-   - nginx
-   - gateway-page
+    - nginx
+    - gateway-page
 #    - freifunk-karte-json
 #    - FFNodeList
 
 - name: install telegraf
-  hosts: map.ffbsee.net
+  hosts: all
   become: yes
   tags:
     - telegraf
@@ -146,9 +198,9 @@
         src: "files/grafana_dashboards/{{ item }}"
         dest: "{{ grafana_dashboard_dir }}/{{ item }}"
         mode: '0644'
-  loop:
-    - freifunk_overview.json
-    - freifunk_router_detail.json
+      loop:
+        - freifunk_overview.json
+        - freifunk_router_detail.json
 
 - name: install golang
   hosts: map.ffbsee.net

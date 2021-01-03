@@ -209,6 +209,12 @@ class Node:
         define/load the nodelist and the properties each single node has
         """
 
+        if 'downstream_mbps_wan' not in self.properties:
+            self.properties['downstream_mbps_wan'] = 0
+
+        if 'downstream_mbps_ff' not in self.properties:
+            self.properties['downstream_mbps_ff'] = 0
+
         obj = {
             'id': re.sub('[:]', '', self.mac),
             'status': {

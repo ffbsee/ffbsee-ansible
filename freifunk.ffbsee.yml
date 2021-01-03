@@ -248,3 +248,10 @@
   vars:
     freifunk_exporter_path: /opt/freifunk-exporter
     #defaults to port: 9295
+
+- name: install re4jh/robin-exporter
+  hosts: map.ffbsee.net
+  tags:
+    - robin
+  roles:
+    - ffbsee-robin-exporter

@@ -45,17 +45,20 @@ class CustomCollector:
 
         downstream = GaugeMetricFamily('node_bw_wan_bps', 'last tested wan downstream mb/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            downstream.add_metric([node['id']], node['downstream_mbps_wan'])
+            if 'downstream_mbps_wan' in node:
+                downstream.add_metric([node['id']], node['downstream_mbps_wan'])
         yield downstream
 
         upstream = GaugeMetricFamily('node_bw_ff_bps', 'last tested ff downstream in mb/s', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            upstream.add_metric([node['id']], node['downstream_mbps_ff'])
+            if 'downstream_mbps_ff' in node:
+                upstream.add_metric([node['id']], node['downstream_mbps_ff'])
         yield upstream
 
         ping = GaugeMetricFamily('node_gw_ping_ms', 'last tested gateway ping in ms', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            ping.add_metric([node['id']], node['gw_ping_ms'])
+            if 'gw_ping_ms' in node:
+                ping.add_metric([node['id']], node['gw_ping_ms'])
         yield ping
 
         # 'test_host': self.properties['test_host'],
@@ -63,12 +66,14 @@ class CustomCollector:
 
         rx_counter = CounterMetricFamily('node_rx_bytes', 'received bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            rx_counter.add_metric([node['id']], int(node['rx_bytes']))
+            if 'rx_bytes' in node:            
+                rx_counter.add_metric([node['id']], int(node['rx_bytes']))
         yield rx_counter
 
         tx_counter = CounterMetricFamily('node_tx_bytes', 'transmitted bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            tx_counter.add_metric([node['id']], int(node['tx_bytes']))
+            if 'tx_bytes' in node:            
+                tx_counter.add_metric([node['id']], int(node['tx_bytes']))
         yield tx_counter
 
 

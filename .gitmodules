@@ -52,3 +52,6 @@
 [submodule "roles/golang"]
 	path = roles/golang
 	url = https://github.com/gantsign/ansible-role-golang.git
+[submodule "roles/python3-default"]
+	path = roles/python3-default
+	url = https://github.com/DEvil0000/ansible-role-python3-default.git

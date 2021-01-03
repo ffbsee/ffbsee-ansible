@@ -212,6 +212,8 @@
       loop:
         - freifunk_overview.json
         - freifunk_router_detail.json
+        - freifunk_robin_detail.json
+        - freifunk_robin_overview.json
 
 - name: install golang
   hosts: map.ffbsee.net

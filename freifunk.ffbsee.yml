@@ -30,6 +30,17 @@
     - sshd
     - home_environment
 
+- name: python3 as default
+  hosts: all
+  tags:
+    - python3
+    - python-is-python3
+    - python3-is-python
+    - python-default
+    - python3-default
+  roles:
+    - python3-default
+
 - name: Update packages and users on all nodes
   hosts: freifunk
   tags: 

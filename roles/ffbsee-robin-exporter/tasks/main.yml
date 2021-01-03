@@ -11,6 +11,12 @@
       - prometheus_client
     executable: pip3
 
+- name: mkdir for robin
+  become: yes
+  file:
+    path: /opt/freifunk/robin
+    state: directory
+
 - name: copy robin script
   become: yes
   copy:

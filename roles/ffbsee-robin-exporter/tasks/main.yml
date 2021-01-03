@@ -24,7 +24,7 @@
     dest: /opt/freifunk/robin/robin_prometheus.py
     owner: root
     group: root
-    mode: '0644'
+    mode: '0755'
   notify: restart robin
 
 - name: create robin as a systemctl service

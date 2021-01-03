@@ -9,6 +9,6 @@
   register: motdsh
 
 - name: Set fancy motd
-  script: 'files/motd.sh {{ hostname }}'
+  command: '/etc/motd.sh {{ hostname }}'
   when: motdsh.changed
 

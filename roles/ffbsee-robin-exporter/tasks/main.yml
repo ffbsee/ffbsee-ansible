@@ -48,4 +48,4 @@
   cron:
     name: "read robin data"
     minute: "*/5"
-    job: "alfred -r 69 -u /var/run/alfred/alfred.sock > {{ robin_tmp_file }}"
+    job: "/usr/local/sbin/alfred -r 69 -u /var/run/alfred/alfred.sock > {{ robin_tmp_file }}"

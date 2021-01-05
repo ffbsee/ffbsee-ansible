@@ -66,13 +66,13 @@ class CustomCollector:
 
         rx_counter = CounterMetricFamily('node_rx_bytes', 'received bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            if 'rx_bytes' in node:            
+            if 'rx_bytes' in node:
                 rx_counter.add_metric([node['id']], int(node['rx_bytes']))
         yield rx_counter
 
         tx_counter = CounterMetricFamily('node_tx_bytes', 'transmitted bytes', labels=['nodeid'])
         for node in GLOBAL_NODES['nodes']:
-            if 'tx_bytes' in node:            
+            if 'tx_bytes' in node:
                 tx_counter.add_metric([node['id']], int(node['tx_bytes']))
         yield tx_counter
 

@@ -147,7 +147,6 @@ class AlfredParser:
         # set some defaults for unspecified fields
         properties.setdefault('downstream_mbps_wan', 0)
         properties.setdefault('downstream_mbps_ff', 0)
-        properties.setdefault('gw_ping_ms', 0)
         properties.setdefault('rx_bytes', 0)
         properties.setdefault('tx_bytes', 0)
 
@@ -223,11 +222,13 @@ class Node:
 
             'downstream_mbps_wan': self.properties['downstream_mbps_wan'],
             'downstream_mbps_ff': self.properties['downstream_mbps_ff'],
-            'gw_ping_ms': self.properties['gw_ping_ms'],
             'tested_when': self.properties['tested_when'],
             'rx_bytes': self.properties['rx_bytes'],
             'tx_bytes': self.properties['tx_bytes'],
         }
+
+        if 'gw_ping_ms' in self.properties:
+            obj['gw_ping_ms'] = self.properties['gw_ping_ms']
 
         if self.firstseen:
             obj['firstseen'] = self.firstseen.isoformat()

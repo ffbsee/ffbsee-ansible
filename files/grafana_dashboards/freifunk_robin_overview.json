@@ -95,7 +95,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Bandwidth top 5 and avg",
+      "title": "Downstream-Bandwidth (Top 5 and avg)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -111,7 +111,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "Mbits",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -304,7 +304,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Ping",
+      "title": "Gateway-Ping",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -320,7 +320,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "ms",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -357,5 +357,5 @@
   "timezone": "",
   "title": "robin overview",
   "uid": "68_NXI-Gz",
-  "version": 2
+  "version": 3
 }

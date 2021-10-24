@@ -4,12 +4,11 @@
 
 - name: Prepare nginx
   apt:
-    # name: '{{ item }}'
+    name: '{{ item }}'
     state: 'latest'
     update_cache: yes
     cache_valid_time: 86400
-  vars:
-    packages:
+  loop:
     - python-simplejson
     - nginx
 

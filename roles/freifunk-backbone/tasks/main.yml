@@ -1,4 +1,7 @@
 ---
+- name: get kernel header package version
+  set_fact:
+    kernel_header_version: "{{ ('-cloud-' in ansible_kernel or '-generic' in ansible_kernel) | ternary(ansible_kernel,dpkg_arch.stdout) }}"
 
 - name: Install dependencies for batman-adv batctl and alfred
   apt:
@@ -12,7 +15,7 @@
     - git
     - build-essential
     - pkg-config
-    - linux-headers-amd64
+    - "linux-headers-{{ kernel_header_version }}"
     - libnl-3-dev
     - libnl-genl-3-dev
     - libjson-c-dev

@@ -49,6 +49,14 @@ users:
     - alex@toolbox
     - alex@rsa-toolbox
 
+# fail2ban
+fail2ban_maxretry: 10
+fail2ban_bantime: "{{ (60 * 10) }}"
+fail2ban_banaction: iptables-multiport
+fail2ban_jails:
+  - name: '{{ fail2ban_ssh_jail_name }}'
+    enabled: 'true'
+
 packages_extra:
   - python3-pip
 

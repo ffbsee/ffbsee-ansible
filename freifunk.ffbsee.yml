@@ -64,7 +64,14 @@
   - interfaces
   roles:
     - network
-  
+
+- name: fail2ban
+  hosts: all
+  tags:
+    - fail2ban
+  roles:
+    - name: fail2ban
+
 - name: Configure freifunk network setup for gw
   hosts: freifunk
   tags:

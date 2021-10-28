@@ -55,3 +55,7 @@
 [submodule "roles/python3-default"]
 	path = roles/python3-default
 	url = https://github.com/DEvil0000/ansible-role-python3-default.git
+[submodule "roles/fail2ban"]
+	path = roles/fail2ban
+	url = https://github.com/wingcon/ansible-fail2ban.git
+        branch = wo-debops-modules

@@ -133,7 +133,7 @@ if [ $run_mesh = true ]; then
         ip addr add "$mesh_ipv4_addr/20" dev bat0 2> /dev/null && echo "(I) Add IPv4-Address $mesh_ipv4_addr to bat0"
             # Add IPv6 address the same way the routers do.
             # This makes the address consistent with the one used on the routers status page.
-            macaddr="$(cat /sys/kernel/debug/batman_adv/bat0/originators | awk -F'[/ ]' '{print $7; exit;}')"
+            macaddr="$(batctl o | awk -F'[/ ]' '{print $7; exit;}')"
             euiaddr="$(ula_addr $ff_prefix $macaddr)"
             echo "(I) Set EUI64-Address: $euiaddr"
             ip a a "$euiaddr/64" dev bat0
@@ -212,7 +212,7 @@ if [ $run_mesh = true ]; then
         IFS="
 "
         nd=0
-        for entry in $(cat /sys/kernel/debug/batman_adv/bat0/originators |  tr '\t/[]()' ' ' |  awk '{ if($1==$4) print($1, $3, $5) }'); do
+        for entry in $(batctl o |  sed "s/\*//g" |  tr '\t/[]()' ' ' |  awk '{ if($1==$4) print($1, $3, $5) }'); do
             [ $nd -eq 0 ] && nd=1 || echo -n ", "
             IFS=" "
             printLink $entry

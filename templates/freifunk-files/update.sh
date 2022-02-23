@@ -234,7 +234,9 @@ if [ $run_gateway = true ]; then
             fi
         fi
         if [ $dhcp_relay = true ]; then
+	    if ! is_running "dhcrelay"; then
                 systemctl restart isc-dhcp-relay.service
+	    fi
         else
                 if  ! is_running "dhcpd"; then
                         echo "(I) Start DHCP-Server."

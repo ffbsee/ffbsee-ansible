@@ -50,6 +50,11 @@
     - home_environment
     - motd
     - install-bat
+  tasks:
+    - name: Prevent batman package auto upgrade
+      dpkg_selections:
+        name: bat
+        selection: hold
 
 # Note: this is NOT done for gw04 atm
 - name: Configure basic network setup for gw
@@ -185,6 +190,7 @@
         grafana_security:
           admin_user: admin
           admin_password: "{{ grafana_admin_password }}"
+        #grafana_admin_password: ""
   tasks:
     - name: create dashboard dir
       file:

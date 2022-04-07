@@ -53,3 +53,5 @@ packages_extra:
   - git-lfs
   - ifupdown
   - python3-pip
+
+number_of_cores: 1

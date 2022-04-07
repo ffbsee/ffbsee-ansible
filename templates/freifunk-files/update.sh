@@ -6,7 +6,7 @@
 #   and all systems are running
 
 # Server address
-mac_addr="{{ mac_address }}"
+mac_addr="{{ bat0_mac_address }}"
 mesh_ipv6_addr="{{ mesh_ipv6_address }}"
 mesh_ipv6_extra_addr="{{ mesh_ipv6_extra_addr }}"
 ff_prefix="{{ ipv6_prefix }}:"

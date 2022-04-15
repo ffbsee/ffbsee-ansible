@@ -75,6 +75,14 @@ is_running() {
     pidof "$1" > /dev/null || return $?
 }
 
+is_vx_running() {
+    if [ ! -f "/sys/class/net/$1/operstate" ];then
+       echo "$1 not up yet"
+       return 1
+    else
+       cat /sys/class/net/$1/operstate | grep -q -v UNKNOWN > /dev/null || return $?
+    fi
+}
 
 if [ $run_mesh = true ]; then
 
@@ -87,10 +95,39 @@ if [ $run_mesh = true ]; then
     echo 1 > /proc/sys/net/ipv4/conf/default/forwarding
     echo 1 > /proc/sys/net/ipv4/conf/all/forwarding
     echo 1 > /proc/sys/net/ipv4/ip_forward
+    
+    # force BATMAN V routing algo _before_ batctl sets up any interface
+    batctl ra BATMAN_V
 
+    # Check for vx-backbone and start the connections if needed
+    if ! is_vx_running "vx-backbone1"; then
+        echo "Setting up vx-backbone1 to Gateway01"
+        /sbin/ip link add vx-backbone1 type vxlan remote fd42:dead:beef:4::1 id 25 dstport 4225
+        /sbin/ip link set up dev vx-backbone1
+        /sbin/ip addr flush dev vx-backbone1
+        /sbin/ip link set mtu 1280 dev vx-backbone1
+        /usr/local/sbin/batctl if add vx-backbone1
+    fi
+    if ! is_vx_running "vx-backbone4"; then
+        echo "Setting up vx-backbone4 to Gateway04"
+        /sbin/ip link add vx-backbone4 type vxlan remote fd42:dead:beef:4::4 id 27 dstport 4225
+        /sbin/ip link set up dev vx-backbone4
+        /sbin/ip addr flush dev vx-backbone4
+        /sbin/ip link set mtu 1280 dev vx-backbone4
+        /usr/local/sbin/batctl if add vx-backbone4
+    fi
+    if ! is_vx_running "vxbackbonemeta"; then
+        echo "Setting up vxbackbonemeta to meta Server"
+        /sbin/ip link add vxbackbonemeta type vxlan remote fd42:dead:beef:4::5 id 29 dstport 4225
+        /sbin/ip link set up dev vxbackbonemeta
+        /sbin/ip addr flush dev vxbackbonemeta
+        /sbin/ip link set mtu 1280 dev vxbackbonemeta
+        /usr/local/sbin/batctl if add vxbackbonemeta
+    fi
+
+    # Fastd nodes setup
     if ! is_running "fastd"; then
         echo "(I) Start fastd."
-	fastd --config /etc/fastd/fastd_backbone.conf --daemon
 	FASTDNODESFILES=/etc/fastd/fastd_nodes*
 	for f in $FASTDNODESFILES
 	do
@@ -99,17 +136,6 @@ if [ $run_mesh = true ]; then
 	sleep 1
     fi
 
-    if [ $(batctl if | grep fastd_backbone -c) = 0 ]; then
-        echo "(I) Add fastd backbone interface to batman-adv."
-        ip link set fastd_backbone up
-        ip addr flush dev fastd_backbone
-
-	# force BATMAN V routing algo _before_ batctl sets up the interface
-	echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo
-
-	batctl if add fastd_backbone
-    fi
-    
     for i in $(seq 0 {{ number_of_cores|int -1 }});
      do
     	if [ $(batctl if | grep fastd_nodes0$i -c) = 0 ]; then

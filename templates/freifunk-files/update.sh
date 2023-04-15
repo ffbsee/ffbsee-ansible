@@ -107,6 +107,7 @@ if [ $run_mesh = true ]; then
         /sbin/ip addr flush dev vx-backbone1
         /sbin/ip link set mtu 1280 dev vx-backbone1
         /usr/local/sbin/batctl if add vx-backbone1
+	/usr/local/sbin/batctl hardif vx-backbone1 throughput_override 10000mbit
     fi
     if ! is_vx_running "vx-backbone4"; then
         echo "Setting up vx-backbone4 to Gateway04"
@@ -115,6 +116,7 @@ if [ $run_mesh = true ]; then
         /sbin/ip addr flush dev vx-backbone4
         /sbin/ip link set mtu 1280 dev vx-backbone4
         /usr/local/sbin/batctl if add vx-backbone4
+	/usr/local/sbin/batctl hardif vx-backbone4 throughput_override 10000mbit
     fi
     if ! is_vx_running "vxbackbonemeta"; then
         echo "Setting up vxbackbonemeta to meta Server"
@@ -123,6 +125,7 @@ if [ $run_mesh = true ]; then
         /sbin/ip addr flush dev vxbackbonemeta
         /sbin/ip link set mtu 1280 dev vxbackbonemeta
         /usr/local/sbin/batctl if add vxbackbonemeta
+	/usr/local/sbin/batctl hardif vx-backbone4 throughput_override 10000mbit
     fi
 
     # Fastd nodes setup

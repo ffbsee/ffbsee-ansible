@@ -4,6 +4,7 @@ freifunk_dhcp_relay: true
 
 # meta information about this gateway:
 hostname: 'gw01.ffbsee.net'
+gwnumber: '01'
 
 # fastd configuration:
 ## list all backbone gateways

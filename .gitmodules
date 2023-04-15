@@ -59,3 +59,6 @@
 	path = roles/fail2ban
 	url = https://github.com/wingcon/ansible-fail2ban.git
         branch = wo-debops-modules
+[submodule "roles/wireguard"]
+	path = roles/wireguard
+	url = https://github.com/githubixx/ansible-role-wireguard

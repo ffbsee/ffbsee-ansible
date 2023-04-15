@@ -99,6 +99,12 @@ if [ $run_mesh = true ]; then
     # force BATMAN V routing algo _before_ batctl sets up any interface
     batctl ra BATMAN_V
 
+    # Check if wireguard is running
+    if ! is_running "wg-crypt-wg-bac"; then
+                echo "(I) Start wireguard."
+                systemctl start wg-quick@wg-backbone
+    fi
+
     # Check for vx-backbone and start the connections if needed
     {% if vxlantogw01 == "1" %}
     if ! is_vx_running "vx-backbone1"; then

@@ -62,3 +62,9 @@
 [submodule "roles/wireguard"]
 	path = roles/wireguard
 	url = https://github.com/githubixx/ansible-role-wireguard
+[submodule "roles/batman-install"]
+	path = roles/batman-install
+	url = https://github.com/DEvil0000/ansible-role-batman-install.git
+[submodule "roles/alfred-install"]
+	path = roles/alfred-install
+	url = https://github.com/DEvil0000/ansible-role-alfred-install.git

@@ -37,10 +37,15 @@ fastd_vpn_backbone_configs:
   - gw03
   - gw04
 
+vxlantogw01: '1'
+vxlantogw03: '1'
+vxlantogw04: '0'
+vxlantometa: '1'
+
 ipv6_uplink_announcen: 'false'
 radv_AdvDefaultPreference: 'medium'
 
-debian: '9'
+debian: '11'
 freifunk_karte_api: 'false'
 
 nodelist: 'true'

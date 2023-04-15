@@ -42,10 +42,15 @@ fastd_vpn_backbone_configs:
   
 fastd_peer_limit: ''
 
+vxlantogw01: '1'
+vxlantogw03: '1'
+vxlantogw04: '0'
+vxlantometa: '1'  
+
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'
 
-debian: '10'
+debian: '11'
 number_of_cores: '8'
 freifunk_karte_api: 'false'
 

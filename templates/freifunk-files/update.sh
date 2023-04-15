@@ -100,6 +100,7 @@ if [ $run_mesh = true ]; then
     batctl ra BATMAN_V
 
     # Check for vx-backbone and start the connections if needed
+    {% if vxlantogw01 == "1" %}
     if ! is_vx_running "vx-backbone1"; then
         echo "Setting up vx-backbone1 to Gateway01"
         /sbin/ip link add vx-backbone1 type vxlan remote fd42:dead:beef:4::1 id 25 dstport 4225
@@ -109,6 +110,20 @@ if [ $run_mesh = true ]; then
         /usr/local/sbin/batctl if add vx-backbone1
 	/usr/local/sbin/batctl hardif vx-backbone1 throughput_override 10000mbit
     fi
+    {% endif %}
+    {% if vxlantogw03 == "1" %}
+    if ! is_vx_running "vx-backbone3"; then
+        echo "Setting up vx-backbone3"
+        /sbin/ip link add vx-backbone3 type vxlan remote fd42:dead:beef:4::3 id 27 dstport 4225
+        /sbin/ip link set dev vx-backbone3 address 12:45:60:98:ed:94
+        /sbin/ip link set up dev vx-backbone3
+        /sbin/ip addr flush dev vx-backbone3
+        /sbin/ip link set mtu 1280 dev vx-backbone3
+        /usr/local/sbin/batctl if add vx-backbone3
+        /usr/local/sbin/batctl hardif vx-backbone3 throughput_override 10000mbit
+    fi
+    {% endif %}
+    {% if vxlantogw04 == "1" %}
     if ! is_vx_running "vx-backbone4"; then
         echo "Setting up vx-backbone4 to Gateway04"
         /sbin/ip link add vx-backbone4 type vxlan remote fd42:dead:beef:4::4 id 27 dstport 4225
@@ -118,6 +133,8 @@ if [ $run_mesh = true ]; then
         /usr/local/sbin/batctl if add vx-backbone4
 	/usr/local/sbin/batctl hardif vx-backbone4 throughput_override 10000mbit
     fi
+    {% endif %}
+    {% if vxlantometa == "1" %}
     if ! is_vx_running "vxbackbonemeta"; then
         echo "Setting up vxbackbonemeta to meta Server"
         /sbin/ip link add vxbackbonemeta type vxlan remote fd42:dead:beef:4::5 id 29 dstport 4225
@@ -127,7 +144,7 @@ if [ $run_mesh = true ]; then
         /usr/local/sbin/batctl if add vxbackbonemeta
 	/usr/local/sbin/batctl hardif vx-backbonemeta throughput_override 10000mbit
     fi
-
+    {% endif %}
     # Fastd nodes setup
     if ! is_running "fastd"; then
         echo "(I) Start fastd."

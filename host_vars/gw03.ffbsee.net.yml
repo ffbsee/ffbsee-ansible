@@ -38,10 +38,15 @@ fastd_vpn_backbone_configs:
   - map
   - mate
 
+vxlantogw01: '1'
+vxlantogw03: '0'
+vxlantogw04: '1'
+vxlantometa: '1'
+
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'
 
-debian: '10'
+debian: '11'
 number_of_cores: '8'
 freifunk_karte_api: 'true'
 

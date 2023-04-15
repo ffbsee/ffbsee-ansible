@@ -53,9 +53,14 @@ mesh_ipv6_address: '{{ ipv6_address }}'
 fastd_secret_key: ''
 fastd_peer_limit: '' # should we limit the fastd peer limits
 
+vxlantogw01: '0'
+vxlantogw03: '1'
+vxlantogw04: '1'
+vxlantometa: '1'
+
 # some rules for the iptables/firewall
 # should we only use the wan interface on some rules? (recomendet)
 block_rfc1918_interface: "{{ wan_base_interface }}"
 
-debian: '10'
+debian: '11'
 number_of_cores: '8'

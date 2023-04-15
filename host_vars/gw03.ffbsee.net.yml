@@ -2,6 +2,7 @@
 hostname: 'gw03.ffbsee.net'
 
 ipv4_mesh_address: '10.15.224.3'
+bat0_mac_address: '26:47:2f:02:f1:45'
 
 ipv6_suffix: ':3'
 ipv6_radv_suffix: ':3'

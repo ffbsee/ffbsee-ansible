@@ -2,6 +2,7 @@
 hostname: 'map.ffbsee.net'
 
 ipv4_mesh_address: '10.15.224.6'
+bat0_mac_address: '86:00:00:2c:de:52'
 
 ipv6_suffix: ':6'
 ipv6_radv_suffix: ':1'

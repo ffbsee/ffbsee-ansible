@@ -31,6 +31,7 @@ ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
 # batman - used addresses
+bat0_mac_address: '82:77:f7:59:2f:f4'
 ipv4_mesh_address: '10.15.224.1' 
 ipv6_suffix: ':1'
 wan_base_interface: 'enp2s0'

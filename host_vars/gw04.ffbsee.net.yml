@@ -1,5 +1,6 @@
 ---
 hostname: 'gw04.ffbsee.net'
+gwnumber: '04'
 
 ipv4_mesh_address: '10.15.224.4'
 bat0_mac_address: '9a:93:7e:b2:ad:75'

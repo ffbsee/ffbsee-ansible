@@ -1,6 +1,7 @@
 ---
 
 hostname: 'meta.ffbsee.net'
+gwnumber: '05'
 
 ipv4_mesh_address: '10.11.160.201'
 

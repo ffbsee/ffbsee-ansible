@@ -110,6 +110,7 @@ if [ $run_mesh = true ]; then
     if ! is_vx_running "vx-backbone1"; then
         echo "Setting up vx-backbone1 to Gateway01"
         /sbin/ip link add vx-backbone1 type vxlan remote fd42:dead:beef:4::1 id 25 dstport 4225
+	/sbin/ip link set dev vx-backbone1 address b5:ee:00:00:01:{{gwnumber}}
         /sbin/ip link set up dev vx-backbone1
         /sbin/ip addr flush dev vx-backbone1
         /sbin/ip link set mtu 1280 dev vx-backbone1
@@ -121,7 +122,7 @@ if [ $run_mesh = true ]; then
     if ! is_vx_running "vx-backbone3"; then
         echo "Setting up vx-backbone3"
         /sbin/ip link add vx-backbone3 type vxlan remote fd42:dead:beef:4::3 id 27 dstport 4225
-        /sbin/ip link set dev vx-backbone3 address 12:45:60:98:ed:94
+        /sbin/ip link set dev vx-backbone3 address b5:ee:00:00:03:{{gwnumber}}
         /sbin/ip link set up dev vx-backbone3
         /sbin/ip addr flush dev vx-backbone3
         /sbin/ip link set mtu 1280 dev vx-backbone3
@@ -133,6 +134,7 @@ if [ $run_mesh = true ]; then
     if ! is_vx_running "vx-backbone4"; then
         echo "Setting up vx-backbone4 to Gateway04"
         /sbin/ip link add vx-backbone4 type vxlan remote fd42:dead:beef:4::4 id 27 dstport 4225
+	/sbin/ip link set dev vx-backbone4 address b5:ee:00:00:04:{{gwnumber}}
         /sbin/ip link set up dev vx-backbone4
         /sbin/ip addr flush dev vx-backbone4
         /sbin/ip link set mtu 1280 dev vx-backbone4
@@ -144,6 +146,7 @@ if [ $run_mesh = true ]; then
     if ! is_vx_running "vxbackbonemeta"; then
         echo "Setting up vxbackbonemeta to meta Server"
         /sbin/ip link add vxbackbonemeta type vxlan remote fd42:dead:beef:4::5 id 29 dstport 4225
+	/sbin/ip link set dev vx-backbonemeta address b5:ee:00:00:05:{{gwnumber}}
         /sbin/ip link set up dev vxbackbonemeta
         /sbin/ip addr flush dev vxbackbonemeta
         /sbin/ip link set mtu 1280 dev vxbackbonemeta

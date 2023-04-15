@@ -125,7 +125,7 @@ if [ $run_mesh = true ]; then
         /sbin/ip addr flush dev vxbackbonemeta
         /sbin/ip link set mtu 1280 dev vxbackbonemeta
         /usr/local/sbin/batctl if add vxbackbonemeta
-	/usr/local/sbin/batctl hardif vx-backbone4 throughput_override 10000mbit
+	/usr/local/sbin/batctl hardif vx-backbonemeta throughput_override 10000mbit
     fi
 
     # Fastd nodes setup

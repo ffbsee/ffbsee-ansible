@@ -1,4 +1,10 @@
 ---
+# auto load vault vars
+- name: load vault vars
+  hosts: all
+  tasks:
+    - include_vars: group_vars/all_vault.yml
+
 - name: check if ansible is not to old
   hosts: localhost
   tags:

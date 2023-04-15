@@ -197,7 +197,6 @@
         grafana_security:
           admin_user: admin
           admin_password: "{{ grafana_admin_password }}"
-        #grafana_admin_password: ""
   tasks:
     - name: create dashboard dir
       file:

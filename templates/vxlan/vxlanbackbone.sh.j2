@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Setting variables with our gateway name, mac and which hosts to connect to
+WgIp={{ wireguardipaddress }}
+VxlanMac={{ vxlanmac }}
+vxlanEndpoints=({{ vxlanendpoints }})
+vxlanifname={{ vxlanbackbonename }}
+
+# Sourcing the functions to be used below and in other scripts
+source /opt/freifunk/vxlanfunctions.sh
+
+# Starting the vxlan-backbone interface if not up already
+if ! is_vx_running "$vxlanifname"; then
+   /sbin/ip -6 link add $vxlanifname type vxlan id 25 dstport 4225 dev wg-backbone
+   /sbin/ip -6 link set dev $vxlanifname address $VxlanMac
+   /sbin/ip -6 link set up dev $vxlanifname
+
+   # interface will be added to bat0 so it musn't have any IPs:
+   /sbin/ip -6 addr flush dev $vxlanifname
+
+   # rather small MTU needed because of need to exchange packages with legacy fastd-nodes:
+   /sbin/ip -6 link set mtu 1240 dev $vxlanifname
+
+   # Add this vxlan if to batman-adv interface:
+   /usr/local/sbin/batctl meshif bat0 if add $vxlanifname
+
+   # Setting throughput_override with very high value because it is the backbone:
+   /usr/local/sbin/batctl hardif $vxlanifname throughput_override 10000mbit
+
+   for str in ${vxlanEndpoints[@]}; do
+
+      if [[ "$WgIp" == $str  ]]
+      then
+         echo "Not adding own address"
+      else
+
+         # The following adds the remote IP(s) as in (other vxlanbackbone peers
+         /sbin/bridge fdb append to 00:00:00:00:00:00 dst $str dev $vxlanifname
+      fi
+   done
+   #Finally set link up
+   /sbin/ip -6 link set up $vxlanifname
+else
+   if ! is_vx_link_up "$vxlanifname"; then
+   echo "link is down, setting it to up"
+   ip link set up dev $vxlanifname
+   else
+      echo "$vxlanifname link already up"
+   fi
+   if ! is_vx_added_to_bat "$vxlanifname"; then
+   echo "not added to bat0 yet, adding it"
+   /usr/local/sbin/batctl if add $vxlanifname
+   else
+      echo "$vxlanifname already added to bat0"
+   fi
+fi

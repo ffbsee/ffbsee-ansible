@@ -97,6 +97,7 @@
     - freifunk-update-script
     - fastd-install
     - fastd-config
+    - vxlanbackbone
 
 - name: Configure network routing for gw
   hosts: freifunk

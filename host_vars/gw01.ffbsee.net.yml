@@ -41,6 +41,12 @@ wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_i
 wan_ipv4_ip: '144.76.175.21'
 wan_ipv6_network: '2a01:4f8:200:5308::/64'
 
+# variables for wireguard and vxlan backbone
+wireguardipaddress: 'fd42:dead:beef:4::1'
+vxlanmac: '3e:67:8b:1e:8b:ef'
+vxlanendpoints: '\"fd42:dead:beef:4::3\" \"fd42:dead:beef:4::4\" \"fd42:dead:beef:4::5\" \"fd42:dead:beef:4::6\"'
+vxlanbackbonename: 'vxbackbone'
+
 # IPv6 address for nodes autoupdater
 mesh_ipv6_extra_addr: ''
 

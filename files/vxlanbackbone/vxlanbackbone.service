@@ -1,0 +1,14 @@
+[Unit]
+# see man systemd.unit
+Description=Starting VXLAN Interfaces
+After=wg-quick@wg-backbone.service
+
+[Service]
+# see man systemd.service, systemd.exec
+Type=oneshot
+ExecStart=/opt/freifunk/vxlan.sh
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

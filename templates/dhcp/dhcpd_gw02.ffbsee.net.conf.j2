@@ -19,11 +19,11 @@ class "ubnt" {
 
 subnet 10.15.224.0 netmask 255.255.240.0 {
   pool {
-        range 10.15.225.1 10.15.239.126;
+        range 10.15.239.128 10.15.239.253;
        }
 
-  option domain-name-servers 10.15.224.1, 10.15.224.2; #, 10.15.224.3;
-  option routers 10.15.224.1;
+  option domain-name-servers 10.15.224.2, 10.15.224.1;
+  option routers 10.15.224.2;
   option ubnt.unifi-address 10.15.224.5;
 
 

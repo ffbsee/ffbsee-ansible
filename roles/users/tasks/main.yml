@@ -1,0 +1,21 @@
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    groups: sudo
+    state: present
+  loop: "{{ users }}"
+
+- name: Install authorized keys
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+  loop: "{{ users | subelements('ssh_keys') }}"
+
+- name: Allow sudo group to use sudo without password
+  copy:
+    dest: /etc/sudoers.d/nopasswd
+    content: |
+      %sudo ALL=(ALL) NOPASSWD:ALL
+    owner: root
+    group: root
+    mode: '0440'

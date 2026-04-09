@@ -45,7 +45,7 @@
     name: letsencrypt_renewal
     special_time: weekly
     job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ maps_webserver }} && service nginx reload
-    cron_file: '/etc/crontab'
+    cron_file: '/etc/cron.d/freifunk'
     user: 'root'
   when: freifunk_karte_api
 
@@ -72,7 +72,7 @@
     name: community_update
     special_time: daily
     job: '/opt/freifunk/json-update.pl'
-    cron_file: '/etc/crontab'
+    cron_file: '/etc/cron.d/freifunk'
     user: 'root'
   when: freifunk_karte_api
 

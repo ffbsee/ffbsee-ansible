@@ -1,0 +1,14 @@
+users:
+  - name: mart
+    ssh_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDq8giGxFvi+XpXUEwiKx1aK+CDQRkNjGsOL7R61yyjd mart@kirika"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+eLcRMUEwIAhT9EYOUHdXE3RO1RxrTJi2cLpXHb9oegjwVdIXUTglXqoQpVn7/xNyA4U2RX64WpTdSIufmovd/GjG6slh68jpLFcJrdKAe/P1LzzfekCBL9rexCFQXwp8kswBT1ThbwnQJDPfORdrahruu7BKLP8QTNw6e6lSg5Y9ST4/FPFwUUT8b0mch7Lu4FkPumnBiG30B4rPZe7s1dg3ZseuD04GJIHM0bvNc2eO0oL/ZCTVZpnNnmcno+Bh2WucSZlL6xOIIx1rPk6sxapBD99eAWHj/JgEswNB0A3EsGgJaoRKSq5fEINxOaJp3Z5GPrwN2obhIJsbrIXHWjagOMqJwN6G4ow8nH8xeJwS17fPMAXOVbaSr1lhIdg6rQVmvwC/jSlpzmAc64S+d2/VrPAq6GrBiZS55tdrcAzfClzu2pBuCu5I3usLANh2MHwzafH7ARRdIWmgRb1F7RhPe3OC4IWAWOQO5RhXzSlmQb/FhzC3bZZh3t4Qvcex5DJKLx/PC0o0IIZHFizJIcZ85ox8GJvdOr+g68kH9iwAn+CTFTBCvhdySS6QB2o4bS4mGxllxJysHxKrLvpvQDjoLsZdI4XBFIx+s/BOrUH3KWC8zBekNHF/iVlMwBAHTQLaDGoPrr7kehgmTTgYOrKGRREKqrQd+ty9THDLEQ== mart@ffbsee.de"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0MCNZDnT0sCVtj1LVLGKA4Afvl6CinEziH03vH9eOG mart@yamada"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDapHrcOdegMpGEjdXaD2Ox9goxplC48kORO8OfPoMOy mart@ao"
+  - name: wolf
+    ssh_keys:
+      - ""
+  - name: xperimental
+    ssh_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICv0OiJSV34vDZyUitgrmgqDVFBziuQtmeYV2FuCzH+w"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINFEpEwtaAkCjtP3oufSdCzMUbu47zgq+SZYW9oPMQw2" 

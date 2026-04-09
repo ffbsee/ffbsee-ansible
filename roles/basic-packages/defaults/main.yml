@@ -1,0 +1,19 @@
+base_packages:
+  - vim
+  - curl
+  - htop
+  - ranger
+  - nmap
+  - psmisc
+  - mtr
+  - iftop
+  - nload
+  - bmon
+  - vnstat
+  - iperf3
+  - tcpdump
+  - wireshark
+  - conntrack
+  - nethogs
+  - arp-scan
+  - glances

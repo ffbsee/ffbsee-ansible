@@ -16,30 +16,12 @@
 [submodule "templates/FFNodeList"]
 	path = templates/FFNodeList
 	url = https://github.com/ffbsee/FFNodeList.git
-[submodule "roles/ssh_authorized_keys"]
-	path = roles/ssh_authorized_keys
-	url = https://github.com/chaos-bodensee/role-ssh_authorized_keys.git
 [submodule "files/ssh_authorized_keys"]
 	path = files/ssh_authorized_keys
 	url = https://github.com/ffbsee/ssh_authorized_keys.git
-[submodule "roles/sshd"]
-	path = roles/sshd
-	url = https://github.com/chaos-bodensee/role_sshd.git
-[submodule "roles/home_environment"]
-	path = roles/home_environment
-	url = https://github.com/chaos-bodensee/role_dotfiles.git
-[submodule "roles/base_packages"]
-	path = roles/base_packages
-	url = https://github.com/chaos-bodensee/role-base_packages.git
 [submodule "roles/install-bat"]
 	path = roles/install-bat
 	url = https://github.com/gantsign/ansible_role_bat.git
-[submodule "roles/manage_users"]
-	path = roles/manage_users
-	url = https://github.com/chaos-bodensee/role-manage_users.git
-[submodule "roles/ansible_version"]
-	path = roles/ansible_version
-	url = https://github.com/chaos-bodensee/role-ansible_version.git
 [submodule "roles/telegraf"]
 	path = roles/telegraf
 	url = https://github.com/dj-wasabi/ansible-telegraf.git

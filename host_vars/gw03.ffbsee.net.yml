@@ -20,6 +20,12 @@ wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
 wan_ipv4_ip: '89.163.145.35'
 
+# variables for wireguard and vxlan backbone
+wireguardipaddress: 'fd42:dead:beef:4::3'
+vxlanmac: 'c2:76:8c:47:62:8b'
+vxlanendpoints: '\"fd42:dead:beef:4::1\" \"fd42:dead:beef:4::4\" \"fd42:dead:beef:4::5\" \"fd42:dead:beef:4::6\"'
+vxlanbackbonename: 'vxbackbone'
+
 fastd_secret_key: ''
 vpn_on_port_443: 'false'
 

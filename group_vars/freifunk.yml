@@ -8,33 +8,31 @@ community_shortname: 'ffbsee'
 ### FYI: We use new addresses on B.A.T.M.A.N. V
 ipv6_prefix: 'fdef:1701:b5ee:23:'
 ipv4_netz: '10.15.224.0/20'
-ipv4_dhcp_server: '10.15.224.6'
+ipv4_dhcp_server: '10.15.224.1'
 ipv4_dhcp_interface: 'bat0'
 
 # some more advanced informations like B.A.T.M.A.N Download Informations
-batman_version: '2021.4'
-batman_sha256sum: 'cff7a2f160045fd0dbf1f1cd7e35e93bf489e81cb8b9501b3756daa391f3eb1b'
+batman_version: '2025.4'
+batman_sha256sum: '62490a8f8b58c02e819216f3e963249984645d3e460156a043b73fc53e24f86d'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batman-adv-{{ batman_version }}.tar.gz
-batctl_sha256sum: 'b6d96e908e3295a1413e8ec4f0f9851f85c67c752ac45bebbbe58aad40fad8e7'
+batctl_sha256sum: '566aa4fd74355e8d5dd2bd21c25e98cc068e77fd08e19f80b8e2b5edde7c8e65'
  # https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz
-alfred_sha256sum: '4c79b6c45de4bcc8cbfe64cba9a0f8b4ef304ca84c194622f2bfa41e01e2cb95'
+alfred_sha256sum: '8375475478ed1cd4139c9000175a7d1407ee8dd919a0b7c9dbf7d15095880485'
  # https://downloads.open-mesh.org/batman/stable/sources/alfred/alfred-{{ batman_version }}.tar.gz'
 
-fastd_libsodium_version: '1.0.18'
-fastd_libsodium_sha256sum: '6f504490b342a4f8a4c4a02fc9b866cbef8622d5df4e5452b46be121e46636c1'
-# https://github.com/jedisct1/libsodium/releases/download/{{ fastd_libsodium_version }}/libsodium-{{ fastd_libsodium_version }}.tar.gz
-libuecc_url_head: 'https://git.universe-factory.net/libuecc/snapshot/'
-libuecc_url_tail: 'libuecc-7.tar'
-libuecc_checksum: '0120aee869f56289204255ba81535369816655264dd018c63969bf35b71fd707'
-fastd_url_string: 'fastd-18'
-fastd_url: 'https://git.universe-factory.net/fastd/snapshot/{{ fastd_url_string }}.tar'
-fastd_checksum: 'dce99ee057f43e3d732a120fb0cb60acb3b86e8231d3dd64ab72fc1254c2491a'
+fastd_url: 'https://github.com/neocturne/fastd/releases/download/v23/fastd-23.tar.xz'
+fastd_checksum: 'dcab54485c79dda22ce6308a2a48764d53977a518952facd1204ba21af1c86e0'
+fastd_build_dir: '/tmp/fastd'
+fastd_version: 23
 
-# tecnical informations for TLS
+wireguard_remote_directory: "/etc/wireguard" 
+wireguard_port: "51820"
+wireguard_interface: "wg-backbone"
+wireguard_service_enabled: "yes"
+wireguard_service_state: "started"
+wireguard_interface_restart: true
+
+# technical informations for TLS
 letsencrypt_email: 'kommunikation@ffbsee.de'
 
-# make ssh more insecur for legacy rsa keys (mart)
-only_allow_ed25519: false
-
-presentation_webserver: 'map.ffbsee.net'
-presentation_domain: 'map.ffbsee.net'
+only_allow_ed25519: false 

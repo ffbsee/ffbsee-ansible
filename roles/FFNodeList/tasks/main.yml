@@ -55,6 +55,6 @@
     minute: '*/5'
     user: 'root'
     state: 'present'
-    cron_file: '/etc/crontab'
+    cron_file: '/etc/cron.d/freifunk'
 
 

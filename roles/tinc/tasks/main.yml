@@ -9,7 +9,7 @@
   when: run_icvpn == 'true'
 
 - name: Copy tinc nets.boot
-  file:
+  copy:
     src: 'files/tinc/nets.boot'
     dest: '/etc/tinc/nets.boot'
     owner: 'root'
@@ -24,7 +24,7 @@
     update: yes
 
 - name: Copy tinc config
-  file:
+  copy:
     src: 'files/tinc/tinc.conf'
     dest: '/etc/tinc/icvpn/tinc.conf'
     owner: 'root'
@@ -32,7 +32,7 @@
     mode: '0755'
 
 - name: copy tinc-up
-  file:
+  copy:
    src: 'files/tinc/tinc-up'
    dest: '/etc/tinc/icvpn/tinc-up'
    owner: 'root'
@@ -40,7 +40,7 @@
    mode: '0775'
 
 - name: copy tinc-down 
-  file: 
+  copy: 
    src: 'files/tinc/tinc-down'
    dest: '/etc/tinc/icvpn/tinc-down'
    owner: 'root'

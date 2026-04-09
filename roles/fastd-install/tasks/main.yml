@@ -1,175 +1,67 @@
 ---
-
-- name: Install some dependencies
+- name: Install dependencies for fastd
   apt:
-    name: "{{ packages }}"
-    state: 'latest'
+    name:
+      - build-essential
+      - meson
+      - ninja-build
+      - bison
+      - libuecc-dev
+      - libcap-dev
+      - libjson-c-dev
+      - libssl-dev
+      - libmnl-dev
+      - libsodium-dev
+      - clang-format
+    state: present
     update_cache: yes
     cache_valid_time: 86400
-  vars:
-    packages:
-    - zip
-    - git
-    - flex
-    - bison
-    - pkg-config
-    - libnacl-dev
-    - libcap-dev
-    - libjson-c-dev
-    - cmake-curses-gui
-    - doxygen
 
-- name: Create '/root/download/' directory
+- name: Ensure download directory exists
   file:
-    path: '/root/download'
+    path: "/root/download"
     state: directory
-    mode: 'u=rwx,g=rx,o=rx'
+    mode: '0755'
 
-- name: Download libsodium
+- name: Download fastd release tarball
   get_url:
-    url: 'https://download.libsodium.org/libsodium/releases/libsodium-{{ fastd_libsodium_version }}.tar.gz'
-    dest: '/root/download/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
-    checksum: sha256:{{ fastd_libsodium_sha256sum }}
-  register: libsodium_install
+    url: "{{ fastd_url }}"
+    checksum: "sha256:{{ fastd_checksum }}"
+    dest: "/root/download/fastd_{{ fastd_version }}.tar.xz"
+  register: download_fastd
 
-- name: Create '/tmp/fastd_libsodium/' Directory
+- name: Ensure build directory exists
   file:
-    path: '/tmp/fastd_libsodium'
+    path: "{{ fastd_build_dir }}"
     state: directory
-    mode: 'u=rwx,g=rx,o=rx'
-  when: libsodium_install.changed
-
-- name: Unpack libsodium archive
-  unarchive:
-    src: '/root/download/fastd_libsodium.{{ fastd_libsodium_version }}.tar.gz'
-    dest: '/tmp/fastd_libsodium/'
-    remote_src: yes
-  when: libsodium_install.changed
-
-- name: Configure libsodium
-  shell: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}/configure'
-  args:
-    chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
-  when: libsodium_install.changed
-
-- name: Make libsodium
-  make:
-    chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
-    params:
-      NUM_THREADS: 4
-  when: libsodium_install.changed
-
-- name: Make install libsodium
-  make:
-    chdir: '/tmp/fastd_libsodium/libsodium-{{ fastd_libsodium_version }}'
-    target: install
-    params:
-      NUM_THREADS: 4
-  when: libsodium_install.changed
-
-- name: Execute ldconfig
-  shell: ldconfig
-  when: libsodium_install.changed
-
-- name: Download libuecc
-  get_url:
-    url: '{{ libuecc_url_head }}{{libuecc_url_tail }}'
-    dest: '/root/download/libuecc-7.{{ libuecc_url_tail }}.tar.xz'
-    checksum: sha256:{{ libuecc_checksum }}
-  register: libuecc_install
-
-- name: Create '/tmp/libuecc/' Directory
-  file:
-    path: '/tmp/libuecc'
-    state: directory
-    mode: 'u=rwx,g=rx,o=rx'
-  when: libuecc_install.changed
-
-- name: Create '/tmp/libuecc/build' Directory
-  file:
-    path: '/tmp/libuecc/build'
-    state: directory
-    mode: 'u=rwx,g=rx,o=rx'
-  when: libuecc_install.changed
-
-- name: Unpack libuecc archive
-  unarchive:
-    src: '/root/download/libuecc-7.{{ libuecc_url_tail }}.tar.xz'
-    dest: '/tmp/libuecc/'
-    remote_src: yes
-  when: libuecc_install.changed
-
-- name: Cmake libuecc
-  shell: 'cmake /tmp/libuecc/libuecc-7'
-  args:
-    chdir: '/tmp/libuecc/build'
-  when: libuecc_install.changed
-
-- name: Make libuecc
-  make:
-    chdir: '/tmp/libuecc/build'
-    params:
-      NUM_THREADS: 4
-  when: libuecc_install.changed
-
-- name: Make install libuecc
-  make:
-    chdir: '/tmp/libuecc/build'
-    target: install
-    params:
-      NUM_THREADS: 4
-  when: libuecc_install.changed
-
-- name: Execute ldconfig
-  shell: ldconfig
-  when: libuecc_install.changed
-
-- name: Download fastd
-  get_url:
-    url: '{{ fastd_url }}'
-    checksum: sha256:{{ fastd_checksum }}
-    dest: '/root/download/fastd_{{ fastd_url_string }}.tar'
-  register: fastd_install
-
-- name: Create '/tmp/fastd' Directory
-  file:
-    path: '/tmp/fastd'
-    state: directory
-    mode: 'u=rwx,g=rx,o=rx'
-  when: fastd_install.changed
-
-- name: Create '/tmp/fastd/build' Directory
-  file:
-    path: '/tmp/fastd/build'
-    state: directory
-    mode: 'u=rwx,g=rx,o=rx'
-  when: fastd_install.changed
+    mode: '0755'
+  when: download_fastd.changed
 
 - name: Unpack fastd archive
   unarchive:
-    src: '/root/download/fastd_{{ fastd_url_string }}.tar'
-    dest: '/tmp/fastd/'
+    src: "/root/download/fastd_{{ fastd_version }}.tar.xz"
+    dest: "{{ fastd_build_dir }}"
     remote_src: yes
-  when: fastd_install.changed
+  register: fastd_unpacked
+  when: download_fastd.changed
 
-- name: Cmake fastd
-  shell: '/usr/bin/cmake /tmp/fastd/fastd-18 -DWITH_CIPHER_AES128_CTR_NACL=OFF' 
+- name: Configure fastd using Meson
+  shell: |
+    meson setup builddir --buildtype=release
   args:
-    chdir: '/tmp/fastd/build'
-  when: fastd_install.changed
+    chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
+    creates: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}/builddir/build.ninja"
+  when: fastd_unpacked.changed
 
-- name: Make fastd
-  make:
-    chdir: '/tmp/fastd/build'
-    params:
-      NUM_THREADS: 4
-  when: fastd_install.changed
+- name: Build fastd using Ninja
+  command: ninja -C builddir
+  args:
+    chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
+  when: fastd_unpacked.changed
 
-- name: Make install fastd
-  make:
-    chdir: '/tmp/fastd/build'
-    target: install
-    params:
-      NUM_THREADS: 4 
-  when: fastd_install.changed
-
+- name: Install fastd
+  command: ninja -C builddir install
+  args:
+    chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
+  become: yes
+  when: fastd_unpacked.changed

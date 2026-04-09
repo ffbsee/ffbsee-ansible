@@ -18,24 +18,50 @@
     group: 'root'
     mode: 'u=rwx,g=rx,o=rx'
 
-- name: Add cron job for update script each five minutes
-  cron:
-    name: 'Update statistics script'
-    job: '/opt/freifunk/update.sh > /dev/null'
-    minute: '*/5'
-    user: 'root'
-    state: 'present'
-    cron_file: '/etc/crontab'
+- name: Create freifunk-update.service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/freifunk-update.service
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      [Unit]
+      Description=Freifunk periodic update script
+      After=wg-quick@wg-backbone.service
+      Wants=wg-quick@wg-backbone.service
 
+      [Service]
+      Type=oneshot
+      User=root
+      Group=root
+      ExecStart=/opt/freifunk/update.sh
 
-- name: Add cron job for update script at reboot
-  cron:
-    name: 'Launch update.sh script'
-    job: '/opt/freifunk/update.sh > /dev/null'
-    special_time: 'reboot'
-    user: 'root'
-    state: 'present'
-    cron_file: '/etc/crontab'
+- name: Create freifunk-update.timer
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/freifunk-update.timer
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      [Unit]
+      Description=Run Freifunk update.sh every 5 minutes
+
+      [Timer]
+      OnBootSec=1min
+      OnUnitActiveSec=5min
+      AccuracySec=30s
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+  notify: Reload systemd units
+
+- name: Enable and start freifunk-update.timer
+  ansible.builtin.systemd:
+    name: freifunk-update.timer
+    enabled: true
+    state: started
+
 
 - name: Copy map-backend.py (deprecated, but required)
   copy:

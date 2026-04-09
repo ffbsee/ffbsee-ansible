@@ -67,6 +67,34 @@
       NUM_THREADS: 4
   when: batmanadv.changed
 
+- name: Create batman-init.service to preload batman-adv with BATMAN_V
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/batman-init.service
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      [Unit]
+      Description=Preload batman-adv with BATMAN_V
+      DefaultDependencies=no
+      Before=network-pre.target
+      Wants=network-pre.target
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=/sbin/modprobe batman-adv
+      ExecStart=/bin/bash -c 'echo BATMAN_V > /sys/module/batman_adv/parameters/routing_algo'
+
+      [Install]
+      WantedBy=sysinit.target
+  notify: Reload systemd units
+
+- name: Enable and start batman-init.service
+  ansible.builtin.systemd:
+    name: batman-init.service
+    enabled: true
+    state: started
+
 - name: Download batctl
   get_url:
     url: 'https://downloads.open-mesh.org/batman/releases/batman-adv-{{ batman_version }}/batctl-{{ batman_version }}.tar.gz'

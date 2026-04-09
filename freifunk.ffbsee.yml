@@ -1,40 +1,21 @@
 ---
 # auto load vault vars
-- name: load vault vars
-  hosts: all
-  tasks:
-    - include_vars: group_vars/all_vault.yml
+#- name: load vault vars
+#  hosts: all
+#  tasks:
+#    - include_vars: group_vars/all_vault.yml
 
-- name: check if ansible is not to old
-  hosts: localhost
+- hosts: all
+  become: yes
   tags:
-   - default
-  roles:
-    - ansible_version
-  gather_facts: no
-
-- name: Update packages and users on all nodes
-  hosts: freifunk
-  tags: 
-  - base
-  - users
-  - home
-  - base-packages
-  - base_packages
-  - ssh_authorized_keys
-  - home_environment
-  - new-user
-  - base
-  - ssh
-  - sshd
-  - ssh_authorized_keys
-  - auth
-  roles:
-    - base_packages
-    - manage_users
-    - ssh_authorized_keys
+    - basic-packages
     - sshd
-    - home_environment
+    - users
+  roles:
+    - basic-packages
+    - sshd
+    - users
+
 
 - name: python3 as default
   hosts: all
@@ -50,10 +31,8 @@
 - name: Update packages and users on all nodes
   hosts: freifunk
   tags: 
-  - home_environment
   - motd
   roles:
-    - home_environment
     - motd
     - install-bat
   tasks:
@@ -62,19 +41,18 @@
         name: bat
         selection: hold
 
-# Note: this is NOT done for gw04 atm
-- name: Configure basic network setup for gw
-  hosts:
-    - gw01.ffbsee.net
-    - gw02.ffbsee.net
-    - gw03.ffbsee.net
-#    - gw04.ffbsee.net
-    - map.ffbsee.net
-  tags:
-  - network
-  - interfaces
-  roles:
-    - network
+# Note: We don't do this for hosts in external datacenters
+# since we may have other hosts in the future, let's keep this for now, but commented out
+#- name: Configure basic network setup for gw
+#  hosts:
+#     - gw01.ffbsee.net
+#     - gw02.ffbsee.net
+#     - map.ffbsee.net
+#  tags:
+#  - network
+#  - interfaces
+#  roles:
+#    - network
 
 - name: fail2ban
   hosts: all
@@ -92,11 +70,15 @@
   - freifunk-update-script
   - fastd-install
   - fastd-config
+  - wireguard
+  - vxlanbackbone
   roles:
     - freifunk-backbone
     - freifunk-update-script
     - fastd-install
     - fastd-config
+    - wireguard
+    - vxlanbackbone
 
 - name: Configure network routing for gw
   hosts: freifunk
@@ -108,19 +90,10 @@
   roles:
    - firewall
 
-# Note: this is only done for gw02
-- name: Configure ovh dns script for gw02.ffbsee.net
-  hosts: gw02.ffbsee.net
-  tags: ovh
-  roles:
-    - ovh-dns-update
-
 - name: Configure network routing for gw
   hosts:
     - gw01.ffbsee.net
     - gw02.ffbsee.net
-    - gw03.ffbsee.net
-    - gw04.ffbsee.net
   tags: 
   - routing
   - dhcp
@@ -128,11 +101,8 @@
   - isc-dhcp
   - isc
   - isc-dhcp-server
-  - isc-dhcp-relay
-  - dhcp-relay
   roles:
-   #- dhcpd
-   - dhcp-relay
+   - dhcpd
 
 - name: Configure network routing for map
   hosts:
@@ -143,30 +113,40 @@
   - dhcpd
   - isc-dhcp
   - isc
-  - isc-dhcp-server
-  - isc-dhcp-relay
-  - dhcp-relay
   roles:
-   - dhcpd
 
 # Note: this is only done on gws
 - name: Configure network routing for gw
   hosts:
     - gw01.ffbsee.net
     - gw02.ffbsee.net
-    - gw03.ffbsee.net
-    - gw04.ffbsee.net
   tags: 
   - dns
   - unbound
   - role-unbound
   - bind
+  
+  collections:
+   - community.general
+   - ansible.utils
   roles:
    - unbound
    - unbound_freifunk_tlds
    - bird
-   - freifunk-icvpn
-   - tinc
+
+# Note: this should only be executed on one gateway
+- name: Configure Intercity VPN
+  hosts:
+    - gw02.ffbsee.net
+  tags:
+  - icvpn 
+  - tinc
+  
+  roles:
+   - role: freifunk-icvpn
+     when: run_icvpn == 'true'
+   - role: tinc
+     when: run_icvpn == 'true'
 
 # Note: this is only done on the map server
 - name: Configure web setup for gw
@@ -186,99 +166,6 @@
   roles:
     - telegraf
 
-- name: install prometheus
-  hosts: map.ffbsee.net
-  tags:
-    - prometheus
-  roles:
-    - prometheus
-
-- name: install grafana
-  hosts: map.ffbsee.net
-  tags:
-    - grafana
-  roles:
-    - role: grafana
-      vars:
-        grafana_security:
-          admin_user: admin
-          admin_password: "{{ grafana_admin_password }}"
-  tasks:
-    - name: create dashboard dir
-      file:
-        path: /opt/grafana/dashboards
-        state: directory
-        mode: '0755'
-    - name: provision dashboards config
-      copy:
-        dest: /etc/grafana/provisioning/dashboards/default.yaml
-        content: |
-          apiVersion: 1
-          providers:
-            - name: 'default'
-              disableDeletion: true
-              editable: false
-              updateIntervalSeconds: 300
-              allowUiUpdates: false
-              options:
-                path: {{ grafana_dashboard_dir }}
-    - name: install dashboards
-      copy:
-        src: "files/grafana_dashboards/{{ item }}"
-        dest: "{{ grafana_dashboard_dir }}/{{ item }}"
-        mode: '0644'
-      loop:
-        - freifunk_overview.json
-        - freifunk_router_detail.json
-        - freifunk_robin_detail.json
-        - freifunk_robin_overview.json
-
-- name: install golang
-  hosts: map.ffbsee.net
-  tags:
-    - golang
-    - go
-  roles:
-     - role: golang
-
-- name: install xperimental/freifunk-exporter
-  hosts: map.ffbsee.net
-  environment:
-    # make sure we find go
-    PATH: /opt/go/1.14.4/bin:{{ ansible_env.PATH }}
-  tags:
-    - freifunk-exporter
-    - exporter
-    - prometheus-exporter
-  tasks:
-    - name: clone repository
-      git:
-        repo: 'https://github.com/xperimental/freifunk-exporter.git'
-        dest: "{{ freifunk_exporter_path }}"
-    - name: Build the default target
-      make:
-        chdir: "{{ freifunk_exporter_path }}"
-    - name: install freifunk-exporter service
-      copy:
-        content: |
-          [Unit]
-          Description=freifunk-exporter
-
-          [Service]
-          Type=simple
-          ExecStart={{ freifunk_exporter_path }}/freifunk-exporter --cache-interval 30s --source-url https://meta.ffbsee.net/data/meshviewer.json
-
-          [Install]
-          WantedBy=multi-user.target
-        dest: /lib/systemd/system/freifunk-exporter.service
-    - name: enable and start freifunk-exporter
-      systemd:
-        state: started
-        enabled: yes
-        name: freifunk-exporter
-  vars:
-    freifunk_exporter_path: /opt/freifunk-exporter
-    #defaults to port: 9295
 
 - name: install re4jh/robin-exporter
   hosts: map.ffbsee.net

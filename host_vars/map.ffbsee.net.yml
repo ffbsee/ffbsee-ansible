@@ -4,6 +4,10 @@ gwnumber: '06'
   
 ipv4_mesh_address: '10.15.224.6'
 bat0_mac_address: '86:00:00:2c:de:52'
+wireguardipaddress: 'fd42:dead:beef:4::6'
+vxlanmac: '66:61:17:75:32:af'
+vxlanendpoints: '\"fd42:dead:beef:4::1\" \"fd42:dead:beef:4::3\" \"fd42:dead:beef:4::4\" \"fd42:dead:beef:4::5\"'
+vxlanbackbonename: 'vxbackbone'
 
 ipv6_suffix: ':6'
 ipv6_radv_suffix: ':1'

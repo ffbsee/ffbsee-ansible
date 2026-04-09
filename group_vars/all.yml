@@ -42,9 +42,6 @@ fail2ban_jails:
   - name: '{{ fail2ban_ssh_jail_name }}'
     enabled: 'true'
 
-packages_extra:
-  - python3-pip
-
 # seme meta informations for the ssh_authorized_keys role
 home_sweet_home: false
 ssh_public_key_store: 'ssh_authorized_keys'
@@ -87,8 +84,6 @@ prometheus_targets:
   - targets:
     - gw01.ffbsee.net:9273
     - gw02.ffbsee.net:9273
-    - gw03.ffbsee.net:9273
-    - gw04.ffbsee.net:9273
     - map.ffbsee.net:9273
     - map.ffbsee.net:9295
     - map.ffbsee.net:8000

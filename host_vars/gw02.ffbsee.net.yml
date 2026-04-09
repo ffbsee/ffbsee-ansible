@@ -1,7 +1,12 @@
 ---
 hostname: 'gw02.ffbsee.net'
 
+freifunk_dhcp_server: true
+freifunk_dhcp_relay: false
+
 ipv4_mesh_address: '10.15.224.2'
+bat0_mac_address: '92:5b:3a:19:fb:85'
+number_of_cores: '8'
 
 ipv6_suffix: ':2'
 ipv6_radv_suffix: ':2'
@@ -11,12 +16,12 @@ mesh_ipv6_extra_addr: ''
 ipv6_radv_address: '{{ ipv6_prefix }}{{ ipv6_radv_suffix }}'
 ipv6_radv_prefix: '{{ ipv6_prefix }}:/64'
 
-wan_ipv6_network: '2a02:168:4638:f1::/64'
-wan_ipv6_ip: '2a02:168:4638:f0::10'
-wan_base_interface: 'enp1s0f0'
-wan_vlan_id: '240'
+wan_ipv6_network: '2a01:4f8:c012:ea63::/64'
+wan_ipv6_ip: '2a01:4f8:c012:ea63::1'
+wan_base_interface: 'eth0'
+wan_vlan_id: ''
 wan_interface: '{{ wan_base_interface }}{% if wan_vlan_id != "" %}.{{ wan_vlan_id }}{% endif %}'
-wan_ipv4_ip: '10.0.240.10' 
+wan_ipv4_ip: '168.119.250.235/32' 
 
 fastd_secret_key: ''
 vpn_on_port_443: 'false'
@@ -27,20 +32,46 @@ run_webserver: 'true'
 run_icvpn: 'false'
 run_map: 'false'
 run_stats: 'false'
-freifunk_dhcp_relay: 'true'
-da_laueft_ein_dhcp_relay: 'true'
+freifunk_dhcp_relay: 'false'
+da_laueft_ein_dhcp_relay: 'false'
 
 fastd_peer_limit: ''
 fastd_vpn_backbone_configs:
-  - gw04
+  - map
+  - mate
   - gw01
+
+# variables for wireguard and vxlan backbone
+wireguard_addresses:
+  - "fd42:dead:beef:4::2/64"
+wireguardipaddress: 'fd42:dead:beef:4::2'
+wireguard_unmanaged_peers:
+  gw01.ffbsee.net:
+    public_key: "y10R+ViqyKNfki1BuY4FdZmeuxSGMgS1w0wpjg+mkyc="
+    allowed_ips: "fd42:dead:beef:4::1/128"
+    endpoint: "gw01.ffbsee.net:51820"
+    persistent_keepalive: 30
+  meta.ffbsee.net:
+    public_key: "xl8xPi3swD8gMzXueAGrXS6UCb36AS7oLaLnDvStizM="
+    allowed_ips: "fd42:dead:beef:4::5/128"
+    endpoint: "meta.ffbsee.net:51820"
+    persistent_keepalive: 30
+  map.ffbsee.net:
+    public_key: "sGdYONKAhLJ19kbuzLkMfEnI3kKLo1EmpqpnsuGI8UA="
+    allowed_ips: "fd42:dead:beef:4::6/128"
+    endpoint: "map.ffbsee.net:51820"
+    persistent_keepalive: 30
+
+vxlanmac: '7a:43:1b:60:39:1c'
+vxlanendpoints: '"fd42:dead:beef:4::1" "fd42:dead:beef:4::5" "fd42:dead:beef:4::6"'
+vxlanbackbonename: 'vxbackbone'
 
 ipv6_uplink_announcen: 'true'
 radv_AdvDefaultPreference: 'medium'
 
-debian: '10'
+debian: '13'
 freifunk_karte_api: 'false'
 
-nodelist: 'true'
+nodelist: 'false'
 
 block_rfc1918_interface: "{{ wan_base_interface }}"

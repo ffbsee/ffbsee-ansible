@@ -7,7 +7,7 @@ users:
       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDapHrcOdegMpGEjdXaD2Ox9goxplC48kORO8OfPoMOy mart@ao"
   - name: wolf
     ssh_keys:
-      - ""
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBVK87sKV+cutVEnEz0FhoxNmEiHt+hTePZO+4OAKHCC wolf@rotkaeppchen"
   - name: xperimental
     ssh_keys:
       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICv0OiJSV34vDZyUitgrmgqDVFBziuQtmeYV2FuCzH+w"

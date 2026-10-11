@@ -71,3 +71,8 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 
 debian: '11'
 number_of_cores: '8'
+
+# fastd v22 in /usr/local/bin (gebaut 2022).
+fastd_version: 22
+fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
+fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'

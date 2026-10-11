@@ -1,4 +1,17 @@
 ---
+# Installierte Version (nur lesen): gebaut wird nur, wenn sie nicht
+# fastd_version ist; die Bauabhängigkeiten kommen nur dann dazu.
+- name: get installed fastd version
+  command: /usr/local/bin/fastd -v
+  register: fastd_installed
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: decide whether to build fastd
+  set_fact:
+    fastd_build: "{{ (fastd_installed.stdout | default('') | trim) != 'fastd v' ~ fastd_version }}"
+
 - name: Install dependencies for fastd
   apt:
     name:
@@ -16,12 +29,14 @@
     state: present
     update_cache: yes
     cache_valid_time: 86400
+  when: fastd_build | bool
 
 - name: Ensure download directory exists
   file:
     path: "/root/download"
     state: directory
     mode: '0755'
+  when: fastd_build | bool
 
 - name: Download fastd release tarball
   get_url:
@@ -29,13 +44,16 @@
     checksum: "sha256:{{ fastd_checksum }}"
     dest: "/root/download/fastd_{{ fastd_version }}.tar.xz"
   register: download_fastd
+  when: fastd_build | bool
 
 - name: Ensure build directory exists
   file:
     path: "{{ fastd_build_dir }}"
     state: directory
     mode: '0755'
-  when: download_fastd.changed
+  when:
+    - fastd_build | bool
+    - download_fastd.changed
 
 - name: Unpack fastd archive
   unarchive:
@@ -43,7 +61,9 @@
     dest: "{{ fastd_build_dir }}"
     remote_src: yes
   register: fastd_unpacked
-  when: download_fastd.changed
+  when:
+    - fastd_build | bool
+    - download_fastd.changed
 
 - name: Configure fastd using Meson
   shell: |
@@ -51,17 +71,23 @@
   args:
     chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
     creates: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}/builddir/build.ninja"
-  when: fastd_unpacked.changed
+  when:
+    - fastd_build | bool
+    - fastd_unpacked.changed
 
 - name: Build fastd using Ninja
   command: ninja -C builddir
   args:
     chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
-  when: fastd_unpacked.changed
+  when:
+    - fastd_build | bool
+    - fastd_unpacked.changed
 
 - name: Install fastd
   command: ninja -C builddir install
   args:
     chdir: "{{ fastd_build_dir }}/fastd-{{ fastd_version }}"
   become: yes
-  when: fastd_unpacked.changed
+  when:
+    - fastd_build | bool
+    - fastd_unpacked.changed

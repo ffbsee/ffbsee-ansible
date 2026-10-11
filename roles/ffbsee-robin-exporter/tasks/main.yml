@@ -1,15 +1,9 @@
 ---
-- name: install python3-pip
+- name: install python3-prometheus-client
   become: yes
   package:
-    name: python3-pip
-
-- name: install pip prometheus_client
-  become: yes
-  pip:
-    name:
-      - prometheus_client
-    executable: pip3
+    name: python3-prometheus-client
+  notify: restart robin
 
 - name: mkdir for robin
   become: yes

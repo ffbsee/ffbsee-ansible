@@ -1,0 +1,20 @@
+---
+- name: "{{ system_updates_report_title }}"
+  vars:
+    _live_re: "{{ '^(' ~ (system_updates_live | map('regex_escape') | join('|')) ~ ')  ' }}"
+    _reboot_re: "{{ '^(' ~ (system_updates_reboot | map('regex_escape') | join('|')) ~ ')  ' }}"
+  ansible.builtin.debug:
+    msg:
+      - "apt upgradable: {{ system_updates_names | length }} (security: {{ system_updates_security | length }})"
+      - "{{ 'without reboot, kept back by apt (need held or new packages)' if system_updates_after_apply
+            else 'without reboot (updates-apply installs these)' }}: {{ system_updates_live | length }}"
+      - "{{ system_updates_lines | select('match', _live_re) | list }}"
+      - "need reboot (held back by updates-apply): {{ system_updates_reboot | length }}"
+      - "{{ system_updates_lines | select('match', _reboot_re) | list }}"
+      - "held back via system_updates_extra_hold_patterns: {{ system_updates_extra }}"
+      - "held via apt-mark: {{ system_updates_held }}"
+      - "security: {{ system_updates_security }}"
+      - "kernel running {{ system_updates_kernel_running }}, newest installed {{ system_updates_kernel_newest }}, reboot pending: {{ system_updates_reboot_pending | ternary('YES', 'no') }}"
+      - "services on outdated libraries: {{ system_updates_restart_services if system_updates_needrestart_bin.stat.exists else 'unknown (needrestart not installed)' }}"
+      - "git checkouts: {{ system_updates_git.results | map(attribute='item.name') | zip(system_updates_git.results | map(attribute='stdout')) | map('join', ': ') | list }}"
+      - "pip outdated: {{ system_updates_pip.results | map(attribute='item.name') | zip(system_updates_pip.results | map(attribute='stdout_lines')) | map('join', ': ') | list }}"

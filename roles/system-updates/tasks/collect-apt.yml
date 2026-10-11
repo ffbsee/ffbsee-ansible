@@ -1,0 +1,87 @@
+---
+- name: Refresh apt package lists
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    lock_timeout: 300
+  changed_when: false
+
+- name: List upgradable packages
+  ansible.builtin.command: apt list --upgradable
+  environment:
+    LC_ALL: C
+  register: system_updates_apt_list
+  changed_when: false
+  check_mode: false
+
+- name: List held packages
+  ansible.builtin.command: apt-mark showhold
+  register: system_updates_held_list
+  changed_when: false
+  check_mode: false
+
+- name: Classify upgradable packages
+  vars:
+    _lines: "{{ system_updates_apt_list.stdout_lines | select('search', '\\[upgradable from: ') | list }}"
+    _names: "{{ _lines | map('regex_replace', '^([^/]+)/.*$', '\\1') | list }}"
+    _held: "{{ system_updates_held_list.stdout_lines }}"
+    _reboot: "{{ _names | select('match', system_updates_reboot_patterns | join('|')) | list }}"
+    _extra: >-
+      {{ _names | select('match', system_updates_extra_hold_patterns | join('|')) | list
+         if system_updates_extra_hold_patterns | length > 0 else [] }}
+  ansible.builtin.set_fact:
+    # "name  old -> new  (suite)"
+    system_updates_lines: >-
+      {{ _lines | map('regex_replace',
+         '^([^/]+)/(\S+) (\S+) \S+ \[upgradable from: ([^\]]+)\]$',
+         '\1  \4 -> \3  (\2)') | list }}
+    system_updates_names: "{{ _names }}"
+    system_updates_security: "{{ _lines | select('search', '^[^/]+/\\S*-security') | map('regex_replace', '/.*$', '') | list }}"
+    system_updates_held: "{{ _held }}"
+    system_updates_reboot: "{{ _reboot | difference(_held) }}"
+    system_updates_extra: "{{ _extra | difference(_reboot) | difference(_held) }}"
+    system_updates_live: "{{ _names | difference(_reboot) | difference(_extra) | difference(_held) }}"
+
+- name: Check for pending reboot
+  ansible.builtin.shell: |
+    running="$(uname -r)"
+    flavour="${running##*-}"
+    kernels="$(ls -1 /boot/vmlinuz-* 2>/dev/null | sed 's|^/boot/vmlinuz-||')"
+    [ -n "$kernels" ] || kernels="$(ls -1 /lib/modules)"
+    newest="$(printf '%s\n' "$kernels" | grep -- "-${flavour}\$" | sort -V | tail -n1)"
+    echo "running=${running}"
+    echo "newest=${newest}"
+    if [ -e /run/reboot-required ] || { [ -n "$newest" ] && [ "$running" != "$newest" ]; }; then
+      echo "pending=yes"
+    else
+      echo "pending=no"
+    fi
+  args:
+    executable: /bin/bash
+  register: system_updates_reboot_state
+  changed_when: false
+  check_mode: false
+
+- name: Check for needrestart
+  ansible.builtin.stat:
+    path: /usr/sbin/needrestart
+  register: system_updates_needrestart_bin
+
+- name: List services running on outdated libraries
+  become: true
+  ansible.builtin.command: /usr/sbin/needrestart -b -r l
+  register: system_updates_needrestart
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  when: system_updates_needrestart_bin.stat.exists
+
+- name: Summarise reboot and restart state
+  ansible.builtin.set_fact:
+    system_updates_reboot_pending: "{{ 'pending=yes' in system_updates_reboot_state.stdout_lines }}"
+    system_updates_kernel_running: "{{ system_updates_reboot_state.stdout_lines | select('match', '^running=') | first | regex_replace('^running=', '') }}"
+    system_updates_kernel_newest: "{{ system_updates_reboot_state.stdout_lines | select('match', '^newest=') | first | regex_replace('^newest=', '') }}"
+    system_updates_restart_services: >-
+      {{ (system_updates_needrestart.stdout_lines | default([]))
+         | select('match', '^NEEDRESTART-SVC: ')
+         | map('regex_replace', '^NEEDRESTART-SVC: ', '') | list }}

@@ -1,0 +1,22 @@
+---
+# Both tags are opt-in: a plain playbook run never touches this role.
+#   --tags updates-check  report what can be updated, change nothing
+#   --tags updates-apply  report, then upgrade everything that needs no reboot
+- name: Collect apt state
+  ansible.builtin.import_tasks: collect-apt.yml
+  tags: [never, updates-check, updates-apply]
+
+- name: Collect git and pip state
+  ansible.builtin.import_tasks: collect-extra.yml
+  tags: [never, updates-check, updates-apply]
+
+- name: Report available updates
+  ansible.builtin.import_tasks: report.yml
+  vars:
+    system_updates_report_title: "Available updates"
+    system_updates_after_apply: false
+  tags: [never, updates-check, updates-apply]
+
+- name: Apply updates
+  ansible.builtin.import_tasks: apply.yml
+  tags: [never, updates-apply]

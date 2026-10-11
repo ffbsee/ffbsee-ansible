@@ -1,0 +1,44 @@
+---
+- name: Compare git checkouts with their remote
+  become: true
+  ansible.builtin.shell: |
+    g="git -c safe.directory=* -C {{ item.path }}"
+    [ -d "{{ item.path }}/.git" ] || { echo "missing"; exit 0; }
+    ref="$($g symbolic-ref -q HEAD || echo HEAD)"
+    local="$($g rev-parse --short HEAD)"
+    remote="$(timeout 30 $g ls-remote origin "$ref" | awk 'NR==1 { print substr($1, 1, 7) }')"
+    if [ -z "$remote" ]; then
+      echo "unknown (${ref#refs/heads/} @ ${local}, remote unreachable)"
+    elif $g merge-base --is-ancestor "$remote" HEAD 2>/dev/null; then
+      echo "current (${ref#refs/heads/} @ ${local})"
+    else
+      echo "behind (${ref#refs/heads/} @ ${local}, remote ${remote})"
+    fi
+  args:
+    executable: /bin/bash
+  loop: "{{ system_updates_git_checkouts }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: system_updates_git
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: List outdated packages in python venvs
+  become: true
+  ansible.builtin.shell: |
+    set -o pipefail
+    [ -x "{{ item.path }}/bin/pip" ] || exit 0
+    # --format=freeze is rejected together with --outdated; strip the column header
+    timeout 120 "{{ item.path }}/bin/pip" list --outdated --disable-pip-version-check 2>/dev/null \
+      | awk 'NR > 2 { print $1 "  " $2 " -> " $3 }' \
+      || echo "check failed (rc=$?)"
+  args:
+    executable: /bin/bash
+  loop: "{{ system_updates_pip_venvs }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: system_updates_pip
+  changed_when: false
+  failed_when: false
+  check_mode: false

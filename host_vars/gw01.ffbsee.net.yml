@@ -71,3 +71,8 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 
 debian: '11'
 number_of_cores: '8'
+
+# --- Ist-Zustand gw01 (fix/wolf) ---------------------------------------------
+# Werte, die den Stand auf gw01 festhalten, damit ein Lauf nichts verändert.
+# Keine python/pip-Alternativen (kein python2, /usr/bin/pip aus python3-pip).
+python3_default_enabled: false

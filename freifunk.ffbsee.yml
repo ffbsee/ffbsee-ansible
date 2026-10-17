@@ -26,7 +26,10 @@
     - python-default
     - python3-default
   roles:
-    - python3-default
+    # python3_default_enabled: false (host_vars) lässt die Alternativen für
+    # python/pip so, wie sie sind (z. B. gw01: keine, pip aus python3-pip).
+    - role: python3-default
+      when: python3_default_enabled | default(true) | bool
 
 - name: Update packages and users on all nodes
   hosts: freifunk

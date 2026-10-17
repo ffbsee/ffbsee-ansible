@@ -72,6 +72,10 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 debian: '11'
 number_of_cores: '8'
 
+# --- Ist-Zustand gw01 (fix/wolf) ---------------------------------------------
+# Werte, die den Stand auf gw01 festhalten, damit ein Lauf nichts verändert.
+# Keine python/pip-Alternativen (kein python2, /usr/bin/pip aus python3-pip).
+python3_default_enabled: false
 # fastd v22 in /usr/local/bin (gebaut 2022).
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'

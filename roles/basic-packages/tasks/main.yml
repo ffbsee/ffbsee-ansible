@@ -1,5 +1,5 @@
 - name: Install basic packages
   apt:
-    name: "{{ basic-packages }}"
+    name: "{{ base_packages }}"
     state: present
     update_cache: yes

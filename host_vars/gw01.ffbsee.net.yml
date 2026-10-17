@@ -76,3 +76,7 @@ number_of_cores: '8'
 # Werte, die den Stand auf gw01 festhalten, damit ein Lauf nichts verändert.
 # Keine python/pip-Alternativen (kein python2, /usr/bin/pip aus python3-pip).
 python3_default_enabled: false
+# fastd v22 in /usr/local/bin (gebaut 2022).
+fastd_version: 22
+fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
+fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'

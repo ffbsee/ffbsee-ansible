@@ -72,6 +72,23 @@ block_rfc1918_interface: "{{ wan_base_interface }}"
 debian: '11'
 number_of_cores: '8'
 
+# Basis-Pakete wie installiert: mtr-tiny statt mtr;
+# bmon, vnstat, wireshark und glances fehlen (zögen ~95 Pakete samt GTK/Qt nach).
+base_packages:
+  - vim
+  - curl
+  - htop
+  - ranger
+  - nmap
+  - psmisc
+  - mtr-tiny
+  - iftop
+  - nload
+  - iperf3
+  - tcpdump
+  - conntrack
+  - nethogs
+  - arp-scan
 # --- Ist-Zustand gw01 (fix/wolf) ---------------------------------------------
 # Werte, die den Stand auf gw01 festhalten, damit ein Lauf nichts verändert.
 # Keine python/pip-Alternativen (kein python2, /usr/bin/pip aus python3-pip).

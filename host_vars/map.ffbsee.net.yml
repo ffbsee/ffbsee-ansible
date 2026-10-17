@@ -66,3 +66,20 @@ packages_extra:
   - python3-pip
 
 number_of_cores: 1
+
+# Basis-Pakete wie installiert (wie gw01, ohne conntrack): mtr-tiny statt mtr;
+# bmon, vnstat, wireshark und glances fehlen (zögen ~95 Pakete samt GTK/Qt nach).
+base_packages:
+  - vim
+  - curl
+  - htop
+  - ranger
+  - nmap
+  - psmisc
+  - mtr-tiny
+  - iftop
+  - nload
+  - iperf3
+  - tcpdump
+  - nethogs
+  - arp-scan

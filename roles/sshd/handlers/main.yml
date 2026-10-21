@@ -1,0 +1,5 @@
+# Nur nach einer Änderung, nicht bei jedem Lauf.
+- name: Restart sshd
+  service:
+    name: ssh
+    state: restarted

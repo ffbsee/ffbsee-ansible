@@ -4,6 +4,7 @@
     validate: '/usr/sbin/sshd -t -f %s'
     regexp: '^#?PermitRootLogin'
     line: 'PermitRootLogin no'
+  notify: Restart sshd
 
 - name: Disable password authentication
   lineinfile:
@@ -11,8 +12,4 @@
     validate: '/usr/sbin/sshd -t -f %s'
     regexp: '^#?PasswordAuthentication'
     line: 'PasswordAuthentication no'
-
-- name: Restart sshd
-  service:
-    name: ssh
-    state: restarted
+  notify: Restart sshd

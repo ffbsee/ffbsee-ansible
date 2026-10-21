@@ -1,0 +1,82 @@
+---
+# Aktualisiert nur die installierten PHP-Pakete, startet laufende Dienste mit
+# PHP neu und prüft danach die Mindestversionen. Hosts ohne PHP bleiben
+# unverändert. Mit --check: zeigt, was aktualisiert würde.
+- name: Installierte PHP-Pakete ermitteln
+  ansible.builtin.shell: >-
+    dpkg-query -W -f='${db:Status-Abbrev} ${Package}\n'
+    | awk '$1 == "ii" {print $2}'
+    | grep -E '{{ php_update_package_pattern }}' || true
+  register: php_update_installed
+  changed_when: false
+  check_mode: false
+
+- name: PHP-Pakete aktualisieren
+  ansible.builtin.apt:
+    name: "{{ php_update_installed.stdout_lines }}"
+    state: latest
+    only_upgrade: true
+    update_cache: true
+    dpkg_options: 'force-confdef,force-confold'
+  environment:
+    NEEDRESTART_MODE: l
+  register: php_update_apt
+  when: php_update_installed.stdout_lines | length > 0
+
+- name: Laufende Dienste mit PHP ermitteln
+  ansible.builtin.command: systemctl is-active {{ item }}
+  loop: "{{ php_update_restart_services }}"
+  register: php_update_active
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  when: php_update_apt is changed
+
+- name: Dienste mit PHP neu starten
+  ansible.builtin.service:
+    name: "{{ item.item }}"
+    state: restarted
+  loop: "{{ php_update_active.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when:
+    - php_update_apt is changed
+    - item.stdout | default('') == 'active'
+
+- name: PHP-Versionen prüfen
+  ansible.builtin.shell: |
+    rc=0
+    {% for branch, min in php_update_min_versions.items() %}
+    v=$(dpkg-query -W -f='${Version}' php{{ branch }}-common 2>/dev/null)
+    if [ -n "$v" ]; then
+      if dpkg --compare-versions "$v" ge "{{ min }}"; then
+        echo "OK   php{{ branch }} $v"
+      else
+        echo "ALT  php{{ branch }} $v (mindestens {{ min }})"; rc=1
+      fi
+    fi
+    {% endfor %}
+    for p in $(dpkg-query -W -f='${db:Status-Abbrev} ${Package}\n' 'php[0-9]*-common' 2>/dev/null | awk '$1 == "ii" {print $2}'); do
+      b=${p#php}; b=${b%-common}
+      case " {{ php_update_min_versions.keys() | join(' ') }} " in
+        *" $b "*) ;;
+        *) echo "OHNE php$b $(dpkg-query -W -f='${Version}' "$p") (kein Mindeststand bekannt)" ;;
+      esac
+    done
+    exit $rc
+  register: php_update_versions
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: PHP-Versionen
+  ansible.builtin.debug:
+    msg: "{{ php_update_versions.stdout_lines }}"
+  when: php_update_versions.stdout_lines | length > 0
+
+- name: Mindestversionen erreicht
+  ansible.builtin.assert:
+    that: php_update_versions.rc == 0
+    fail_msg: "PHP unter der Mindestversion, siehe oben"
+    quiet: true
+  when: not ansible_check_mode

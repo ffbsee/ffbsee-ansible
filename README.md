@@ -109,4 +109,12 @@ Only run the roles with the "update" tag and not the full playbook:
 ansible-playbook update_admins.yml --tags "update"
 ```
 
+Security update for PHP only (opt-in): upgrades the installed PHP packages,
+restarts Apache/PHP-FPM if running, checks the minimum versions:
+```bash
+ansible-playbook site.yml --tags php-update --check   # dry run
+ansible-playbook site.yml --tags php-update --limit mate.ffbsee.net
+```
+Details: [roles/php-update/README.md](roles/php-update/README.md)
+
 

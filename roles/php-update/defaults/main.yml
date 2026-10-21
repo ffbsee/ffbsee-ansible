@@ -1,0 +1,21 @@
+---
+# Mindestversionen je PHP-Zweig (php8.x-common). Stand 2026-10-21: behebt
+# CVE-2026-109618 und CVE-2026-109619 ("PHP2Shell").
+php_update_min_versions:
+  '8.2': '8.2.35'
+  '8.3': '8.3.36'
+  '8.4': '8.4.27'
+  '8.5': '8.5.12'
+
+# Installierte Pakete, die auf eines dieser Muster passen, werden aktualisiert
+# (nur vorhandene Pakete, nichts wird neu installiert).
+php_update_package_pattern: '^(php|libapache2-mod-php|libphp)'
+
+# Dienste, die nach dem Update neu starten, sofern sie laufen.
+php_update_restart_services:
+  - apache2
+  - php8.1-fpm
+  - php8.2-fpm
+  - php8.3-fpm
+  - php8.4-fpm
+  - php8.5-fpm

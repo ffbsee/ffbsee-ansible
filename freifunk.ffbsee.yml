@@ -176,3 +176,15 @@
     - robin
   roles:
     - ffbsee-robin-exporter
+
+# Opt-in: läuft nur mit --tags php-update. Aktualisiert die installierten
+# PHP-Pakete und startet laufende Dienste mit PHP neu (Apache, FPM).
+# Details: roles/php-update/README.md
+- name: PHP update
+  hosts: all
+  gather_facts: false
+  tags:
+    - never
+    - php-update
+  roles:
+    - php-update

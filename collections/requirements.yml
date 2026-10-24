@@ -1,0 +1,9 @@
+---
+# Installieren: ansible-galaxy collection install -r collections/requirements.yml
+# ansible.utils/ansible.netcommon: Filter ipaddr (unbound_freifunk_tlds),
+# braucht zusätzlich python3-netaddr auf dem Controller.
+collections:
+  - name: ansible.posix
+  - name: ansible.utils
+  - name: ansible.netcommon
+  - name: community.general

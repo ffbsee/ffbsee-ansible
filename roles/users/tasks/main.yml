@@ -1,21 +1,52 @@
+# Vorerst nur ergänzend: keine Konten, Gruppen oder Schlüssel werden entfernt.
+# Die Benutzer ansible und root fasst die Rolle nicht an.
+- name: Create group admins
+  group:
+    name: admins
+    state: present
+
 - name: Create users
   user:
-    name: "{{ item.name }}"
-    groups: sudo
+    name: "{{ item }}"
     state: present
-  loop: "{{ users }}"
+  loop: "{{ accounts }}"
+
+# append: Wer nicht mehr Admin sein soll, muss vorerst von Hand raus.
+- name: Add admins to group admins
+  user:
+    name: "{{ item }}"
+    groups: admins
+    append: true
+  loop: "{{ admins }}"
 
 - name: Install authorized keys
   authorized_key:
-    user: "{{ item.0.name }}"
-    key: "{{ item.1 }}"
-  loop: "{{ users | subelements('ssh_keys') }}"
+    user: "{{ item.0.key }}"
+    key: "{{ lookup('file', users_key_store + '/' + item.1 + '.pub') }}"
+    state: present
+  loop: "{{ users | combine(users_override) | dict2items | selectattr('key', 'in', accounts) | subelements('value') }}"
+  loop_control:
+    label: "{{ item.0.key }}: {{ item.1 }}"
 
-- name: Allow sudo group to use sudo without password
+- name: Allow group admins to use sudo without password
   copy:
-    dest: /etc/sudoers.d/nopasswd
-    content: |
-      %sudo ALL=(ALL) NOPASSWD:ALL
+    src: sudoers-ansible
+    dest: /etc/sudoers.d/ansible
     owner: root
     group: root
     mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Restrict ssh login to the accounts
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    validate: '/usr/sbin/sshd -t -f %s'
+    regexp: '^#?{{ item.key }}\s'
+    line: "{{ item.key }} {{ (item.value + accounts | sort) | join(' ') }}"
+  loop:
+    - { key: AllowUsers, value: [root, ansible] }
+    - { key: AllowGroups, value: [root, admins] }
+  loop_control:
+    label: "{{ item.key }}"
+  when: users_sshd_allow | bool
+  notify: Reload sshd

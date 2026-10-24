@@ -1,0 +1,20 @@
+# Struktur wie die frühere role-ssh_authorized_keys, Daten in group_vars/host_vars.
+
+# Konten, die angelegt werden.
+accounts: []
+
+# Konten in der Gruppe admins (sudo über /etc/sudoers.d/ansible).
+admins: []
+
+# Konto -> Namen der Schlüssel im Store (Datei <name>.pub). Nur was hier steht,
+# wird ausgerollt; der Store enthält auch Schlüssel, die nirgends hingehören.
+users: {}
+
+# Abweichungen pro Host, ersetzen den Eintrag eines Kontos in users.
+users_override: {}
+
+# Schlüssel-Store (Submodul ffbsee/ssh_authorized_keys).
+users_key_store: "{{ playbook_dir }}/files/ssh_authorized_keys"
+
+# AllowUsers/AllowGroups in /etc/ssh/sshd_config aus accounts erzeugen.
+users_sshd_allow: true

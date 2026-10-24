@@ -1,38 +1,45 @@
 ---
-# Users and authorisation.
-## Visit https://github.com/ffbsee/role-ssh_authorized_keys.git for details config informations
-
-## admins on the gateway that are allowd to execute sudo
-admins:
-  - mart
-  - wolf
-  - xperimental 
-  - alex
-
-## accounts who should be created on gateway
+# Konten, Admins und SSH-Schlüssel (Rolle users). Schlüssel liegen im Store
+# files/ssh_authorized_keys (ffbsee/ssh_authorized_keys) als <name>.pub.
+# Stand wie auf mate und map (2026-10-25); Abweichungen in host_vars.
 accounts:
+  - alex
+  - kpanic
   - mart
+  - raoul
   - wolf
   - xperimental
-  - alex
 
-## users for remote login with their ssh public key
+admins:
+  - alex
+  - kpanic
+  - mart
+  - raoul
+  - wolf
+
 users:
-  mart:
-    - mart@ffbsee.de
-    - mart@kirika
-    - mart@linux-srfv
-    - mart@waldorfschule-ueberlingen.de
-  xperimental:
-    - xperimental@id1
-    - xperimental@id2
-    - xperimental@id3
-    - xperimental@id4
-  wolf:
-    - wolf@rotkaeppchen
   alex:
-    - alex@toolbox
-    - alex@rsa-toolbox
+    - alex@rsa-toolbox_rsa
+    - alex@toolbox_ed25519
+    - alexander@alex-g5_ed25519
+  kpanic:
+    - kpanic@hirnduenger.de_rsa
+  mart:
+    - mart@ffbsee.de_rsa
+    - mart@kirika_rsa
+    - mart@linux-srfv_rsa
+    - mart@waldorfschule-ueberlingen.de_rsa
+    - mart@archlinux_ed25519
+    - mart@kirika_ed25519
+  raoul:
+    - raoul@ccczh_ed25519
+  wolf:
+    - wolf@rotkaeppchen_ed25510
+  xperimental:
+    - xperimental@id1_rsa
+    - xperimental@id2_rsa
+    - xperimental@id3_rsa
+    - xperimental@id4_rsa
 
 # fail2ban
 fail2ban_maxretry: 10
@@ -41,10 +48,6 @@ fail2ban_banaction: iptables-multiport
 fail2ban_jails:
   - name: '{{ fail2ban_ssh_jail_name }}'
     enabled: 'true'
-
-# seme meta informations for the ssh_authorized_keys role
-home_sweet_home: false
-ssh_public_key_store: 'ssh_authorized_keys'
 
 #telegraf config for all machines
 telegraf_agent_package_method: online

@@ -247,7 +247,7 @@
   iptables:
     chain: FORWARD
     destination: fc00::/7
-    out_interface: "! {{ wan_interface }}"
+    out_interface: "!{{ wan_interface }}"
     state: present
     ip_version: ipv6
     jump: ACCEPT
@@ -260,7 +260,7 @@
   iptables:
     chain: FORWARD
     destination: fec0::/1
-    out_interface: "! {{ wan_interface }}"
+    out_interface: "!{{ wan_interface }}"
     state: present
     ip_version: ipv6
     jump: ACCEPT

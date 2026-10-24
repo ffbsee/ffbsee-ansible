@@ -117,4 +117,12 @@ ansible-playbook site.yml --tags php-update --limit mate.ffbsee.net
 ```
 Details: [roles/php-update/README.md](roles/php-update/README.md)
 
+Update the DHCP server (opt-in, a plain run only installs it): upgrades
+isc-dhcp-server on the hosts with `freifunk_dhcp_server`; dpkg restarts it,
+DHCP clients are briefly without service:
+```bash
+ansible-playbook site.yml --tags dhcpd-update --check   # dry run
+ansible-playbook site.yml --tags dhcpd-update
+```
+
 

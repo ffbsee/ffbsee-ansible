@@ -1,0 +1,16 @@
+---
+# Nur per --tags dhcpd-update (Play in freifunk.ffbsee.yml). Aktualisiert
+# isc-dhcp-server, falls installiert; dpkg startet den Dienst dabei neu.
+- name: Update isc-dhcp-server
+  apt:
+    name: 'isc-dhcp-server'
+    state: 'latest'
+    only_upgrade: yes
+    update_cache: yes
+  when: freifunk_dhcp_server | default(false) | bool
+
+- name: Ensure isc-dhcp-server is running
+  service:
+    name: 'isc-dhcp-server'
+    state: 'started'
+  when: freifunk_dhcp_server | default(false) | bool

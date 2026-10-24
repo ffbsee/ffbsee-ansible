@@ -188,3 +188,16 @@
     - php-update
   roles:
     - php-update
+
+# Opt-in: läuft nur mit --tags dhcpd-update. Aktualisiert isc-dhcp-server auf
+# den Hosts mit freifunk_dhcp_server; der normale Lauf installiert nur.
+- name: DHCP server update
+  hosts: all
+  gather_facts: false
+  tags:
+    - never
+    - dhcpd-update
+  tasks:
+    - import_role:
+        name: dhcpd
+        tasks_from: update.yml

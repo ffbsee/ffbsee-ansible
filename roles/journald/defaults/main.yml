@@ -1,0 +1,5 @@
+---
+# Obergrenzen für das persistente Journal; journald löscht ältere Einträge
+# selbst, sobald eine der beiden Grenzen erreicht ist.
+journald_system_max_use: 500M
+journald_max_retention: 14day

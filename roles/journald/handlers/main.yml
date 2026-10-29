@@ -1,0 +1,11 @@
+---
+- name: Restart journald
+  ansible.builtin.service:
+    name: systemd-journald
+    state: restarted
+
+# Bestehende Altlasten sofort auf die neuen Grenzen kürzen.
+- name: Vacuum journal
+  ansible.builtin.command: >-
+    journalctl --vacuum-size={{ journald_system_max_use }}
+    --vacuum-time={{ journald_max_retention }}

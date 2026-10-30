@@ -225,7 +225,16 @@
   notify: save ip6tables
 
 #/sbin/ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
+- name: Check if connlimit rule exists
+  become: true
+  command: ip6tables -C FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP
+  register: connlimit_check
+  failed_when: false
+  changed_when: false
+  check_mode: false
+
 - name: established_ipv6_traffic_complex
+  when: connlimit_check.rc != 0
   become: true
   command: "ip6tables -A FORWARD -m state --state NEW -m connlimit --connlimit-above 200 --connlimit-mask 128 --connlimit-saddr -j DROP"
 
@@ -304,8 +313,19 @@
 
 #/sbin/ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}
 
-- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+- name: Check if NETMAP rule exists
   when: wan_ipv6_network != '' and wan_ipv6_network != None 
+  become: true
+  command: "ip6tables -t nat -C POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}"
+  register: netmap_check
+  failed_when: false
+  changed_when: false
+  check_mode: false
+
+- name: NAT vom 'WAN' Interface zum 'B.A.T.M.A.N.' Interface
+  when:
+    - wan_ipv6_network != '' and wan_ipv6_network != None
+    - netmap_check.rc != 0
   become: true
   command: "ip6tables -t nat -A POSTROUTING -o {{ wan_interface }} -j NETMAP --to {{ wan_ipv6_network }}"
   notify: save ip6tables

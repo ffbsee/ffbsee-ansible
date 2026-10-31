@@ -31,6 +31,14 @@
     - role: python3-default
       when: python3_default_enabled | default(true) | bool
 
+- name: journald retention
+  hosts: all
+  become: yes
+  tags:
+    - journald
+  roles:
+    - journald
+
 - name: Update packages and users on all nodes
   hosts: freifunk
   tags: 

@@ -97,3 +97,20 @@ python3_default_enabled: false
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
 fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'
+
+# Benutzer (Rolle users), Abweichungen zu group_vars (Stand 2026-10-25):
+# raoul nicht in admins, alex ohne alex-g5, kpanic mit zwei Schlüsseln ohne
+# Kommentar.
+admins:
+  - alex
+  - kpanic
+  - mart
+  - wolf
+users_override:
+  alex:
+    - alex@rsa-toolbox_rsa
+    - alex@toolbox_ed25519
+  kpanic:
+    - kpanic@hirnduenger.de_rsa
+    - kpanic@gw01-1_rsa
+    - kpanic@gw01-2_ed25519

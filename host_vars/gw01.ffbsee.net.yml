@@ -93,6 +93,12 @@ base_packages:
 # Werte, die den Stand auf gw01 festhalten, damit ein Lauf nichts verändert.
 # Keine python/pip-Alternativen (kein python2, /usr/bin/pip aus python3-pip).
 python3_default_enabled: false
+# bat aus Debian (0.22), daher install-bat aus.
+install_bat_enabled: false
+# fail2ban wie von Debian ausgeliefert (jail.d/defaults-debian.conf, sshd).
+fail2ban_enabled: false
+# Kein telegraf auf gw01.
+telegraf_enabled: false
 # fastd v22 in /usr/local/bin (gebaut 2022).
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'

@@ -1,0 +1,35 @@
+---
+# Packages matching one of these patterns only take full effect after a
+# reboot (kernel, firmware, DKMS modules, microcode, libc, init system).
+# updates-apply holds them back; updates-check flags them.
+system_updates_reboot_patterns:
+  - '^linux-(image|headers|modules|generic|virtual|signed|firmware|base|raspi)'
+  - '^raspi-firmware$'
+  - '^raspberrypi-'
+  - '^firmware-'
+  - '^(intel|amd64)-microcode$'
+  - '-dkms$'
+  - '^initramfs-tools'
+  - '^libc6$'
+  - '^libc-bin$'
+  - '^systemd'
+  - '^libsystemd'
+  - '^udev$'
+  - '^libudev'
+  - '^dbus'
+  - '^libdbus'
+
+# Further patterns updates-apply holds back although no reboot is needed,
+# e.g. '^docker' when restarting the Docker daemon (and with it every
+# container) has to be planned.
+system_updates_extra_hold_patterns: []
+
+# Git checkouts managed by other roles; only reported, never pulled here.
+# - name: example
+#   path: /opt/example
+system_updates_git_checkouts: []
+
+# Python venvs whose outdated packages are reported, never upgraded here.
+# - name: example
+#   path: /opt/example/.venv
+system_updates_pip_venvs: []

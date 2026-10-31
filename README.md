@@ -109,6 +109,17 @@ Only run the roles with the "update" tag and not the full playbook:
 ansible-playbook update_admins.yml --tags "update"
 ```
 
+Check for and apply system updates (opt-in, never part of a plain run):
+```bash
+# read-only report: upgradable apt packages (no reboot / needs reboot,
+# security, held), pending reboot, services on outdated libraries
+ansible-playbook site.yml --tags updates-check
+# same report, then upgrades everything that needs no reboot
+# (kernel, firmware, libc, systemd … stay held back, no reboot happens)
+ansible-playbook site.yml --tags updates-apply
+```
+Details: [roles/system-updates/README.md](roles/system-updates/README.md)
+
 Security update for PHP only (opt-in): upgrades the installed PHP packages,
 restarts Apache/PHP-FPM if running, checks the minimum versions:
 ```bash

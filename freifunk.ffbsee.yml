@@ -177,6 +177,15 @@
   roles:
     - ffbsee-robin-exporter
 
+# Opt-in: läuft nur mit --tags updates-check bzw. --tags updates-apply.
+# Bewusst ohne Play-Tag, sonst erben die apply-Tasks ihn und laufen beim
+# Check mit. Details: roles/system-updates/README.md
+- name: System updates
+  hosts: all
+  gather_facts: false
+  roles:
+    - system-updates
+
 # Opt-in: läuft nur mit --tags php-update. Aktualisiert die installierten
 # PHP-Pakete und startet laufende Dienste mit PHP neu (Apache, FPM).
 # Details: roles/php-update/README.md

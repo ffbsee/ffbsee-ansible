@@ -1,0 +1,44 @@
+---
+# Reboot-relevant packages (plus system_updates_extra_hold_patterns) are put
+# on hold for the duration of the upgrade, so apt-get upgrade keeps them (and
+# anything depending on their new versions) back. Only holds set here are
+# released again. needrestart only lists, it never restarts services here.
+- name: Upgrade packages that need no reboot
+  become: true
+  when: system_updates_live | length > 0
+  block:
+    - name: Temporarily hold reboot-relevant packages
+      ansible.builtin.dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop: "{{ system_updates_reboot + system_updates_extra }}"
+
+    - name: Run apt-get upgrade
+      ansible.builtin.command: >-
+        apt-get -y
+        -o DPkg::Lock::Timeout=300
+        -o Dpkg::Options::=--force-confdef
+        -o Dpkg::Options::=--force-confold
+        upgrade
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+        NEEDRESTART_MODE: l
+        LC_ALL: C
+      register: system_updates_apply
+      changed_when: system_updates_apply.stdout is not search('(?m)^0 upgraded, 0 newly installed')
+
+  always:
+    - name: Release temporary holds
+      ansible.builtin.dpkg_selections:
+        name: "{{ item }}"
+        selection: install
+      loop: "{{ system_updates_reboot + system_updates_extra }}"
+
+- name: Collect apt state after apply
+  ansible.builtin.import_tasks: collect-apt.yml
+
+- name: Report state after apply
+  ansible.builtin.import_tasks: report.yml
+  vars:
+    system_updates_report_title: "State after updates-apply"
+    system_updates_after_apply: true

@@ -1,0 +1,50 @@
+---
+# mate: kein Gateway (kein NAT, kein radvd, kein DHCP), aber Mesh-Knoten
+# mit Backbone (wg-backbone, vxbackbone, fastd_backbone) und Karte.
+# Backbone und update.sh sind von Hand gepflegt, Ansible fasst sie nicht an.
+hostname: 'mate.ffbsee.net'
+
+# Basis-Pakete wie installiert (wie gw01): mtr-tiny statt mtr;
+# bmon, vnstat, wireshark und glances fehlen (zögen ~95 Pakete samt GTK/Qt nach).
+base_packages:
+  - vim
+  - curl
+  - htop
+  - ranger
+  - nmap
+  - psmisc
+  - mtr-tiny
+  - iftop
+  - nload
+  - iperf3
+  - tcpdump
+  - conntrack
+  - nethogs
+  - arp-scan
+
+# --- Ist-Zustand mate --------------------------------------------------------
+# Werte, die den Stand auf mate festhalten, damit ein Lauf nichts verändert.
+# Keine python/pip-Alternativen (kein /usr/bin/python).
+python3_default_enabled: false
+# bat aus Debian (0.22), daher install-bat aus.
+install_bat_enabled: false
+# fail2ban wie von Debian ausgeliefert (jail.d/defaults-debian.conf, sshd).
+fail2ban_enabled: false
+# Kein telegraf auf mate.
+telegraf_enabled: false
+# Kein Gateway: kein radvd, batman-adv aus dem Kernel.
+freifunk_backbone_enabled: false
+# fastd-Konfiguration von Hand gepflegt (Schlüssel in fastd_backbone.conf).
+fastd_config_enabled: false
+# Kein NAT, nur die Regeln von fail2ban.
+firewall_enabled: false
+# update.sh von Hand angepasst (Map-Backend), läuft per /etc/crontab.
+freifunk_update_script_enabled: false
+# wg-backbone.conf von Hand gepflegt (Peers gw01, gw02, map, ggway).
+wireguard_enabled: false
+# vxlanbackbone.sh und Service von Hand gepflegt (Endpunkte inkl. ::9).
+vxlanbackbone_enabled: false
+# fastd v22 in /usr/local/bin.
+fastd_version: 22
+fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
+fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'

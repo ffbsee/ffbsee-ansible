@@ -96,14 +96,22 @@
     # Aufgaben (z. B. mate: kein radvd, batman-adv aus dem Kernel).
     - role: freifunk-backbone
       when: freifunk_backbone_enabled | default(true) | bool
-    - freifunk-update-script
+    # freifunk_update_script_enabled: false (host_vars), wo update.sh von Hand
+    # angepasst ist und per cron läuft (z. B. mate: eigene Map-Backend-Aufrufe).
+    - role: freifunk-update-script
+      when: freifunk_update_script_enabled | default(true) | bool
     - fastd-install
     # fastd_config_enabled: false (host_vars), wo die fastd-Konfiguration von
     # Hand gepflegt ist (z. B. mate: Schlüssel steht in fastd_backbone.conf).
     - role: fastd-config
       when: fastd_config_enabled | default(true) | bool
-    - wireguard
-    - vxlanbackbone
+    # wireguard_enabled / vxlanbackbone_enabled: false (host_vars), wo
+    # wg-backbone.conf bzw. das vxlan-Skript von Hand gepflegt sind
+    # (z. B. mate: Peers gw01, gw02, map, ggway).
+    - role: wireguard
+      when: wireguard_enabled | default(true) | bool
+    - role: vxlanbackbone
+      when: vxlanbackbone_enabled | default(true) | bool
 
 - name: Configure network routing for gw
   hosts: freifunk

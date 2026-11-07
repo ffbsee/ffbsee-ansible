@@ -1,0 +1,10 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# Läuft nach jeder erfolgreichen Erneuerung (certbot renew), einmal pro Lineage.
+set -e
+apache2ctl configtest && systemctl reload apache2
+{% if apache_sites_unifi_cert_name | length > 0 %}
+if [ "$(basename "$RENEWED_LINEAGE")" = "{{ apache_sites_unifi_cert_name }}" ]; then
+  /usr/local/sbin/unifi-import-cert
+fi
+{% endif %}

@@ -1,0 +1,17 @@
+---
+# Apache-Sites mit je eigenem Let's-Encrypt-Zertifikat (webroot).
+# Jeder Eintrag: name (ServerName und Zertifikatsname), docroot,
+# optional aliases (ServerAlias, kommen mit ins Zertifikat),
+# php (true: PHP-Einstellungen wie bisher), icingaweb2 (true: Alias /icingaweb2).
+apache_sites: []
+
+# Gemeinsames Verzeichnis für die ACME-Challenges aller Sites.
+apache_sites_acme_webroot: /var/www/letsencrypt
+
+apache_sites_certbot_email: "{{ letsencrypt_email }}"
+
+# Name der Zertifikats-Lineage, die nach Ausstellung/Erneuerung in den
+# UniFi-Keystore übernommen wird ('' = kein UniFi).
+apache_sites_unifi_cert_name: ''
+
+apache_sites_php_open_basedir: /var/www/html:/var/www/tmp:/usr/share/php5:/usr/share/php:/tmp:/usr/share/phpmyadmin:/etc/phpmyadmin:/var/lib/phpmyadmin:/usr/share/icingaweb2:/etc/icingaweb2:/var/run/icinga2:/usr/share/php

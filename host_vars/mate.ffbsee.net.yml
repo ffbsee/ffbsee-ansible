@@ -48,3 +48,27 @@ vxlanbackbone_enabled: false
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
 fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'
+
+# Apache-Sites auf mate, je mit eigenem Zertifikat (Rolle apache-sites).
+# Zertifikate werden in dieser Reihenfolge beantragt. mate steht zuletzt:
+# Bis zur Umstellung trägt sein Zertifikat die anderen Namen mit, es darf
+# erst neu ausgestellt werden, wenn die anderen Zertifikate da sind.
+apache_sites:
+  # meta war bisher ServerAlias von mate und zeigt auf denselben Inhalt.
+  - name: meta.ffbsee.net
+    docroot: /var/www/mate.ffbsee.net
+    php: true
+  - name: api.ffbsee.net
+    docroot: /var/www/api.ffbsee.net
+    php: true
+  - name: speed.ffbsee.net
+    aliases:
+      - speedtest.ffbsee.net
+    docroot: /var/www/speed.ffbsee.net
+  - name: mate.ffbsee.net
+    docroot: /var/www/mate.ffbsee.net
+    php: true
+    icingaweb2: true
+
+# UniFi-Controller (Port 8443) nutzt das Zertifikat von mate.
+apache_sites_unifi_cert_name: mate.ffbsee.net

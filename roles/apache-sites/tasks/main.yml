@@ -1,0 +1,162 @@
+---
+- name: Install apache2 and certbot
+  ansible.builtin.apt:
+    name:
+      - apache2
+      - certbot
+    state: present
+
+- name: ACME webroot
+  ansible.builtin.file:
+    path: "{{ apache_sites_acme_webroot }}/.well-known/acme-challenge"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+# Gilt für alle vhosts; so klappt die Challenge auch über Weiterleitungen
+# (z. B. 000-default) und bevor der vhost eines Namens existiert.
+- name: Apache config for ACME challenges
+  ansible.builtin.template:
+    src: acme-webroot.conf.j2
+    dest: /etc/apache2/conf-available/acme-webroot.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload apache
+
+- name: Enable ACME config
+  ansible.builtin.command: a2enconf acme-webroot
+  args:
+    creates: /etc/apache2/conf-enabled/acme-webroot.conf
+  notify: Reload apache
+
+- name: Enable apache modules
+  ansible.builtin.command: a2enmod {{ item }}
+  args:
+    creates: /etc/apache2/mods-enabled/{{ item }}.load
+  loop:
+    - ssl
+    - rewrite
+    - alias
+  notify: Reload apache
+
+# Die Challenge-Config muss aktiv sein, bevor certbot anfragt.
+- name: Activate ACME config now
+  ansible.builtin.meta: flush_handlers
+
+# Kaputte Renewal-Configs der verwalteten Namen (z. B. api.ffbsee.net-0001)
+# lassen jeden certbot-Lauf scheitern; sie werden samt live/archive entfernt.
+- name: Find invalid certbot lineages
+  ansible.builtin.shell: >-
+    certbot certificates 2>&1
+    | sed -n '/renewal configurations were invalid/,$p'
+    | grep -o '/etc/letsencrypt/renewal/[^ ]*\.conf'
+    | xargs -r -n1 basename | sed 's/\.conf$//' || true
+  register: apache_sites_invalid
+  changed_when: false
+  check_mode: false
+
+- name: Remove invalid lineages of managed names
+  ansible.builtin.file:
+    path: >-
+      {{ '/etc/letsencrypt/renewal/' ~ item.0 ~ '.conf' if item.1 == 'renewal'
+         else '/etc/letsencrypt/' ~ item.1 ~ '/' ~ item.0 }}
+    state: absent
+  loop: "{{ apache_sites_invalid_names | product(['renewal', 'live', 'archive']) | list }}"
+  vars:
+    apache_sites_name_pattern: "^({{ apache_sites | map(attribute='name') | map('regex_escape') | join('|') }})(-[0-9]{4})?$"
+    apache_sites_invalid_names: "{{ apache_sites_invalid.stdout_lines | select('match', apache_sites_name_pattern) | list }}"
+
+- name: Check certificates
+  ansible.builtin.shell: |
+    conf=/etc/letsencrypt/renewal/{{ item.name }}.conf
+    cert=/etc/letsencrypt/live/{{ item.name }}/cert.pem
+    [ -f "$conf" ] && [ -f "$cert" ] || { echo missing; exit 0; }
+    grep -q '^authenticator = webroot' "$conf" || { echo authenticator; exit 0; }
+    openssl x509 -checkend 0 -noout -in "$cert" >/dev/null || { echo expired; exit 0; }
+    want=$(printf '%s\n' {{ ([item.name] + item.aliases | default([])) | join(' ') }} | sort | tr '\n' ' ')
+    have=$(openssl x509 -in "$cert" -noout -ext subjectAltName | grep -o 'DNS:[^,]*' | cut -d: -f2 | sort | tr '\n' ' ')
+    [ "$want" = "$have" ] || { echo domains; exit 0; }
+    echo ok
+  loop: "{{ apache_sites }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: apache_sites_cert_state
+  changed_when: false
+  check_mode: false
+
+- name: Request certificates
+  ansible.builtin.command: >-
+    certbot certonly -n --agree-tos -m {{ apache_sites_certbot_email }}
+    --webroot -w {{ apache_sites_acme_webroot }}
+    --cert-name {{ item.item.name }}
+    -d {{ ([item.item.name] + item.item.aliases | default([])) | join(' -d ') }}
+    --force-renewal
+  loop: "{{ apache_sites_cert_state.results }}"
+  loop_control:
+    label: "{{ item.item.name }} ({{ item.stdout }})"
+  when: item.stdout != 'ok'
+  register: apache_sites_certonly
+  notify: Reload apache
+
+- name: Deploy hook for renewals
+  ansible.builtin.template:
+    src: deploy-hook.sh.j2
+    dest: /etc/letsencrypt/renewal-hooks/deploy/apache-sites.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: UniFi certificate import script
+  ansible.builtin.template:
+    src: unifi-import-cert.sh.j2
+    dest: /usr/local/sbin/unifi-import-cert
+    owner: root
+    group: root
+    mode: '0700'
+  when: apache_sites_unifi_cert_name | length > 0
+
+# Renewal-Hooks laufen nur bei "certbot renew", nicht bei certonly.
+- name: Import new certificate into UniFi
+  ansible.builtin.command: /usr/local/sbin/unifi-import-cert
+  when:
+    - apache_sites_unifi_cert_name | length > 0
+    - apache_sites_certonly.results
+      | selectattr('changed', 'defined') | selectattr('changed')
+      | map(attribute='item.item.name') | select('equalto', apache_sites_unifi_cert_name) | list | length > 0
+
+- name: Site configs
+  ansible.builtin.template:
+    src: site.conf.j2
+    dest: /etc/apache2/sites-available/{{ item.name }}.conf
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ apache_sites }}"
+  loop_control:
+    label: "{{ item.name }}"
+  notify: Reload apache
+
+- name: Enable sites
+  ansible.builtin.command: a2ensite {{ item.name }}
+  args:
+    creates: /etc/apache2/sites-enabled/{{ item.name }}.conf
+  loop: "{{ apache_sites }}"
+  loop_control:
+    label: "{{ item.name }}"
+  notify: Reload apache
+
+# Erneuerung läuft über certbot.timer (Debian-Paket) mit webroot; der alte
+# Weg (Apache stoppen, standalone) fällt weg.
+- name: Remove legacy renewal cron job
+  ansible.builtin.lineinfile:
+    path: /etc/crontab
+    regexp: 'renew_letsencrypt\.sh'
+    state: absent
+
+- name: certbot timer
+  ansible.builtin.systemd:
+    name: certbot.timer
+    enabled: true
+    state: started

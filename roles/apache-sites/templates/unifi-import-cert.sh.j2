@@ -1,0 +1,16 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# Übernimmt das Zertifikat {{ apache_sites_unifi_cert_name }} in den Keystore
+# des UniFi-Controllers (Port 8443) und startet unifi neu.
+set -e
+live=/etc/letsencrypt/live/{{ apache_sites_unifi_cert_name }}
+p12=$(mktemp)
+trap 'rm -f "$p12"' EXIT
+openssl pkcs12 -export -inkey "$live/privkey.pem" -in "$live/fullchain.pem" \
+  -out "$p12" -name unifi -password pass:temppass
+# aircontrolenterprise ist das feste Keystore-Passwort von UniFi.
+keytool -importkeystore -deststorepass aircontrolenterprise \
+  -destkeypass aircontrolenterprise -destkeystore /var/lib/unifi/keystore \
+  -srckeystore "$p12" -srcstoretype PKCS12 -srcstorepass temppass \
+  -alias unifi -noprompt
+systemctl restart unifi

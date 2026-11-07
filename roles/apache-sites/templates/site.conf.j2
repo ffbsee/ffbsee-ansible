@@ -1,0 +1,84 @@
+# {{ ansible_managed }}
+{% if item.icingaweb2 | default(false) %}
+Alias /icingaweb2 "/usr/share/icingaweb2/public"
+<Directory "/usr/share/icingaweb2/public">
+  Options SymLinksIfOwnerMatch
+  AllowOverride None
+  SetEnv ICINGAWEB_CONFIGDIR "/etc/icingaweb2"
+  EnableSendfile Off
+  <IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /icingaweb2/
+    RewriteCond %{REQUEST_FILENAME} -s [OR]
+    RewriteCond %{REQUEST_FILENAME} -l [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^.*$ - [NC,L]
+    RewriteRule ^.*$ index.php [NC,L]
+  </IfModule>
+  <IfModule !mod_rewrite.c>
+    DirectoryIndex error_norewrite.html
+    ErrorDocument 404 /error_norewrite.html
+  </IfModule>
+</Directory>
+
+{% endif %}
+<Directory {{ item.docroot }}>
+  AllowOverride None
+  Require all denied
+</Directory>
+
+<VirtualHost *:80>
+  ServerName {{ item.name }}
+{% for alias in item.aliases | default([]) %}
+  ServerAlias {{ alias }}
+{% endfor %}
+  ServerAdmin {{ apache_sites_certbot_email }}
+  DocumentRoot {{ item.docroot }}
+  ErrorLog /var/log/apache2/html/error.log
+  RewriteEngine on
+  RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName {{ item.name }}
+{% for alias in item.aliases | default([]) %}
+  ServerAlias {{ alias }}
+{% endfor %}
+  ServerAdmin {{ apache_sites_certbot_email }}
+  DocumentRoot {{ item.docroot }}
+  ErrorLog /var/log/apache2/html/error.log
+
+  SSLEngine on
+  SSLProtocol All -SSLv2 -SSLv3
+  SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA
+  SSLHonorCipherOrder     on
+  SSLCertificateFile /etc/letsencrypt/live/{{ item.name }}/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/{{ item.name }}/privkey.pem
+  SSLUseStapling on
+  SSLStaplingResponderTimeout 5
+  SSLStaplingReturnResponderErrors off
+  SSLOpenSSLConfCmd DHParameters "/etc/apache2/dhparams.pem"
+
+  <Directory {{ item.docroot }}>
+    <FilesMatch ".+\.ph(p[345]?|t|tml)$">
+      SetHandler None
+    </FilesMatch>
+    Options +FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+{% if item.php | default(false) %}
+
+  <IfModule mod_php8.c>
+    AddType application/x-httpd-php .php .php3 .php4 .php5
+    SetEnv TMP /var/www/tmp
+    SetEnv TMPDIR /var/www/tmp
+    SetEnv TEMP /var/www/tmp
+    php_admin_value sendmail_path "/usr/sbin/sendmail -t -i -f{{ apache_sites_certbot_email }}"
+    php_admin_value upload_tmp_dir /var/www/tmp
+    php_admin_value session.save_path /var/www/tmp
+    php_admin_value open_basedir {{ apache_sites_php_open_basedir }}
+  </IfModule>
+{% endif %}
+</VirtualHost>

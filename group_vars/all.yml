@@ -34,7 +34,7 @@ users:
   raoul:
     - raoul@ccczh_ed25519
   wolf:
-    - wolf@rotkaeppchen_ed25510
+    - wolf@rotkaeppchen_ed25519
   xperimental:
     - xperimental@id1_rsa
     - xperimental@id2_rsa

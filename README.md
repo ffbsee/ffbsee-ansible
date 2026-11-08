@@ -63,23 +63,6 @@ Right now, there are some dedicated servers, the Freifunk-Gateways:
   * Germany
   * Dual-Stack
   * AS 24940
-<!--
-* [gw02.ffbsee.net](https://gw02.ffbsee.net) - **Gateway 02**
-  * CCCZH Server
-  * Swiss
-  * fastd: Dual-Stack; web, ssh etc: IPv6
-  * AS 13030
-* [gw03.ffbsee.net](https://gw03.ffbsee.net) - **Gateway 03**
-  * MyLoc Server
-  * Germany
-  * Dual-Stack
-  * AS 24961
-* [gw04.ffbsee.net](https://gw04.ffbsee.net) - **Gateway 04**
-  * Lake Constance Area
-  * Germany
-  * IPv4 only
-  * AS 21263
--->
 
  Adresses:
 -----------
@@ -101,7 +84,7 @@ To add an other gateway please read the [Instructions](https://github.com/ffbsee
 
 If you need a jump host to reach a gateway simply use this command:
 ```bash
-ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W [%h]:%p ansible@gw03.ffbsee.net'" gw02.ffbsee.yml
+ansible-playbook --ssh-common-args="-o ProxyCommand='ssh -W [%h]:%p ansible@map.ffbsee.net'" site.yml --limit gw01.ffbsee.net
 ```
 
 Only run the roles with the "update" tag and not the full playbook:

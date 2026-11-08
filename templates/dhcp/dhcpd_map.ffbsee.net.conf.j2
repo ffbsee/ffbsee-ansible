@@ -1,18 +1,5 @@
 ddns-update-style none;
 
-#failover peer "dhcp-failover" {
-#  primary;
-#  address 10.15.224.1;
-#  port 647;
-#  peer address 10.15.224.4;
-#  peer port 647;
-#  mclt 3600;
-#  split 128;
-#  max-response-delay 30;
-#  max-unacked-updates 10;
-#  load balance max seconds 3;
-#}
-
 
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
@@ -37,7 +24,6 @@ class "ubnt" {
 subnet 10.15.224.0 netmask 255.255.240.0 {
   pool {
         range 10.15.225.0 10.15.238.254;
-        #failover peer "dhcp-failover";
        }
 
   option domain-name-servers 10.15.224.1;

@@ -1,0 +1,9 @@
+---
+# ExecReload der Units ist birdc/birdc6 configure.
+- name: Reload bird
+  systemd:
+    name: '{{ item }}'
+    state: reloaded
+  loop:
+    - bird
+    - bird6

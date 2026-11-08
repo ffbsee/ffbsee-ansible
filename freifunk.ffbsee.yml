@@ -166,9 +166,21 @@
    - community.general
    - ansible.utils
   roles:
-   - unbound
+   # unbound_conf_file (host_vars): fertige unbound.conf statt der Rolle
+   # (die legt alle Snippets an, auch stillgelegte wie qname-minimisation).
+   - role: unbound
+     when: unbound_conf_file is not defined
    - unbound_freifunk_tlds
    - bird
+  tasks:
+   - name: Copy main unbound configuration (host file)
+     copy:
+       src: '{{ unbound_conf_file }}'
+       dest: '/etc/unbound/unbound.conf'
+       owner: root
+       group: root
+       mode: 'u=rw,g=r,o=r'
+     when: unbound_conf_file is defined
 
 # Note: this should only be executed on one gateway
 - name: Configure Intercity VPN

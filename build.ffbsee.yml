@@ -24,4 +24,5 @@
   - motd
   roles:
     - motd
-    - install-bat
+    - role: install-bat
+      when: install_bat_enabled | default(true) | bool

@@ -45,12 +45,17 @@
   - motd
   roles:
     - motd
-    - install-bat
+    # install_bat_enabled: false (host_vars), wenn bat als Debian-Paket kommt
+    # (die Rolle installiert ein älteres .deb von GitHub).
+    - role: install-bat
+      when: install_bat_enabled | default(true) | bool
   tasks:
+    # Hält bat (nicht batman) – gehört zum .deb aus install-bat.
     - name: Prevent batman package auto upgrade
       dpkg_selections:
         name: bat
         selection: hold
+      when: install_bat_enabled | default(true) | bool
 
 # Note: We don't do this for hosts in external datacenters
 # since we may have other hosts in the future, let's keep this for now, but commented out
@@ -70,7 +75,10 @@
   tags:
     - fail2ban
   roles:
+    # fail2ban_enabled: false (host_vars) lässt fail2ban, wie Debian es
+    # ausliefert (z. B. gw01: nur jail.d/defaults-debian.conf, Jail sshd).
     - name: fail2ban
+      when: fail2ban_enabled | default(true) | bool
 
 - name: Configure freifunk network setup for gw
   hosts: freifunk
@@ -84,12 +92,26 @@
   - wireguard
   - vxlanbackbone
   roles:
-    - freifunk-backbone
-    - freifunk-update-script
+    # freifunk_backbone_enabled: false (host_vars) auf Hosts ohne Gateway-
+    # Aufgaben (z. B. mate: kein radvd, batman-adv aus dem Kernel).
+    - role: freifunk-backbone
+      when: freifunk_backbone_enabled | default(true) | bool
+    # freifunk_update_script_enabled: false (host_vars), wo update.sh von Hand
+    # angepasst ist und per cron läuft (z. B. mate: eigene Map-Backend-Aufrufe).
+    - role: freifunk-update-script
+      when: freifunk_update_script_enabled | default(true) | bool
     - fastd-install
-    - fastd-config
-    - wireguard
-    - vxlanbackbone
+    # fastd_config_enabled: false (host_vars), wo die fastd-Konfiguration von
+    # Hand gepflegt ist (z. B. mate: Schlüssel steht in fastd_backbone.conf).
+    - role: fastd-config
+      when: fastd_config_enabled | default(true) | bool
+    # wireguard_enabled / vxlanbackbone_enabled: false (host_vars), wo
+    # wg-backbone.conf bzw. das vxlan-Skript von Hand gepflegt sind
+    # (z. B. mate: Peers gw01, gw02, map, ggway).
+    - role: wireguard
+      when: wireguard_enabled | default(true) | bool
+    - role: vxlanbackbone
+      when: vxlanbackbone_enabled | default(true) | bool
 
 - name: Configure network routing for gw
   hosts: freifunk
@@ -99,7 +121,10 @@
   - ip6tables
   - firewall
   roles:
-   - firewall
+   # firewall_enabled: false (host_vars) auf Hosts, die kein Gateway sind
+   # (z. B. mate: kein NAT, nur die Regeln von fail2ban).
+   - role: firewall
+     when: firewall_enabled | default(true) | bool
 
 - name: Configure network routing for gw
   hosts:
@@ -175,7 +200,9 @@
   tags:
     - telegraf
   roles:
-    - telegraf
+    # telegraf_enabled: false (host_vars), wo kein telegraf läuft.
+    - role: telegraf
+      when: telegraf_enabled | default(true) | bool
 
 
 - name: install re4jh/robin-exporter

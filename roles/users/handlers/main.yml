@@ -1,0 +1,5 @@
+# reload reicht für AllowUsers/AllowGroups, bestehende Sitzungen bleiben.
+- name: Reload sshd
+  service:
+    name: ssh
+    state: reloaded

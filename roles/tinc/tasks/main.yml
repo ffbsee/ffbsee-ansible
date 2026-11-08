@@ -1,12 +1,14 @@
 ---
+# tinc für das IC-VPN (Netz icvpn). Läuft nur, wenn icvpn_enabled gesetzt
+# ist (Play in freifunk.ffbsee.yml). Name und Transferadressen pro Host:
+# icvpn_tinc_name, icvpn_ipv4, icvpn_ipv6 (siehe icvpn-meta).
 
 - name: Install tinc
   apt:
     name: 'tinc'
-    state: 'latest'
+    state: present
     update_cache: yes
     cache_valid_time: 86400
-  when: run_icvpn == 'true'
 
 - name: Copy tinc nets.boot
   copy:
@@ -16,63 +18,68 @@
     group: 'root'
     mode: '0755'
 
-- name: Clone current icvpn-scripts from gitthub
+- name: Clone current icvpn hosts from github
   git:
     repo: 'https://github.com/freifunk/icvpn.git'
     dest: '/etc/tinc/icvpn'
     clone: yes
     update: yes
+  register: tinc_icvpn_git
 
 - name: Copy tinc config
-  copy:
-    src: 'files/tinc/tinc.conf'
+  template:
+    src: 'tinc.conf.j2'
     dest: '/etc/tinc/icvpn/tinc.conf'
     owner: 'root'
     group: 'root'
     mode: '0755'
+  notify: Reload tinc
 
-- name: copy tinc-up
+- name: Copy tinc-up and tinc-down
+  template:
+    src: '{{ item }}.j2'
+    dest: '/etc/tinc/icvpn/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+  loop:
+    - tinc-up
+    - tinc-down
+  notify: Restart tinc
+
+# Der Hook schreibt conf.d/connects.conf aus metanodes und lädt tinc neu.
+- name: Install post-merge hook
   copy:
-   src: 'files/tinc/tinc-up'
-   dest: '/etc/tinc/icvpn/tinc-up'
-   owner: 'root'
-   group: 'root'
-   mode: '0775'
+    src: '/etc/tinc/icvpn/scripts/post-merge'
+    dest: '/etc/tinc/icvpn/.git/hooks/post-merge'
+    remote_src: yes
+    mode: '0755'
 
-- name: copy tinc-down 
-  copy: 
-   src: 'files/tinc/tinc-down'
-   dest: '/etc/tinc/icvpn/tinc-down'
-   owner: 'root'
-   group: 'root'
-   mode: '0775'
-
-
-- name: check if post-merge script exists
-  stat: path=/etc/tinc/icvpn/scripts/post-merge
-  register: postmerge_stat
-
-- name:  copy post-merge script to .git/hooks
-  command: cp /etc/tinc/icvpn/scripts/post-merge /etc/tinc/icvpn/.git/hooks/
-  when: postmerge_stat.stat.exists
-
-- name: execute post-merge hook once
+- name: Run post-merge hook after an update
   command: /etc/tinc/icvpn/.git/hooks/post-merge
+  args:
+    chdir: /etc/tinc/icvpn
+  when: tinc_icvpn_git is changed
 
 - name: check if tinc private key already exists
-  stat: 
+  stat:
     path: /etc/tinc/icvpn/rsa_key.priv
-  register: privkey_exists  
+  register: privkey_exists
 
 - name: create public/private key pair for tinc
   shell: yes | tincd -n icvpn -K
-  when: privkey_exists.stat.exists == False
+  when: not privkey_exists.stat.exists
 
-- name: enable service tinc with icvpn 
+# tinc@icvpn hängt an tinc.service (WantedBy); ohne tinc.service startet
+# es beim Booten nicht.
+- name: Enable tinc
   systemd:
-    name: tinc@icvpn
+    name: '{{ item }}'
     enabled: yes
     masked: no
+  loop:
+    - tinc
+    - tinc@icvpn
 
 - name: Make sure tinc with icvpn is running
   systemd:

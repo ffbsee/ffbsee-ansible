@@ -33,7 +33,9 @@
   cron:
     name: 'Update icvpn-meta'
     job: '/opt/freifunk/update-icvpn.sh > /dev/null'
-    day: '*/1'
+    # einmal täglich (ohne minute/hour lief es jede Minute)
+    minute: '17'
+    hour: '4'
     user: 'root'
     state: 'present'
     cron_file: '/etc/cron.d/freifunk'

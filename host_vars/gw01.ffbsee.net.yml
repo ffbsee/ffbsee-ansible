@@ -18,7 +18,8 @@ fastd_vpn_backbone_configs:
 run_mesh: 'true'
 run_gateway: 'true'
 run_webserver: 'false'
-run_icvpn: 'true'
+# folgt icvpn_enabled (update.sh startet sonst tinc)
+run_icvpn: "{{ 'true' if icvpn_enabled | bool else 'false' }}"
 run_map: 'false'
 run_stats: 'false'
 da_laueft_ein_dhcp_relay: 'true'
@@ -120,3 +121,13 @@ users_override:
     - kpanic@hirnduenger.de_rsa
     - kpanic@gw01-1_rsa
     - kpanic@gw01-2_ed25519
+
+# IC-VPN: gw01 ist bodensee2 in icvpn-meta (Transfernetz, tinc-Host).
+# Vorbereitet, aber abgeschaltet; einschalten mit icvpn_enabled: true.
+icvpn_enabled: false
+icvpn_tinc_name: 'bodensee2'
+icvpn_ipv4: '10.207.0.12'
+icvpn_ipv6: 'fec0::a:cf:0:c'
+icvpn_tinc_connect_to:
+  - darmstadt1
+  - frankfurt2

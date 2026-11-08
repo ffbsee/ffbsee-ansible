@@ -168,21 +168,24 @@
   roles:
    - unbound
    - unbound_freifunk_tlds
-   - bird
 
-# Note: this should only be executed on one gateway
+# IC-VPN (tinc, BGP mit bird, Update aus icvpn-meta) auf dem Gateway, das
+# in icvpn-meta als bodensee-Peer eingetragen ist. Abgeschaltet, solange
+# icvpn_enabled nicht gesetzt ist; Werte pro Host in host_vars.
 - name: Configure Intercity VPN
-  hosts:
-    - gw02.ffbsee.net
+  hosts: freifunk
   tags:
-  - icvpn 
+  - icvpn
   - tinc
-  
+  - bird
+
   roles:
-   - role: freifunk-icvpn
-     when: run_icvpn == 'true'
    - role: tinc
-     when: run_icvpn == 'true'
+     when: icvpn_enabled | default(false) | bool
+   - role: bird
+     when: icvpn_enabled | default(false) | bool
+   - role: freifunk-icvpn
+     when: icvpn_enabled | default(false) | bool
 
 # Note: this is only done on the map server
 - name: Configure web setup for gw

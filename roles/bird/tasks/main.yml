@@ -1,6 +1,8 @@
 ---
+# bird für BGP im IC-VPN. Läuft nur, wenn icvpn_enabled gesetzt ist
+# (Play in freifunk.ffbsee.yml).
 
-- name: Install bird 
+- name: Install bird
   apt:
     name: 'bird'
     state: present
@@ -15,4 +17,13 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+  notify: Reload bird
 
+- name: Enable and start bird
+  systemd:
+    name: '{{ item }}'
+    enabled: yes
+    state: started
+  loop:
+    - bird
+    - bird6

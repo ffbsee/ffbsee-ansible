@@ -86,7 +86,6 @@ prometheus_targets:
   node:
   - targets:
     - gw01.ffbsee.net:9273
-    - gw02.ffbsee.net:9273
     - map.ffbsee.net:9273
     - map.ffbsee.net:9295
     - map.ffbsee.net:8000

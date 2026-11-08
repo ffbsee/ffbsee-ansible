@@ -62,7 +62,6 @@
 #- name: Configure basic network setup for gw
 #  hosts:
 #     - gw01.ffbsee.net
-#     - gw02.ffbsee.net
 #     - map.ffbsee.net
 #  tags:
 #  - network
@@ -129,7 +128,6 @@
 - name: Configure network routing for gw
   hosts:
     - gw01.ffbsee.net
-    - gw02.ffbsee.net
   tags: 
   - routing
   - dhcp
@@ -155,7 +153,6 @@
 - name: Configure network routing for gw
   hosts:
     - gw01.ffbsee.net
-    - gw02.ffbsee.net
   tags: 
   - dns
   - unbound
@@ -169,20 +166,6 @@
    - unbound
    - unbound_freifunk_tlds
    - bird
-
-# Note: this should only be executed on one gateway
-- name: Configure Intercity VPN
-  hosts:
-    - gw02.ffbsee.net
-  tags:
-  - icvpn 
-  - tinc
-  
-  roles:
-   - role: freifunk-icvpn
-     when: run_icvpn == 'true'
-   - role: tinc
-     when: run_icvpn == 'true'
 
 # Note: this is only done on the map server
 - name: Configure web setup for gw

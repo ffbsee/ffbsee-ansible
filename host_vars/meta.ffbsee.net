@@ -34,13 +34,8 @@ da_laueft_ein_dhcp_relay: 'true'
 fastd_peer_limit: ''
 fastd_vpn_backbone_configs:
   - gw01
-  - gw02
-  - gw03
-  - gw04
 
 vxlantogw01: '1'
-vxlantogw03: '1'
-vxlantogw04: '1'
 vxlantometa: '0'
 
 ipv6_uplink_announcen: 'false'

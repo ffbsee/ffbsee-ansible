@@ -9,8 +9,6 @@ gwnumber: '01'
 # fastd configuration:
 ## list all backbone gateways
 fastd_vpn_backbone_configs: 
- - gw04
- - gw03
  - map
  - mate
 
@@ -61,8 +59,6 @@ fastd_secret_key: ''
 fastd_peer_limit: '' # should we limit the fastd peer limits
 
 vxlantogw01: '0'
-vxlantogw03: '1'
-vxlantogw04: '1'
 vxlantometa: '1'
 
 # some rules for the iptables/firewall

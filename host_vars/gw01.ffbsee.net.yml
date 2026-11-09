@@ -103,6 +103,9 @@ telegraf_enabled: false
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
 fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'
+# unbound wie auf gw01: eigene unbound.conf (mit root-hints), Snippet
+# qname-minimisation stillgelegt (.dpkg-bak).
+unbound_conf_file: 'files/hosts/gw01.ffbsee.net/etc/unbound/unbound.conf'
 
 # Benutzer (Rolle users), Abweichungen zu group_vars (Stand 2026-10-25):
 # raoul nicht in admins, alex ohne alex-g5, kpanic mit zwei Schlüsseln ohne

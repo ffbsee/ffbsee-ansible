@@ -83,3 +83,23 @@ base_packages:
   - tcpdump
   - nethogs
   - arp-scan
+
+# Backbone von Hand gepflegt: Ansible fasst batman-adv, update.sh, fastd,
+# WireGuard und vxlan auf map nicht an (ein Lauf würde sie überschreiben).
+freifunk_backbone_enabled: false
+freifunk_update_script_enabled: false
+fastd_config_enabled: false
+wireguard_enabled: false
+vxlanbackbone_enabled: false
+# Weitere Dienste wie installiert: Ansible lässt sie auf map unverändert.
+python3_default_enabled: false
+install_bat_enabled: false
+fail2ban_enabled: false
+firewall_enabled: false
+nginx_enabled: false
+robin_exporter_enabled: false
+telegraf_enabled: false
+# fastd wie installiert, sonst würde fastd-install neu bauen.
+fastd_version: 22
+fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
+fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'

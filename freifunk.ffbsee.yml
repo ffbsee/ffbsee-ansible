@@ -189,7 +189,9 @@
   hosts: map.ffbsee.net
   tags: web
   roles:
-    - nginx
+    # nginx_enabled: false (host_vars) lässt nginx, wie es installiert ist.
+    - role: nginx
+      when: nginx_enabled | default(true) | bool
     - gateway-page
 #    - freifunk-karte-json
 #    - FFNodeList
@@ -210,7 +212,9 @@
   tags:
     - robin
   roles:
-    - ffbsee-robin-exporter
+    # robin_exporter_enabled: false (host_vars) lässt den Exporter, wie er läuft.
+    - role: ffbsee-robin-exporter
+      when: robin_exporter_enabled | default(true) | bool
 
 # Opt-in: läuft nur mit --tags updates-check bzw. --tags updates-apply.
 # Bewusst ohne Play-Tag, sonst erben die apply-Tasks ihn und laufen beim

@@ -99,6 +99,13 @@ install_bat_enabled: false
 fail2ban_enabled: false
 # Kein telegraf auf gw01.
 telegraf_enabled: false
+# Backbone von Hand gepflegt: Ansible fasst batman-adv, update.sh, fastd,
+# WireGuard und vxlan auf gw01 nicht an (ein Lauf würde sie überschreiben).
+freifunk_backbone_enabled: false
+freifunk_update_script_enabled: false
+fastd_config_enabled: false
+wireguard_enabled: false
+vxlanbackbone_enabled: false
 # fastd v22 in /usr/local/bin (gebaut 2022).
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'

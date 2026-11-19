@@ -48,3 +48,7 @@ vxlanbackbone_enabled: false
 fastd_version: 22
 fastd_url: 'https://github.com/neocturne/fastd/releases/download/v22/fastd-22.tar.xz'
 fastd_checksum: '19750b88705d66811b7c21b672537909c19ae6b21350688cbd1a3a54d08a8951'
+# Kein PHP im Web: alle aktiven Seiten sind statisch (speed.ffbsee.net ist
+# nicht aktiviert). Ohne mod_php ist PHP von außen nicht erreichbar.
+apache_disabled_modules:
+  - php8.3

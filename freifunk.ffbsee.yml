@@ -80,6 +80,16 @@
     - name: fail2ban
       when: fail2ban_enabled | default(true) | bool
 
+# apache_disabled_modules (host_vars) schaltet Apache-Module ab, z. B. mate:
+# mod_php aus, alle Seiten dort sind statisch.
+- name: Apache modules
+  hosts: all
+  gather_facts: false
+  tags:
+    - apache-modules
+  roles:
+    - apache-modules
+
 - name: Configure freifunk network setup for gw
   hosts: freifunk
   tags:

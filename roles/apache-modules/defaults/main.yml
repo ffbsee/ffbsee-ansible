@@ -1,0 +1,4 @@
+---
+# Apache-Module, die abgeschaltet sein sollen (Name wie bei a2dismod).
+# Leer: die Rolle ändert nichts.
+apache_disabled_modules: []

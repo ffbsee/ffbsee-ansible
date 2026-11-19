@@ -1,11 +1,11 @@
 ---
-# Mindestversionen je PHP-Zweig (php8.x-common). Stand 2026-10-21: behebt
-# CVE-2026-109618 und CVE-2026-109619 ("PHP2Shell").
+# Mindestversionen je PHP-Zweig (php8.x-common). Stand 2026-11-19: Security-
+# Release vom 19.11.2026 (u. a. Core/Session/Date-RCE, FPM, CGI; CVE-2026-129474 ff.).
 php_update_min_versions:
-  '8.2': '8.2.35'
-  '8.3': '8.3.36'
-  '8.4': '8.4.27'
-  '8.5': '8.5.12'
+  '8.2': '8.2.36'
+  '8.3': '8.3.37'
+  '8.4': '8.4.28'
+  '8.5': '8.5.13'
 
 # Installierte Pakete, die auf eines dieser Muster passen, werden aktualisiert
 # (nur vorhandene Pakete, nichts wird neu installiert).
